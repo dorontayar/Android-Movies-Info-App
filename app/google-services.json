@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "701856907497",
+    "project_id": "android-movies-info-app",
+    "storage_bucket": "android-movies-info-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701856907497:android:b2c11a9784daafc71ef078",
+        "android_client_info": {
+          "package_name": "il.ac.hit.android_movies_info_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDu_k96H0gysXFVjfISdDH1cGcWRTluw24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

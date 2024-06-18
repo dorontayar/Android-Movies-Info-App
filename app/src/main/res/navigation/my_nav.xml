@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav.xml"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="il.ac.hit.android_movies_info_app.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment"
+            app:popUpTo="@id/my_nav.xml" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainScreenFragment"
+        android:name="il.ac.hit.android_movies_info_app.ui.main_screen.MainScreenFragment"
+        android:label="fragment_all_tasks"
+        tools:layout="@layout/fragment_main_screen" >
+        <action
+            android:id="@+id/action_mainScreenFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/my_nav.xml" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="il.ac.hit.android_movies_info_app.ui.register.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment"
+            app:popUpTo="@id/my_nav.xml" />
+    </fragment>
+</navigation>
