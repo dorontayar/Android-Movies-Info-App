@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -41,7 +43,11 @@ android {
 }
 
 dependencies {
-
+    //gson implementation
+    implementation(libs.gson)
+    //for dependency injection using hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
     //for view model property delegate
     implementation (libs.androidx.fragment.ktx)
     implementation (libs.androidx.activity.ktx)
