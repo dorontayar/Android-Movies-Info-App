@@ -1,12 +1,12 @@
-package il.ac.hit.android_movies_info_app.ui.login
+package il.ac.hit.android_movies_info_app.ui.login.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import il.ac.hit.android_movies_info_app.model.User
-import il.ac.hit.android_movies_info_app.repository.AuthRepository
+import il.ac.hit.android_movies_info_app.data.model.User
+import il.ac.hit.android_movies_info_app.repositories.AuthRepository
 import il.ac.hit.android_movies_info_app.util.Resource
 import kotlinx.coroutines.launch
 

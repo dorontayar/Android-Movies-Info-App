@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -7,6 +9,15 @@ plugins {
     id("dagger.hilt.android.plugin")
 
 }
+// Load properties from local.properties
+val properties = Properties().apply {
+    load(project.rootProject.file("local.properties").inputStream())
+}
+
+// Defining API Key
+project.extensions.extraProperties["TMDB_API_KEY"] = properties.getProperty("TMDB_API_KEY")
+val tmdbApiKey: String = properties.getProperty("TMDB_API_KEY") ?: ""
+
 
 android {
     namespace = "il.ac.hit.android_movies_info_app"
@@ -14,6 +25,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
     defaultConfig {
@@ -24,6 +36,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Injecting API key as a BuildConfig field
+        buildConfigField("String", "TMDB_API_KEY", "\"$tmdbApiKey\"")
     }
 
     buildTypes {

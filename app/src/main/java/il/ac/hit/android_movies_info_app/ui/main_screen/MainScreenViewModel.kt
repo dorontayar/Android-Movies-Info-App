@@ -2,9 +2,7 @@ package il.ac.hit.android_movies_info_app.ui.main_screen
 
 
 import androidx.lifecycle.*
-import il.ac.hit.android_movies_info_app.repository.AuthRepository
-import il.ac.hit.android_movies_info_app.util.Resource
-import kotlinx.coroutines.launch
+import il.ac.hit.android_movies_info_app.repositories.AuthRepository
 
 class MainScreenViewModel(private val authRep: AuthRepository) : ViewModel() {
 
