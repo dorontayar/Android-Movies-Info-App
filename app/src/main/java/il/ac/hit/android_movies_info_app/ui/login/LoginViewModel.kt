@@ -21,16 +21,16 @@ class LoginViewModel(private val authRep: AuthRepository) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            _currentUser.postValue(Resource.Loading())
+            _currentUser.postValue(Resource.loading())
             _currentUser.postValue(authRep.currentUser())
         }
     }
 
     fun signInUser(userEmail: String, userPass: String) {
         if (userEmail.isEmpty() || userPass.isEmpty())
-            _userSignInStatus.postValue(Resource.Error("Empty email or password"))
+            _userSignInStatus.postValue(Resource.error("Empty email or password"))
         else {
-            _userSignInStatus.postValue(Resource.Loading())
+            _userSignInStatus.postValue(Resource.loading())
             viewModelScope.launch {
                 val loginResult = authRep.login(userEmail, userPass)
                 _userSignInStatus.postValue(loginResult)

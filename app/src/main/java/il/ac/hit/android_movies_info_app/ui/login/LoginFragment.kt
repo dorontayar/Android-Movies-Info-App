@@ -12,7 +12,10 @@ import androidx.navigation.fragment.findNavController
 import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.databinding.FragmentLoginBinding
 import il.ac.hit.android_movies_info_app.repository.firebase_implementation.AuthRepositoryFirebase
+import il.ac.hit.android_movies_info_app.util.Loading
 import il.ac.hit.android_movies_info_app.util.Resource
+import il.ac.hit.android_movies_info_app.util.Success
+import il.ac.hit.android_movies_info_app.util.Error
 import il.ac.hit.android_movies_info_app.util.autoCleared
 
 
@@ -48,34 +51,35 @@ class LoginFragment : Fragment() {
 
         viewModel.userSignInStatus.observe(viewLifecycleOwner) {
 
-            when(it) {
-                is Resource.Loading -> {
+            when(it.status) {
+                is Loading -> {
                     binding.loginProgressBar.isVisible = true
                     binding.buttonLogin.isEnabled = false
                 }
-                is Resource.Success -> {
+                is Success -> {
                     Toast.makeText(requireContext(),"Login successful", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_loginFragment_to_mainScreenFragment)
                 }
-                is Resource.Error -> {
+                is Error -> {
                     binding.loginProgressBar.isVisible = false
                     binding.buttonLogin.isEnabled = true
-                    Toast.makeText(requireContext(),it.message,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),it.status.message,Toast.LENGTH_SHORT).show()
                 }
+
             }
         }
 
         viewModel.currentUser.observe(viewLifecycleOwner) {
 
-            when(it) {
-                is Resource.Loading -> {
+            when(it.status) {
+                is Loading -> {
                     binding.loginProgressBar.isVisible = true
                     binding.buttonLogin.isEnabled = false
                 }
-                is Resource.Success -> {
+                is Success -> {
                     findNavController().navigate(R.id.action_loginFragment_to_mainScreenFragment)
                 }
-                is Resource.Error -> {
+                is Error -> {
                     binding.loginProgressBar.isVisible = false
                     binding.buttonLogin.isEnabled = true
                 }

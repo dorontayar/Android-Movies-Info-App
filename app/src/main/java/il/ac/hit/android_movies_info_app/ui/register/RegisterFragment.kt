@@ -13,7 +13,11 @@ import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.databinding.FragmentRegisterBinding
 import il.ac.hit.android_movies_info_app.repository.firebase_implementation.AuthRepositoryFirebase
 import il.ac.hit.android_movies_info_app.ui.register.RegisterViewModel
+import il.ac.hit.android_movies_info_app.util.Loading
 import il.ac.hit.android_movies_info_app.util.Resource
+import il.ac.hit.android_movies_info_app.util.Success
+import il.ac.hit.android_movies_info_app.util.Error
+
 import il.ac.hit.android_movies_info_app.util.autoCleared
 
 class RegisterFragment: Fragment(){
@@ -46,16 +50,16 @@ class RegisterFragment: Fragment(){
 
         viewmodel.userRegistrationStatus.observe(viewLifecycleOwner){
 
-            when(it){
-                is Resource.Loading -> {
+            when(it.status){
+                is Loading -> {
                     binding.registerProgress.isVisible = true
                     binding.userRegisterButton.isEnabled = false
                 }
-                is Resource.Success -> {
+                is Success -> {
                     Toast.makeText(requireContext(),"Registration Successful",Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_registerFragment_to_mainScreenFragment)
                 }
-                is Resource.Error -> {
+                is Error -> {
                     binding.registerProgress.isVisible = false
                     binding.userRegisterButton.isEnabled = true
                 }

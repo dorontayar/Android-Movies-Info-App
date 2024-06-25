@@ -19,7 +19,7 @@ class AuthRepositoryFirebase : AuthRepository {
         return withContext(Dispatchers.IO) {
             safeCall {
                 val user = userRef.document(firebaseAuth.currentUser!!.uid).get().await().toObject(User::class.java)
-                Resource.Success(user!!)
+                Resource.success(user!!)
             }
         }
     }
@@ -29,7 +29,7 @@ class AuthRepositoryFirebase : AuthRepository {
             safeCall {
                 val result  = firebaseAuth.signInWithEmailAndPassword(email,password).await()
                 val user = userRef.document(result.user?.uid!!).get().await().toObject(User::class.java)!!
-                Resource.Success(user)
+                Resource.success(user)
             }
         }
     }
@@ -46,7 +46,7 @@ class AuthRepositoryFirebase : AuthRepository {
                 val userId = registrationResult.user?.uid!!
                 val newUser = User(userName,userEmail,userPhone)
                 userRef.document(userId).set(newUser).await()
-                Resource.Success(newUser)
+                Resource.success(newUser)
             }
 
         }

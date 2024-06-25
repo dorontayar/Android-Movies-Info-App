@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.google.gms.google.services)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("dagger.hilt.android.plugin")
+
 }
 
 android {
@@ -43,31 +45,67 @@ android {
 }
 
 dependencies {
+
+    //Retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
+    //Kotlin Coroutines
+    implementation (libs.kotlinx.coroutines.core)
+    implementation (libs.kotlinx.coroutines.android)
+
+    //Hilt
+    implementation (libs.hilt.android)
+    //Deprecated
+    //implementation (libs.androidx.hilt.lifecycle.viewmodel)
+    kapt (libs.hilt.android.compiler)
+    kapt (libs.androidx.hilt.compiler)
+
+    //Room
+    implementation (libs.androidx.room.runtime)
+    implementation (libs.room.ktx)
+    kapt (libs.androidx.room.compiler)
+
+    //Navigation
+    implementation (libs.androidx.navigation.fragment.ktx)
+    implementation (libs.navigation.ui.ktx)
+
+    //Glide
+    implementation (libs.glide)
+    kapt (libs.compiler)
+
     //gson implementation
     implementation(libs.gson)
+
     //for dependency injection using hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
+
     //for view model property delegate
     implementation (libs.androidx.fragment.ktx)
     implementation (libs.androidx.activity.ktx)
-    //for coroutines
-    implementation (libs.kotlinx.coroutines.android)
-    implementation (libs.kotlinx.coroutines.core)
+
+
     //for firebase coroutine support
     implementation (libs.kotlinx.coroutines.play.services)
+
     //for flow as live data
     implementation (libs.androidx.lifecycle.livedata.ktx.v281)
+
     //firebase version control
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+
     // Firebase Firestore Database
     implementation (libs.firebase.firestore.ktx)
+
     // Firebase Auth
     implementation (libs.firebase.auth.ktx)
+
     //navigation - added when adding the resource
     implementation (libs.androidx.navigation.fragment.ktx)
     implementation (libs.androidx.navigation.ui.ktx)
+
     //For live data ktx - flow as liveData
     implementation (libs.lifecycle.livedata.ktx)
 

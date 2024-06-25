@@ -20,9 +20,9 @@ class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
             "Not a valid email"
         }else null
         error?.let {
-            _userRegistrationStatus.postValue(Resource.Error(it))
+            _userRegistrationStatus.postValue(Resource.error(it))
         }
-        _userRegistrationStatus.value = Resource.Loading()
+        _userRegistrationStatus.value = Resource.loading()
         viewModelScope.launch {
             val registrationResult = repository.createUser(userName,userEmail,userPhone,userPass)
             _userRegistrationStatus.postValue(registrationResult)
