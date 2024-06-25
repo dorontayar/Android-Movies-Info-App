@@ -1,9 +1,10 @@
-package il.ac.hit.android_movies_info_app.ui.register
+package il.ac.hit.android_movies_info_app.ui.register.viewmodel
 
 import android.util.Patterns
 import androidx.lifecycle.*
-import il.ac.hit.android_movies_info_app.model.User
-import il.ac.hit.android_movies_info_app.repository.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import il.ac.hit.android_movies_info_app.data.model.User
+import il.ac.hit.android_movies_info_app.repositories.AuthRepository
 import il.ac.hit.android_movies_info_app.util.Resource
 import kotlinx.coroutines.launch
 
