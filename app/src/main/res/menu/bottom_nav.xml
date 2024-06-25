@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Explore"
+        android:id="@+id/btm_nav_home"
+        android:icon="@drawable/film"/>
+    <item android:title="Search"
+        android:id="@+id/btm_nav_search"
+        android:icon="@drawable/search"/>
+    <item android:title="Profile"
+        android:id="@+id/btm_nav_profile"
+        android:icon="@drawable/person_fill"/>
+</menu>
