@@ -1,5 +1,4 @@
-import il.ac.hit.android_movies_info_app.model.User
-import il.ac.hit.android_movies_info_app.util.Resource
+package il.ac.hit.android_movies_info_app.util
 
 inline fun <T> safeCall(action: () -> Resource<T>): Resource<T> {
     return try {

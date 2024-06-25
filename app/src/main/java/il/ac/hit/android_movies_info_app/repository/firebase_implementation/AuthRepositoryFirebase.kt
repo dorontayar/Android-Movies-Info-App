@@ -8,7 +8,7 @@ import il.ac.hit.android_movies_info_app.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import safeCall
+import il.ac.hit.android_movies_info_app.util.safeCall
 
 class AuthRepositoryFirebase : AuthRepository {
 
