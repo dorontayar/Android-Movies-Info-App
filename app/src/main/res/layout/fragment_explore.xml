@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.explore.Explore"
-    android:background="@color/purple_200">
+    >
 
     <TextView
         android:layout_width="wrap_content"
