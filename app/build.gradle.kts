@@ -71,6 +71,7 @@ dependencies {
 
     //Hilt
     implementation (libs.hilt.android)
+    implementation(libs.androidx.fragment)
     //Deprecated
     //implementation (libs.androidx.hilt.lifecycle.viewmodel)
     kapt (libs.hilt.android.compiler)
