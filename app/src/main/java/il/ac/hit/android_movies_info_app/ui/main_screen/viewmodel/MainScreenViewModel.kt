@@ -1,4 +1,4 @@
-package il.ac.hit.android_movies_info_app.ui.main_screen
+package il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel
 
 
 import androidx.lifecycle.*

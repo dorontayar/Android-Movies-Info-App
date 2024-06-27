@@ -1,28 +1,25 @@
 package il.ac.hit.android_movies_info_app.ui.main_screen
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.navigation.NavigationBarView
 import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.databinding.FragmentMainScreenBinding
 import il.ac.hit.android_movies_info_app.repositories.firebase_implementation.AuthRepositoryFirebase
-import il.ac.hit.android_movies_info_app.ui.explore.Explore
+import il.ac.hit.android_movies_info_app.ui.explore.ExploreFragment
+import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenViewModel
 import il.ac.hit.android_movies_info_app.ui.profile.Profile
-import il.ac.hit.android_movies_info_app.ui.search.Search
+import il.ac.hit.android_movies_info_app.ui.search.SearchFragment
 import il.ac.hit.android_movies_info_app.util.autoCleared
-import kotlin.math.log
 
 class MainScreenFragment : Fragment() {
 
@@ -42,18 +39,18 @@ class MainScreenFragment : Fragment() {
 //        childFragmentManager.beginTransaction()
 //            .replace(R.id.frame_layout, Search())
 //            .commit()
-        replaceFragment(Explore())
+        replaceFragment(ExploreFragment())
 
 //        binding.bottomNavigationView.setOnNavigationItemSelectedListener()
         binding.bottomNavigationView.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.btm_nav_explore -> {
-                    replaceFragment(Explore())
+                    replaceFragment(ExploreFragment())
                     true
                 }
 
                 R.id.btm_nav_search -> {
-                    replaceFragment(Search())
+                    replaceFragment(SearchFragment())
                     true
                 }
 

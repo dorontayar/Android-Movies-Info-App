@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/explore"
-        android:name="il.ac.hit.android_movies_info_app.ui.explore.Explore"
+        android:name="il.ac.hit.android_movies_info_app.ui.explore.ExploreFragment"
         android:label="fragment_explore"
         tools:layout="@layout/fragment_explore" />
     <fragment
@@ -59,7 +59,7 @@
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/search"
-        android:name="il.ac.hit.android_movies_info_app.ui.search.Search"
+        android:name="il.ac.hit.android_movies_info_app.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
 </navigation>
