@@ -37,7 +37,7 @@ class MainScreenFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMainScreenBinding.inflate(inflater, container, false)
-
+//Blabla
         //Setting it to search as default
 //        childFragmentManager.beginTransaction()
 //            .replace(R.id.frame_layout, Search())
