@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/explore_nav">
+
+    <fragment
+        android:id="@+id/explore_nav"
+        android:name="il.ac.hit.android_movies_info_app.ui.explore.ExploreFragment"
+        android:label="Explore"
+        tools:layout="@layout/fragment_explore" />
+    <fragment
+        android:id="@+id/search_nav"
+        android:name="il.ac.hit.android_movies_info_app.ui.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/profile_nav"
+        android:name="il.ac.hit.android_movies_info_app.ui.profile.Profile"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

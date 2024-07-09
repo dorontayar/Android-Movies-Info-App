@@ -1,4 +1,4 @@
-package il.ac.hit.android_movies_info_app.util
+package il.ac.hit.android_movies_info_app.utils
 /*
  * Copyright (C) 2018 The Android Open Source Project
  *

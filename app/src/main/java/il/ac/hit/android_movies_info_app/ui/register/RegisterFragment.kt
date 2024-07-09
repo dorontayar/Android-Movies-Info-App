@@ -12,20 +12,17 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.databinding.FragmentRegisterBinding
-import il.ac.hit.android_movies_info_app.repositories.firebase_implementation.AuthRepositoryFirebase
 import il.ac.hit.android_movies_info_app.ui.register.viewmodel.RegisterViewModel
-import il.ac.hit.android_movies_info_app.util.Loading
-import il.ac.hit.android_movies_info_app.util.Success
-import il.ac.hit.android_movies_info_app.util.Error
+import il.ac.hit.android_movies_info_app.utils.Loading
+import il.ac.hit.android_movies_info_app.utils.Success
+import il.ac.hit.android_movies_info_app.utils.Error
 
-import il.ac.hit.android_movies_info_app.util.autoCleared
-
+import il.ac.hit.android_movies_info_app.utils.autoCleared
+@AndroidEntryPoint
 class RegisterFragment: Fragment(){
 
     private var binding : FragmentRegisterBinding by autoCleared()
-    private val viewmodel : RegisterViewModel by viewModels() {
-        RegisterViewModel.RegisterViewModelFactory(AuthRepositoryFirebase())
-    }
+    private val viewmodel: RegisterViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,7 +37,7 @@ class RegisterFragment: Fragment(){
                 binding.edxtEmailAddress.editText?.text.toString(),
                 binding.edxtPhoneNum.editText?.text.toString(),
                 binding.edxtPassword.editText?.text.toString()
-                )
+            )
         }
         return binding.root
     }

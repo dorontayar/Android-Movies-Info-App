@@ -5,56 +5,70 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
+import il.ac.hit.android_movies_info_app.databinding.FragmentExploreBinding
+import il.ac.hit.android_movies_info_app.ui.explore.viewmodel.ExploreAdapter
+import il.ac.hit.android_movies_info_app.ui.explore.viewmodel.ExploreViewModel
+import il.ac.hit.android_movies_info_app.utils.Loading
+import il.ac.hit.android_movies_info_app.utils.Success
+import il.ac.hit.android_movies_info_app.utils.Error
+import il.ac.hit.android_movies_info_app.utils.autoCleared
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class ExploreFragment : Fragment(), ExploreAdapter.MoviesItemListener {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ExploreFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ExploreFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var binding : FragmentExploreBinding by autoCleared()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val viewModel: ExploreViewModel by viewModels()
+
+    private  lateinit var  adapter: ExploreAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_explore, container, false)
+        binding = FragmentExploreBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Explore.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ExploreFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        adapter = ExploreAdapter(this)
+        binding.moviesRv.layoutManager = LinearLayoutManager(requireContext())
+        binding.moviesRv.adapter = adapter
+
+
+        viewModel.topMovies.observe(viewLifecycleOwner) {
+            when(it.status) {
+                is Loading -> binding.progressBar.isVisible = true
+                is Success -> {
+                    if(!it.status.data.isNullOrEmpty()) {
+                        binding.progressBar.isVisible = false
+                        adapter.setMovies(ArrayList(it.status.data))
+                    }
                 }
+                is Error -> {
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(requireContext(),it.status.message, Toast.LENGTH_SHORT).show()
+                }
+
+
             }
+        }
+
+    }
+
+    override fun onMovieClick(movieId: Int) {
+        Toast.makeText(requireContext(),"Movie Clicked",Toast.LENGTH_SHORT).show()
     }
 }

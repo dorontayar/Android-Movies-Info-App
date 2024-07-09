@@ -1,4 +1,4 @@
-package il.ac.hit.android_movies_info_app.util
+package il.ac.hit.android_movies_info_app.utils
 
 class Resource<out T> private constructor(val status: Status<T>){
 

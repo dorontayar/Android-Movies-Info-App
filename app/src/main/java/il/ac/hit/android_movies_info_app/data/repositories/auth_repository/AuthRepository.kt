@@ -1,7 +1,7 @@
-package il.ac.hit.android_movies_info_app.repositories
+package il.ac.hit.android_movies_info_app.data.repositories.auth_repository
 
 import il.ac.hit.android_movies_info_app.data.model.User
-import il.ac.hit.android_movies_info_app.util.Resource
+import il.ac.hit.android_movies_info_app.utils.Resource
 
 interface AuthRepository {
 

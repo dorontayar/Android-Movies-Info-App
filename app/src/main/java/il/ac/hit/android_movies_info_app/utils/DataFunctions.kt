@@ -1,4 +1,4 @@
-package il.ac.hit.android_movies_info_app.util
+package il.ac.hit.android_movies_info_app.utils
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
@@ -26,3 +26,18 @@ fun <T,A> performFetchingAndSaving(localDbFetch: () -> LiveData<T>,
             emitSource(source)
         }
     }
+
+fun <T> performFetching(remoteDbFetch: suspend () -> Resource<T>): LiveData<Resource<T>> =
+
+    liveData(Dispatchers.IO) {
+
+        emit(Resource.loading())
+
+        val fetchResource = remoteDbFetch()
+
+        if (fetchResource.status is Success) {
+            emit(Resource.success(fetchResource.status.data!!))
+        } else if (fetchResource.status is Error) {
+            emit(Resource.error(fetchResource.status.message))
+        }
+}
