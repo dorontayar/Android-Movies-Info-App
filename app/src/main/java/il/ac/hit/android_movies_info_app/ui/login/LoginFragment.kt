@@ -9,22 +9,21 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.databinding.FragmentLoginBinding
-import il.ac.hit.android_movies_info_app.repositories.firebase_implementation.AuthRepositoryFirebase
+import il.ac.hit.android_movies_info_app.data.repositories.firebase_implementation.AuthRepositoryFirebase
 import il.ac.hit.android_movies_info_app.ui.login.viewmodel.LoginViewModel
 import il.ac.hit.android_movies_info_app.util.Loading
 import il.ac.hit.android_movies_info_app.util.Success
 import il.ac.hit.android_movies_info_app.util.Error
 import il.ac.hit.android_movies_info_app.util.autoCleared
 
-
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private var binding :FragmentLoginBinding by autoCleared()
-    private val viewModel : LoginViewModel by viewModels {
-        LoginViewModel.LoginViewModelFactory(AuthRepositoryFirebase())
-    }
+    private val viewModel : LoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

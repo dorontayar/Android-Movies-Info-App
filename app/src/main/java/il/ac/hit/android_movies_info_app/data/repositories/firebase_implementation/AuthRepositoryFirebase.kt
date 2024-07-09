@@ -1,19 +1,24 @@
-package il.ac.hit.android_movies_info_app.repositories.firebase_implementation
+package il.ac.hit.android_movies_info_app.data.repositories.firebase_implementation
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import il.ac.hit.android_movies_info_app.data.model.User
-import il.ac.hit.android_movies_info_app.repositories.AuthRepository
+import il.ac.hit.android_movies_info_app.data.repositories.AuthRepository
 import il.ac.hit.android_movies_info_app.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import il.ac.hit.android_movies_info_app.util.safeCall
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AuthRepositoryFirebase : AuthRepository {
+@Singleton
+class AuthRepositoryFirebase @Inject constructor(
+    private val firebaseAuth: FirebaseAuth,
+    private val firestore: FirebaseFirestore
+) : AuthRepository {
 
-    private val firebaseAuth = FirebaseAuth.getInstance()
-    private val userRef = FirebaseFirestore.getInstance().collection("user")
+    private val userRef = firestore.collection("user")
 
     override suspend fun currentUser(): Resource<User> {
         return withContext(Dispatchers.IO) {
@@ -28,7 +33,7 @@ class AuthRepositoryFirebase : AuthRepository {
     override suspend fun login(email: String, password: String): Resource<User> {
         return withContext(Dispatchers.IO) {
             safeCall {
-                val result  = firebaseAuth.signInWithEmailAndPassword(email,password).await()
+                val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
                 val user = userRef.document(result.user?.uid!!).get().await().toObject(User::class.java)!!
                 Resource.success(user)
             }
@@ -40,19 +45,16 @@ class AuthRepositoryFirebase : AuthRepository {
         userEmail: String,
         userPhone: String,
         userLoginPass: String
-    ) : Resource<User> {
+    ): Resource<User> {
         return withContext(Dispatchers.IO) {
             safeCall {
-                val registrationResult  = firebaseAuth.createUserWithEmailAndPassword(userEmail,userLoginPass).await()
+                val registrationResult = firebaseAuth.createUserWithEmailAndPassword(userEmail, userLoginPass).await()
                 val userId = registrationResult.user?.uid!!
-                val newUser = User(userName,userEmail,userPhone)
+                val newUser = User(userName, userEmail, userPhone)
                 userRef.document(userId).set(newUser).await()
                 Resource.success(newUser)
             }
-
         }
-
-
     }
 
     override fun logout() {
