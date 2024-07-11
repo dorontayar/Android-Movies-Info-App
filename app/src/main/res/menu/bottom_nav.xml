@@ -7,10 +7,10 @@
         android:icon="@drawable/film"/>
     <item
         android:title="Search"
-        android:id="@+id/profile_nav"
+        android:id="@+id/search_nav"
         android:icon="@drawable/search"/>
     <item
         android:title="Profile"
-        android:id="@+id/search_nav"
+        android:id="@+id/profile_nav"
         android:icon="@drawable/person_fill"/>
 </menu>
