@@ -1,5 +1,6 @@
 package il.ac.hit.android_movies_info_app.ui.register.viewmodel
 
+import android.net.Uri
 import android.util.Patterns
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -9,7 +10,6 @@ import il.ac.hit.android_movies_info_app.utils.Resource
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
     private val repository: AuthRepository
@@ -18,7 +18,7 @@ class RegisterViewModel @Inject constructor(
     private val _userRegistrationStatus = MutableLiveData<Resource<User>>()
     val userRegistrationStatus: LiveData<Resource<User>> = _userRegistrationStatus
 
-    fun createUser(userName: String, userEmail: String, userPhone: String, userPass: String) {
+    fun createUser(userName: String, userEmail: String, userPhone: String, userPass: String, profilePictureUri: Uri?) {
         val error = when {
             userEmail.isEmpty() || userName.isEmpty() || userPass.isEmpty() || userPhone.isEmpty() -> "Empty Strings"
             !Patterns.EMAIL_ADDRESS.matcher(userEmail).matches() -> "Not a valid email"
@@ -30,7 +30,7 @@ class RegisterViewModel @Inject constructor(
         }
         _userRegistrationStatus.value = Resource.loading()
         viewModelScope.launch {
-            val registrationResult = repository.createUser(userName, userEmail, userPhone, userPass)
+            val registrationResult = repository.createUser(userName, userEmail, userPhone, userPass, profilePictureUri)
             _userRegistrationStatus.postValue(registrationResult)
         }
     }

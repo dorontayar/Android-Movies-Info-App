@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/profile_nav"
-        android:name="il.ac.hit.android_movies_info_app.ui.profile.Profile"
+        android:name="il.ac.hit.android_movies_info_app.ui.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

@@ -3,6 +3,7 @@ package il.ac.hit.android_movies_info_app.di
 import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -27,9 +28,10 @@ object AppModule {
     @Singleton
     fun provideAuthRepository(
         firebaseAuth: FirebaseAuth,
-        firestore: FirebaseFirestore
+        firestore: FirebaseFirestore,
+        storage: FirebaseStorage
     ): AuthRepository {
-        return AuthRepositoryFirebase(firebaseAuth, firestore)
+        return AuthRepositoryFirebase(firebaseAuth, firestore,storage)
     }
 
     @Provides
@@ -42,6 +44,11 @@ object AppModule {
     @Singleton
     fun provideFirebaseFirestore(): FirebaseFirestore {
         return FirebaseFirestore.getInstance()
+    }
+    @Provides
+    @Singleton
+    fun provideFirebaseStorage(): FirebaseStorage {
+        return FirebaseStorage.getInstance()
     }
 
     @Provides

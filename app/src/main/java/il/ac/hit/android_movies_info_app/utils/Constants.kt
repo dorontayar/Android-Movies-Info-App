@@ -18,5 +18,7 @@ class Constants {
         const val IMAGE_TYPE_ORIGINAL = "https://image.tmdb.org/t/p/original/"
         const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/"
 
+        const val DEFAULT_PROFILE_IMAGE_URL = "drawable/ic_profile_placeholder"
+
     }
 }

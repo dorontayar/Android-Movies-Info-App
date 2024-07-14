@@ -72,6 +72,7 @@ dependencies {
     //Hilt
     implementation (libs.hilt.android)
     implementation(libs.androidx.fragment)
+    implementation(libs.firebase.storage.ktx)
     //Deprecated
     //implementation (libs.androidx.hilt.lifecycle.viewmodel)
     kapt (libs.hilt.android.compiler)
