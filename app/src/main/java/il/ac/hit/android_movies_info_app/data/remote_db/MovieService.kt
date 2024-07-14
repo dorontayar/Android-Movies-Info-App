@@ -30,4 +30,6 @@ interface MovieService {
     suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String = API_KEY
     ): Response<MovieResponse>
+
+
 }

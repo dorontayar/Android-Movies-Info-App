@@ -49,8 +49,7 @@ class MainScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val navView: BottomNavigationView = binding.navView
-        val navHostFragment =
-            childFragmentManager.findFragmentById(R.id.nav_host_fragment_main_screen) as NavHostFragment
+        val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment_main_screen) as NavHostFragment
         val navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(navController.graph)
