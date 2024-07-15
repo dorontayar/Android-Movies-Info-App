@@ -78,7 +78,7 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
         val navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.explore_nav, R.id.search_nav, R.id.profile_nav),
+            setOf(R.id.explore_nav, R.id.search_nav, R.id.profile_nav,R.id.movieDetailFragment),
             drawerLayout
         )
         setupActionBarWithNavController(requireActivity() as AppCompatActivity, navController, appBarConfiguration)
