@@ -56,7 +56,6 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
 
         val toolbar: Toolbar = binding.appBarMain.toolbar
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
-        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true);
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         drawerToggle = ActionBarDrawerToggle(
@@ -73,34 +72,19 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
         val navigationView: NavigationView = binding.navSideView
         navigationView.setNavigationItemSelectedListener(this)
 
-
         val navView: BottomNavigationView = binding.appBarMain.contentMain.navView
 
         val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment_main_screen) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.explore_nav, R.id.search_nav, R.id.profile_nav),
+            drawerLayout
+        )
         setupActionBarWithNavController(requireActivity() as AppCompatActivity, navController, appBarConfiguration)
 
         navView.setupWithNavController(navController)
 
-
-       /* requireActivity().addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.main_menu, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.itemId) {
-                    R.id.action_sign_out -> {
-                        viewModel.signOut()
-                        findNavController().navigate(R.id.action_mainScreenFragment_to_loginFragment)
-                        true
-                    }
-                    else -> false
-                }
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)*/
 
         handleOnBackPressed()
     }

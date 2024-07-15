@@ -10,16 +10,17 @@
         android:id="@+id/nav_host_fragment_main_screen"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="0dp"
+        android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/main_navigation" />
+        app:navGraph="@navigation/main_navigation"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_layout"/>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/bottom_nav_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomAppBar"
@@ -28,7 +29,8 @@
             android:layout_gravity="bottom"
             android:background="@color/white"
             app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="50dp">
+            app:fabCradleRoundedCornerRadius="50dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/nav_view"
@@ -36,10 +38,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 app:labelVisibilityMode="labeled"
-                app:menu="@menu/bottom_nav"/>
+                app:menu="@menu/bottom_nav"
+                app:layout_insetEdge="bottom" />
 
         </com.google.android.material.bottomappbar.BottomAppBar>
-
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
