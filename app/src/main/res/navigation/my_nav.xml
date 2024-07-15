@@ -27,15 +27,7 @@
             android:id="@+id/action_mainScreenFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/my_nav.xml" />
-        <action
-            android:id="@+id/action_mainScreenFragment_to_explore"
-            app:destination="@id/explore" />
-        <action
-            android:id="@+id/action_mainScreenFragment_to_search"
-            app:destination="@id/search" />
-        <action
-            android:id="@+id/action_mainScreenFragment_to_profile"
-            app:destination="@id/profile" />
+
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -47,19 +39,5 @@
             app:destination="@id/mainScreenFragment"
             app:popUpTo="@id/my_nav.xml" />
     </fragment>
-    <fragment
-        android:id="@+id/explore"
-        android:name="il.ac.hit.android_movies_info_app.ui.explore.ExploreFragment"
-        android:label="fragment_explore"
-        tools:layout="@layout/fragment_explore" />
-    <fragment
-        android:id="@+id/profile"
-        android:name="il.ac.hit.android_movies_info_app.ui.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
-    <fragment
-        android:id="@+id/search"
-        android:name="il.ac.hit.android_movies_info_app.ui.search.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+
 </navigation>
