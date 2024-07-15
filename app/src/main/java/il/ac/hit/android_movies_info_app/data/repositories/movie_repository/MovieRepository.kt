@@ -23,5 +23,6 @@ class MovieRepository @Inject constructor(
 
     fun getMovie(id: Int) = performFetching { remoteDataSource.getMovieDetails(id) }
 
+    fun getSearchedMovies(query : String) = performFetching { remoteDataSource.searchMovie(query) }
 
 }
