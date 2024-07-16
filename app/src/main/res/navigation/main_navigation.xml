@@ -9,15 +9,32 @@
         android:id="@+id/explore_nav"
         android:name="il.ac.hit.android_movies_info_app.ui.explore.ExploreFragment"
         android:label="Explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action
+            android:id="@+id/action_explore_nav_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:popUpTo="@id/explore_nav"
+            app:popUpToInclusive="true"/>
+    </fragment>
     <fragment
         android:id="@+id/search_nav"
         android:name="il.ac.hit.android_movies_info_app.ui.search.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_search_nav_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:popUpTo="@id/search_nav"
+            app:popUpToInclusive="true"/>
+    </fragment>
     <fragment
         android:id="@+id/profile_nav"
         android:name="il.ac.hit.android_movies_info_app.ui.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="il.ac.hit.android_movies_info_app.ui.movie_detail.MovieDetailFragment"
+        android:label="fragment_movie_detail"
+        tools:layout="@layout/fragment_movie_detail" />
 </navigation>

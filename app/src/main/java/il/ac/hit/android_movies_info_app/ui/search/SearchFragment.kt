@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
@@ -71,5 +73,8 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
 
     override fun onMovieClick(movieId: Int) {
         Toast.makeText(requireContext(), "Movie Clicked", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.action_search_nav_to_movieDetailFragment,
+            bundleOf("id" to movieId)
+        )
     }
 }
