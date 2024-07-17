@@ -19,6 +19,13 @@ interface MovieService {
         @Query("api_key") apiKey: String = API_KEY
     ): Response<MovieResponse>
 
+    @GET("search/movie")
+    suspend fun searchMovieScrolling(
+        @Query("query") query: String,
+        @Query("page") page:Int,
+        @Query("api_key") apiKey: String = API_KEY
+    ): Response<MovieResponse>
+
     // Get details of a movie by its ID with videos and images
     @GET("movie/{id}")
     suspend fun getMovieDetails(

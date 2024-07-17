@@ -1,5 +1,7 @@
 package il.ac.hit.android_movies_info_app.ui.search.viewmodel
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,14 +31,27 @@ class SearchAdapter(private val listener: MoviesItemListener) :
         fun bind(item: Movie) {
             this.movie = item
             itemBinding.title.text = item.title
-            itemBinding.description.text = item.overview
+            itemBinding.description.text = shortenText(item.overview, 150)
             // can change to other sizes, check Constants.kt
             val imagePath: String = IMAGE_TYPE_W185 + item.posterPath
-            Glide.with(itemBinding.root).load(imagePath).into(itemBinding.image)
+            Glide.with(itemBinding.root).load(imagePath).placeholder(ColorDrawable(Color.BLACK)).into(itemBinding.image)
         }
 
         override fun onClick(v: View?) {
             listener.onMovieClick(movie.id)
+        }
+
+
+        private fun shortenText(text: String, maxLength: Int): String {
+            if (text.length <= maxLength) {
+                return text
+            } else {
+                // Trim the text to the specified maxLength
+                val trimmedText = text.substring(0, maxLength)
+
+                // Append "..." to indicate the text has been shortened
+                return "$trimmedText..."
+            }
         }
     }
 
@@ -45,6 +60,13 @@ class SearchAdapter(private val listener: MoviesItemListener) :
         this.movies.addAll(movies)
         notifyDataSetChanged()
     }
+
+    fun generateMoreMovies(newMovies: Collection<Movie>) {
+        val currentSize = itemCount
+        this.movies.addAll(newMovies)
+        notifyItemRangeInserted(currentSize, newMovies.size)
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val binding = ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -61,4 +83,6 @@ class SearchAdapter(private val listener: MoviesItemListener) :
     interface MoviesItemListener {
         fun onMovieClick(movieId: Int)
     }
+
+
 }

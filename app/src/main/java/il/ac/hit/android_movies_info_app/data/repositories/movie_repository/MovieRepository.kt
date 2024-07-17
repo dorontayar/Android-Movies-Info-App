@@ -24,25 +24,19 @@ class MovieRepository @Inject constructor(
     // Movies API related repo functions
     fun getTopMovies() = performFetchingAndSaving(
         { localDataSourceTopRated.getTopRatedMovies() },
-        {
-            val response = remoteDataSource.getTopRatedMovies()
-            Log.d("MovieRepository", "Top Rated Movies: ${response.status.data}")
-            response
-        },
+        { remoteDataSource.getTopRatedMovies() },
         { localDataSourceTopRated.insertMovies(it.results.sortedByDescending { movie -> movie.voteAverage }) }
     )
 
     fun getUpcomingMovies() = performFetchingAndSaving(
         { localDataSourceUpcoming.getUpcomingMovies() },
-        {
-            val response = remoteDataSource.getUpcomingMovies()
-            Log.d("MovieRepository", "Upcoming Movies: ${response.status.data}")
-            response
-        },
+        { remoteDataSource.getUpcomingMovies() },
         { localDataSourceUpcoming.insertMovies(it.results.sortedByDescending { movie -> movie.releaseDate }) }
     )
     fun getMovie(id: Int) = performFetching { remoteDataSource.getMovieDetails(id) }
     fun getSearchedMovies(query : String) = performFetching { remoteDataSource.searchMovie(query) }
+    fun getSearchedMoviesScrolling(query : String,page:Int) = performFetching { remoteDataSource.searchMovieScrolling(query,page) }
+
 
     // Room related repo functions
     fun getAllFavoriteMovies() = localDataSourceFavoriteMovie?.getAllFavoriteMovies()
