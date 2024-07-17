@@ -30,6 +30,7 @@ class MovieDetailFragment: Fragment() {
 
     private val viewModel: MovieDetailViewModel by viewModels()
 
+    private var movieDetailResult: MovieDetailsResponse? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +42,7 @@ class MovieDetailFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var movieDetailResult: MovieDetailsResponse? = null
+
 
         arguments?.getInt("id")?.let{
             viewModel.setId(it)
@@ -54,6 +55,8 @@ class MovieDetailFragment: Fragment() {
                     binding.progressBar.isVisible = false
                     updateMovie(it.status.data!!)
                     movieDetailResult = it.status.data
+                    setButtons()
+                    updateFavoriteButtons()
                     Log.w("MovieDetailsLog",movieDetailResult.toString())
                 }
                 is Error -> {
@@ -66,6 +69,9 @@ class MovieDetailFragment: Fragment() {
         }
 
 
+
+    }
+    private fun setButtons(){
         binding.btnAddFavorite.setOnClickListener {
             movieDetailResult?.let { movie ->
                 viewModel.addFavorite(movie.toFavoriteMovie())
@@ -78,8 +84,6 @@ class MovieDetailFragment: Fragment() {
             viewModel.removeFavorite()
             Toast.makeText(requireContext(), "Removed from favorites", Toast.LENGTH_SHORT).show()
         }
-
-        updateFavoriteButtons()
     }
 
     private fun updateMovie(movie: MovieDetailsResponse){
