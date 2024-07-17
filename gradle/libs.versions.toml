@@ -1,5 +1,6 @@
 [versions]
 activityKtx = "1.9.0"
+debugDb = "1.0.6"
 gson = "2.10.1"
 hiltCompiler = "1.2.0"
 hiltAndroid = "2.51"
@@ -33,8 +34,11 @@ roomKtx = "2.6.1"
 roomRuntime = "2.6.1"
 fragment = "1.8.0"
 firebaseStorageKtx = "21.0.0"
+legacySupportV4 = "1.0.0"
+stetho = "1.5.1"
 
 [libraries]
+debug-db = { module = "com.amitshekhar.android:debug-db", version.ref = "debugDb" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
@@ -73,6 +77,8 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
 androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
+androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+stetho = { module = "com.facebook.stetho:stetho", version.ref = "stetho" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

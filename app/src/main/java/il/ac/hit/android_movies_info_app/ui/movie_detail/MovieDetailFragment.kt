@@ -1,6 +1,7 @@
 package il.ac.hit.android_movies_info_app.ui.movie_detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
 import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.MovieDetailsResponse
 import il.ac.hit.android_movies_info_app.databinding.FragmentMovieDetailBinding
 import il.ac.hit.android_movies_info_app.ui.movie_detail.viewmodel.MovieDetailViewModel
@@ -20,6 +22,7 @@ import il.ac.hit.android_movies_info_app.utils.Error
 import il.ac.hit.android_movies_info_app.utils.Loading
 import il.ac.hit.android_movies_info_app.utils.Success
 import il.ac.hit.android_movies_info_app.utils.autoCleared
+import il.ac.hit.android_movies_info_app.utils.toFavoriteMovie
 
 @AndroidEntryPoint
 class MovieDetailFragment: Fragment() {
@@ -38,9 +41,11 @@ class MovieDetailFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var movieDetailResult: MovieDetailsResponse? = null
 
-        val parentActivity = requireActivity() as AppCompatActivity
-        parentActivity.supportActionBar?.title = "Movie Details"
+        arguments?.getInt("id")?.let{
+            viewModel.setId(it)
+        }
 
         viewModel.movie.observe(viewLifecycleOwner){
             when(it.status) {
@@ -48,6 +53,8 @@ class MovieDetailFragment: Fragment() {
                 is Success -> {
                     binding.progressBar.isVisible = false
                     updateMovie(it.status.data!!)
+                    movieDetailResult = it.status.data
+                    Log.w("MovieDetailsLog",movieDetailResult.toString())
                 }
                 is Error -> {
                     binding.progressBar.isVisible = false
@@ -58,9 +65,21 @@ class MovieDetailFragment: Fragment() {
 
         }
 
-        arguments?.getInt("id")?.let{
-            viewModel.setId(it)
+
+        binding.btnAddFavorite.setOnClickListener {
+            movieDetailResult?.let { movie ->
+                viewModel.addFavorite(movie.toFavoriteMovie())
+                Log.d("MovieDetailsLog", "Added to favorites: ${movie.toFavoriteMovie()}")
+                Toast.makeText(requireContext(), "Added to favorites", Toast.LENGTH_SHORT).show()
+            }
         }
+
+        binding.btnRemoveFavorite.setOnClickListener {
+            viewModel.removeFavorite()
+            Toast.makeText(requireContext(), "Removed from favorites", Toast.LENGTH_SHORT).show()
+        }
+
+        updateFavoriteButtons()
     }
 
     private fun updateMovie(movie: MovieDetailsResponse){
@@ -71,5 +90,15 @@ class MovieDetailFragment: Fragment() {
         binding.movieRating.text = movie.voteAverage.toString()
         binding.movieVote.text = movie.voteCount.toString()
 
+    }
+
+    private fun updateFavoriteButtons() {
+        viewModel.findFavorite().observe(viewLifecycleOwner) { favoriteMovie ->
+            Log.d("MovieDetailsLog", "Favorite: $favoriteMovie")
+            val isFavorite = favoriteMovie != null
+            binding.btnAddFavorite.isVisible = !isFavorite
+            binding.btnRemoveFavorite.isVisible = isFavorite
+            Log.d("MovieDetailsLog", "Is favorite: $isFavorite")
+        }
     }
 }

@@ -60,7 +60,6 @@ android {
 }
 
 dependencies {
-
     //Retrofit
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
@@ -73,6 +72,7 @@ dependencies {
     implementation (libs.hilt.android)
     implementation(libs.androidx.fragment)
     implementation(libs.firebase.storage.ktx)
+    implementation(libs.androidx.legacy.support.v4)
     //Deprecated
     //implementation (libs.androidx.hilt.lifecycle.viewmodel)
     kapt (libs.hilt.android.compiler)

@@ -35,6 +35,17 @@
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="il.ac.hit.android_movies_info_app.ui.movie_detail.MovieDetailFragment"
-        android:label="fragment_movie_detail"
+        android:label="Movie Details"
         tools:layout="@layout/fragment_movie_detail" />
+    <fragment
+        android:id="@+id/favorites_nav"
+        android:name="il.ac.hit.android_movies_info_app.ui.favorites.FavoritesFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorites" >
+        <action
+            android:id="@+id/action_favorites_nav_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment"
+            app:popUpTo="@id/favorites_nav"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>

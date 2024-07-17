@@ -106,14 +106,25 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btn_favorite"
+            android:id="@+id/btn_add_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@string/favorite"
+            android:text="@string/add_to_favorites"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        <Button
+            android:id="@+id/btn_remove_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/remove_from_favorites"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            android:visibility="gone"
+            />
 
         <ProgressBar
             android:id="@+id/progress_bar"
