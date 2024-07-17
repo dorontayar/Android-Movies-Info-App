@@ -62,7 +62,6 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
     }
 
     override fun onMovieClick(movieId: Int) {
-        Toast.makeText(requireContext(),"Movie Clicked", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_favorites_nav_to_movieDetailFragment,
             bundleOf("id" to movieId)
         )
