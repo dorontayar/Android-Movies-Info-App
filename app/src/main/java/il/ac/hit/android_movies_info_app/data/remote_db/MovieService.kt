@@ -2,6 +2,8 @@ package il.ac.hit.android_movies_info_app.data.remote_db
 
 import il.ac.hit.android_movies_info_app.data.model.movie_search.MovieResponse
 import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.MovieDetailsResponse
+import il.ac.hit.android_movies_info_app.data.model.top_rated_movies.TopRatedMovieResponse
+import il.ac.hit.android_movies_info_app.data.model.upcoming_movies.UpcomingMovieResponse
 import il.ac.hit.android_movies_info_app.utils.Constants.Companion.API_KEY
 import retrofit2.Response
 import retrofit2.http.GET
@@ -29,7 +31,13 @@ interface MovieService {
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String = API_KEY
-    ): Response<MovieResponse>
+    ): Response<TopRatedMovieResponse>
+
+    // Get upcoming movies
+    @GET("movie/upcoming")
+    suspend fun getUpcomingMovies(
+        @Query("api_key") apiKey: String = API_KEY
+    ): Response<UpcomingMovieResponse>
 
 
 }

@@ -7,8 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import il.ac.hit.android_movies_info_app.data.model.movie_search.Movie
 import il.ac.hit.android_movies_info_app.databinding.ItemMovieBinding
-import il.ac.hit.android_movies_info_app.ui.explore.viewmodel.ExploreAdapter
-import il.ac.hit.android_movies_info_app.ui.explore.viewmodel.ExploreAdapter.MovieViewHolder
 import il.ac.hit.android_movies_info_app.utils.Constants.Companion.IMAGE_TYPE_W185
 
 class SearchAdapter(private val listener: MoviesItemListener) :

@@ -16,4 +16,6 @@ class MovieRemoteDataSource @Inject constructor(
     suspend fun searchMovie(query: String) = getResult { movieService.searchMovie(query) }
     suspend fun getMovieDetails(id: Int) = getResult { movieService.getMovieDetails(id) }
     suspend fun getTopRatedMovies() = getResult { movieService.getTopRatedMovies() }
+    suspend fun getUpcomingMovies() = getResult { movieService.getUpcomingMovies() }
+
 }

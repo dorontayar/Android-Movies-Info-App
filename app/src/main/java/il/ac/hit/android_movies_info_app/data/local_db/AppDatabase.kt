@@ -15,9 +15,10 @@ import il.ac.hit.android_movies_info_app.data.model.favorite_movie.SpokenLanguag
 import il.ac.hit.android_movies_info_app.data.model.favorite_movie.StringListConverter
 import il.ac.hit.android_movies_info_app.data.model.favorite_movie.VideosConverter
 import il.ac.hit.android_movies_info_app.data.model.movie_search.GenreIdsConverter
-import il.ac.hit.android_movies_info_app.data.model.movie_search.Movie
+import il.ac.hit.android_movies_info_app.data.model.top_rated_movies.TopRatedMovie
+import il.ac.hit.android_movies_info_app.data.model.upcoming_movies.UpcomingMovie
 
-@Database(entities = [Movie::class, FavoriteMovie::class], version=1, exportSchema = false)
+@Database(entities = [TopRatedMovie::class, FavoriteMovie::class, UpcomingMovie::class], version=3, exportSchema = false)
 @TypeConverters(GenreIdsConverter::class,
     GenresConverter::class,
     BelongsToCollectionConverter::class,
@@ -28,8 +29,10 @@ import il.ac.hit.android_movies_info_app.data.model.movie_search.Movie
     ImagesConverter::class,
     StringListConverter::class)
 abstract class AppDatabase:RoomDatabase() {
-    abstract fun movieDao():MovieDao
+    abstract fun topRatedMovieDao(): TopRatedMovieDao
     abstract fun favoriteMovieDao(): FavoriteMovieDao
+    abstract fun upcomingMovieDao(): UpcomingMovieDao
+
 
     companion object {
 
