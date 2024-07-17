@@ -14,7 +14,8 @@ import dagger.hilt.components.SingletonComponent
 import il.ac.hit.android_movies_info_app.data.YouTubeApiService
 import il.ac.hit.android_movies_info_app.data.local_db.AppDatabase
 import il.ac.hit.android_movies_info_app.data.local_db.FavoriteMovieDao
-import il.ac.hit.android_movies_info_app.data.local_db.MovieDao
+import il.ac.hit.android_movies_info_app.data.local_db.TopRatedMovieDao
+import il.ac.hit.android_movies_info_app.data.local_db.UpcomingMovieDao
 import il.ac.hit.android_movies_info_app.data.remote_db.MovieService
 import il.ac.hit.android_movies_info_app.data.repositories.auth_repository.AuthRepository
 import il.ac.hit.android_movies_info_app.data.repositories.auth_repository.firebase_implementation.AuthRepositoryFirebase
@@ -80,8 +81,13 @@ object AppModule {
     }
     @Provides
     @Singleton
-    fun providesMovieDao(database: AppDatabase): MovieDao {
-        return database.movieDao()
+    fun providesTopRatedMovieDao(database: AppDatabase): TopRatedMovieDao {
+        return database.topRatedMovieDao()
+    }
+    @Provides
+    @Singleton
+    fun providesUpcomingMovieDao(database: AppDatabase): UpcomingMovieDao {
+        return database.upcomingMovieDao()
     }
     @Provides
     @Singleton

@@ -10,4 +10,5 @@ class ExploreViewModel @Inject constructor(
     movieRepository: MovieRepository
 ):ViewModel(){
     val topMovies = movieRepository.getTopMovies()
+    val upcomingMovies = movieRepository.getUpcomingMovies()
 }

@@ -1,12 +1,13 @@
-package il.ac.hit.android_movies_info_app.data.model.movie_search
+package il.ac.hit.android_movies_info_app.data.model.top_rated_movies
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "top_rated_movies")
 @TypeConverters(GenreIdsConverter::class)
-data class Movie(
+data class TopRatedMovie(
     val adult: Boolean,
     @SerializedName("backdrop_path")
     val backdropPath: String?,
