@@ -16,14 +16,21 @@ class SearchViewModel @Inject constructor(
     movieRepository: MovieRepository
 ):ViewModel() {
     private val _query = MutableLiveData<String>()
+    private val _page = MutableLiveData<Int>()
 
     //God bless this man, Transformations has become deprecated.
     //https://stackoverflow.com/questions/75465435/unresolved-reference-transformations-after-upgrading-lifecycle-dependency/75465436#75465436
     val movies = _query.switchMap(){
         movieRepository.getSearchedMovies(it)
     }
+    val moreMovies = _page.switchMap(){
+        _query.value?.let { query -> movieRepository.getSearchedMoviesScrolling(query,it) }
+    }
 
     fun setQuery(query : String){
         _query.value = query
+    }
+    fun setPage(page:Int){
+        _page.value = page
     }
 }
