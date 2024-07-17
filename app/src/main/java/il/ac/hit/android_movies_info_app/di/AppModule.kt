@@ -12,6 +12,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import il.ac.hit.android_movies_info_app.data.local_db.AppDatabase
+import il.ac.hit.android_movies_info_app.data.local_db.FavoriteMovieDao
 import il.ac.hit.android_movies_info_app.data.local_db.MovieDao
 import il.ac.hit.android_movies_info_app.data.remote_db.MovieService
 import il.ac.hit.android_movies_info_app.data.repositories.auth_repository.AuthRepository
@@ -78,6 +79,11 @@ object AppModule {
     @Singleton
     fun providesMovieDao(database: AppDatabase): MovieDao {
         return database.movieDao()
+    }
+    @Provides
+    @Singleton
+    fun providesFavoriteMovieDao(database: AppDatabase): FavoriteMovieDao {
+        return database.favoriteMovieDao()
     }
 
 }

@@ -5,13 +5,31 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import il.ac.hit.android_movies_info_app.data.model.favorite_movie.BelongsToCollectionConverter
+import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
+import il.ac.hit.android_movies_info_app.data.model.favorite_movie.GenresConverter
+import il.ac.hit.android_movies_info_app.data.model.favorite_movie.ImagesConverter
+import il.ac.hit.android_movies_info_app.data.model.favorite_movie.ProductionCompanyConverter
+import il.ac.hit.android_movies_info_app.data.model.favorite_movie.ProductionCountryConverter
+import il.ac.hit.android_movies_info_app.data.model.favorite_movie.SpokenLanguageConverter
+import il.ac.hit.android_movies_info_app.data.model.favorite_movie.StringListConverter
+import il.ac.hit.android_movies_info_app.data.model.favorite_movie.VideosConverter
 import il.ac.hit.android_movies_info_app.data.model.movie_search.GenreIdsConverter
 import il.ac.hit.android_movies_info_app.data.model.movie_search.Movie
 
-@Database(entities = [Movie::class], version=1, exportSchema = false)
-@TypeConverters(GenreIdsConverter::class)
+@Database(entities = [Movie::class, FavoriteMovie::class], version=1, exportSchema = false)
+@TypeConverters(GenreIdsConverter::class,
+    GenresConverter::class,
+    BelongsToCollectionConverter::class,
+    ProductionCompanyConverter::class,
+    ProductionCountryConverter::class,
+    SpokenLanguageConverter::class,
+    VideosConverter::class,
+    ImagesConverter::class,
+    StringListConverter::class)
 abstract class AppDatabase:RoomDatabase() {
     abstract fun movieDao():MovieDao
+    abstract fun favoriteMovieDao(): FavoriteMovieDao
 
     companion object {
 
@@ -25,7 +43,8 @@ abstract class AppDatabase:RoomDatabase() {
                     AppDatabase::class.java,
                     "movies_db"
                 )
-                    .fallbackToDestructiveMigration().build().also {
+                    .fallbackToDestructiveMigration()
+                    .build().also {
                         instance = it
                     }
             }

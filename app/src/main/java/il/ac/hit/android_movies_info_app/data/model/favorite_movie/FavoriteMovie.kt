@@ -1,17 +1,19 @@
-package il.ac.hit.android_movies_info_app.data.model.movie_search_detailed
+package il.ac.hit.android_movies_info_app.data.model.favorite_movie
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
-import il.ac.hit.android_movies_info_app.data.model.favorite_movie.BelongsToCollectionConverter
-import il.ac.hit.android_movies_info_app.data.model.favorite_movie.GenresConverter
-import il.ac.hit.android_movies_info_app.data.model.favorite_movie.ImagesConverter
-import il.ac.hit.android_movies_info_app.data.model.favorite_movie.ProductionCompanyConverter
-import il.ac.hit.android_movies_info_app.data.model.favorite_movie.ProductionCountryConverter
-import il.ac.hit.android_movies_info_app.data.model.favorite_movie.SpokenLanguageConverter
-import il.ac.hit.android_movies_info_app.data.model.favorite_movie.StringListConverter
-import il.ac.hit.android_movies_info_app.data.model.favorite_movie.VideosConverter
 import il.ac.hit.android_movies_info_app.data.model.movie_search.GenreIdsConverter
+import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.BelongsToCollection
+import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.Genre
+import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.Images
+import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.ProductionCompany
+import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.ProductionCountry
+import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.SpokenLanguage
+import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.Videos
 
+@Entity(tableName = "favorite_movies")
 @TypeConverters(
     GenresConverter::class,
     BelongsToCollectionConverter::class,
@@ -22,13 +24,14 @@ import il.ac.hit.android_movies_info_app.data.model.movie_search.GenreIdsConvert
     ImagesConverter::class,
     StringListConverter::class
 )
-data class MovieDetailsResponse(
+data class FavoriteMovie(
     val adult: Boolean,
     @SerializedName("backdrop_path") val backdropPath: String?,
     @SerializedName("belongs_to_collection") val belongsToCollection: BelongsToCollection?,
     val budget: Int,
     val genres: List<Genre>,
     val homepage: String?,
+    @PrimaryKey
     val id: Int,
     @SerializedName("imdb_id") val imdbId: String?,
     @SerializedName("origin_country") val originCountries: List<String>,
