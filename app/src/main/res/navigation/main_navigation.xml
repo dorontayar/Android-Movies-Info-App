@@ -13,8 +13,7 @@
         <action
             android:id="@+id/action_explore_nav_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment"
-            app:popUpTo="@id/explore_nav"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/explore_nav" />
     </fragment>
     <fragment
         android:id="@+id/search_nav"
@@ -24,8 +23,7 @@
         <action
             android:id="@+id/action_search_nav_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment"
-            app:popUpTo="@id/search_nav"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/search_nav" />
     </fragment>
     <fragment
         android:id="@+id/profile_nav"
@@ -45,7 +43,6 @@
         <action
             android:id="@+id/action_favorites_nav_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment"
-            app:popUpTo="@id/favorites_nav"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/favorites_nav" />
     </fragment>
 </navigation>

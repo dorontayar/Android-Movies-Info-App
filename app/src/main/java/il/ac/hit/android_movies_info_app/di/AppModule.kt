@@ -11,7 +11,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import il.ac.hit.android_movies_info_app.data.YouTubeApiService
 import il.ac.hit.android_movies_info_app.data.local_db.AppDatabase
 import il.ac.hit.android_movies_info_app.data.local_db.FavoriteMovieDao
 import il.ac.hit.android_movies_info_app.data.local_db.MovieDao
@@ -87,22 +86,6 @@ object AppModule {
     @Singleton
     fun providesFavoriteMovieDao(database: AppDatabase): FavoriteMovieDao {
         return database.favoriteMovieDao()
-    }
-
-    @Provides
-    @Singleton
-    @Named("Youtube")
-    fun provideYouTubeRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://www.googleapis.com/youtube/v3/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideYouTubeApiService(@Named("Youtube") retrofit: Retrofit): YouTubeApiService {
-        return retrofit.create(YouTubeApiService::class.java)
     }
 
 }

@@ -1,7 +1,6 @@
 package il.ac.hit.android_movies_info_app.utils
 
 import il.ac.hit.android_movies_info_app.BuildConfig.TMDB_API_KEY
-import il.ac.hit.android_movies_info_app.BuildConfig.YOUTUBE_API_KEY
 
 class Constants {
 
@@ -9,7 +8,6 @@ class Constants {
         private const val API_VERSION = "3"
         const val BASE_URL = "https://api.themoviedb.org/$API_VERSION/"
         const val API_KEY = TMDB_API_KEY
-        const val YT_API_KEY = YOUTUBE_API_KEY
 
         const val IMAGE_TYPE_W45 = "https://image.tmdb.org/t/p/w45/"
         const val IMAGE_TYPE_W92 = "https://image.tmdb.org/t/p/w92/"
