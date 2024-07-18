@@ -28,6 +28,8 @@
     <string name="favorites">Favorites</string>
     <string name="add_to_favorites">Add To Favorites</string>
     <string name="remove_from_favorites">Remove From Favorites</string>
+    <string name="release_date">Release date: %1$s</string>
+    <string name="no_trailer">No trailer found—here\'s Rick Astley!</string>
 
 
 </resources>
