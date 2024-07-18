@@ -6,22 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
-import il.ac.hit.android_movies_info_app.databinding.FragmentExploreBinding
 import il.ac.hit.android_movies_info_app.databinding.FragmentFavoritesBinding
-import il.ac.hit.android_movies_info_app.ui.explore.viewmodel.ExploreAdapter
 import il.ac.hit.android_movies_info_app.ui.favorites.viewmodel.FavoritesAdapter
 import il.ac.hit.android_movies_info_app.ui.favorites.viewmodel.FavoritesViewModel
-import il.ac.hit.android_movies_info_app.utils.Error
-import il.ac.hit.android_movies_info_app.utils.Loading
-import il.ac.hit.android_movies_info_app.utils.Success
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
 @AndroidEntryPoint
@@ -62,7 +54,6 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
     }
 
     override fun onMovieClick(movieId: Int) {
-        Toast.makeText(requireContext(),"Movie Clicked", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_favorites_nav_to_movieDetailFragment,
             bundleOf("id" to movieId)
         )

@@ -86,6 +86,7 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
         navView.setupWithNavController(navController)
 
 
+
         handleOnBackPressed()
     }
 
@@ -94,8 +95,9 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
             R.id.nav_home -> {
                 findNavController().navigate(R.id.mainScreenFragment)
             }
+            R.id.nav_settings -> {
 
-
+            }
 
             R.id.nav_logout -> {
                 Toast.makeText(requireContext(), "Logout!", Toast.LENGTH_SHORT).show()

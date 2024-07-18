@@ -1,12 +1,14 @@
-package il.ac.hit.android_movies_info_app.data.model.movie_search
+package il.ac.hit.android_movies_info_app.data.model.upcoming_movies
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.SerializedName
+import il.ac.hit.android_movies_info_app.data.model.movie_search.GenreIdsConverter
 
+@Entity(tableName = "upcoming_movies")
 @TypeConverters(GenreIdsConverter::class)
-data class Movie(
+data class UpcomingMovie(
     val adult: Boolean,
     @SerializedName("backdrop_path")
     val backdropPath: String?,
@@ -29,6 +31,7 @@ data class Movie(
     @SerializedName("vote_average")
     val voteAverage: Double,
     @SerializedName("vote_count")
-    val voteCount: Int,
-
+    val voteCount: Int
 )
+
+

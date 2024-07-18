@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -31,6 +33,7 @@ class MovieDetailFragment: Fragment() {
     private var binding: FragmentMovieDetailBinding by autoCleared()
     private val viewModel: MovieDetailViewModel by viewModels()
 
+    private var movieDetailResult: MovieDetailsResponse? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,7 +45,11 @@ class MovieDetailFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var movieDetailResult: MovieDetailsResponse? = null
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigateUp()
+            }
+        })
 
         lifecycle.addObserver(binding.youtubePlayerView)
 
@@ -57,7 +64,9 @@ class MovieDetailFragment: Fragment() {
                     binding.progressBar.isVisible = false
                     updateMovie(it.status.data!!)
                     movieDetailResult = it.status.data
-                    Log.w("MovieDetailsLog", it.status.data.title)
+                    setButtons()
+                    updateFavoriteButtons()
+
                 }
 
                 is Error -> {
@@ -67,6 +76,9 @@ class MovieDetailFragment: Fragment() {
             }
         }
 
+
+    }
+    private fun setButtons(){
         binding.btnAddFavorite.setOnClickListener {
             movieDetailResult?.let { movie ->
                 viewModel.addFavorite(movie.toFavoriteMovie())
@@ -79,8 +91,6 @@ class MovieDetailFragment: Fragment() {
             viewModel.removeFavorite()
             Toast.makeText(requireContext(), "Removed from favorites", Toast.LENGTH_SHORT).show()
         }
-
-        updateFavoriteButtons()
     }
 
     private fun updateMovie(movie: MovieDetailsResponse) {
@@ -112,3 +122,4 @@ class MovieDetailFragment: Fragment() {
         }
     }
 }
+

@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.databinding.FragmentSearchBinding
@@ -31,6 +32,7 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
 
     private lateinit var adapter: SearchAdapter
 
+    private var page = 1
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,18 +50,30 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
         binding.moviesRvSearch.adapter = adapter
 
         binding.searchButton.setOnClickListener{
-            viewModel.setQuery(binding.searchEditText.text.toString())
-            Log.d("Oh nyo", binding.searchEditText.text.toString())
+            //reset the page
+            val query = binding.searchEditText.text.toString()
+            page = 1
+            viewModel.setQuery(query)
+
         }
+
+        //If Rv reached bottom generate next page of query
+        binding.moviesRvSearch.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1)){
+                    viewModel.setPage(++page)
+
+                }
+            }
+        })
+
         viewModel.movies.observe(viewLifecycleOwner) {
             when(it.status) {
                 is Loading -> binding.progressBar.isVisible = true
                 is Success -> {
                     binding.progressBar.isVisible = false
-                    Log.d("query", binding.searchEditText.text.toString())
-                    Log.d("query", it.status.data?.results.toString())
-
-                    //Fix the !! call later. For some reason .isNullOrEmpty() refuses to cooperate
                     adapter.setMovies(ArrayList(it.status.data!!.results))
 
                 }
@@ -69,10 +83,26 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
                 }
             }
         }
+
+        viewModel.moreMovies.observe(viewLifecycleOwner) {
+            when(it.status) {
+                is Loading -> binding.progressBar.isVisible = true
+                is Success -> {
+                    binding.progressBar.isVisible = false
+                    //For the scroll rv when it reaches bottom
+                    adapter.generateMoreMovies(ArrayList(it.status.data!!.results))
+                }
+                is Error -> {
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(requireContext(),it.status.message, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+
     }
 
     override fun onMovieClick(movieId: Int) {
-        Toast.makeText(requireContext(), "Movie Clicked", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_search_nav_to_movieDetailFragment,
             bundleOf("id" to movieId)
         )
