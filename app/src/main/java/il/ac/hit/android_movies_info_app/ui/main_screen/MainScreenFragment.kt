@@ -15,8 +15,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
@@ -24,6 +26,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.room.InvalidationTracker
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,9 +40,8 @@ import il.ac.hit.android_movies_info_app.utils.autoCleared
 @AndroidEntryPoint
 class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedListener{
 
-    //private var binding: FragmentMainScreenBinding by autoCleared()
     private var binding: FragmentMainScreenDrawerBinding by autoCleared()
-    private val viewModel : MainScreenViewModel by viewModels()
+    private val viewModel : MainScreenViewModel by activityViewModels()
     private var drawerLayout: DrawerLayout? = null
     private var drawerToggle: ActionBarDrawerToggle? = null
 
@@ -53,6 +55,7 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         val toolbar: Toolbar = binding.appBarMain.toolbar
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
@@ -85,7 +88,10 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
 
         navView.setupWithNavController(navController)
 
-
+        viewModel.bottomNavigationVisibility.observe(viewLifecycleOwner)
+            { isVisible ->
+                setBottomNavigationVisibility(isVisible)
+            }
 
         handleOnBackPressed()
     }
@@ -124,5 +130,7 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
             })
     }
 
-
+    private fun setBottomNavigationVisibility(isVisible:Boolean){
+        binding.appBarMain.contentMain.bottomAppBar.isVisible = isVisible
+    }
 }

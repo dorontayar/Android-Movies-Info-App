@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -21,6 +23,7 @@ import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
 import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.MovieDetailsResponse
 import il.ac.hit.android_movies_info_app.databinding.FragmentMovieDetailBinding
+import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenViewModel
 import il.ac.hit.android_movies_info_app.ui.movie_detail.viewmodel.MovieDetailViewModel
 import il.ac.hit.android_movies_info_app.utils.Constants.Companion.IMAGE_TYPE_W185
 import il.ac.hit.android_movies_info_app.utils.Constants.Companion.IMAGE_TYPE_ORIGINAL
@@ -34,6 +37,7 @@ import il.ac.hit.android_movies_info_app.utils.toFavoriteMovie
 class MovieDetailFragment: Fragment() {
     private var binding: FragmentMovieDetailBinding by autoCleared()
     private val viewModel: MovieDetailViewModel by viewModels()
+    private val mainScreenViewModel: MainScreenViewModel by activityViewModels()
     private var currentVideoPosition: Float = 0f
     private var isPlaying: Boolean = false
     private var movieDetailResult: MovieDetailsResponse? = null
@@ -43,6 +47,7 @@ class MovieDetailFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        mainScreenViewModel.setBottomNavigationVisibility(false)
         binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -83,6 +88,8 @@ class MovieDetailFragment: Fragment() {
                 }
             }
         }
+
+        handleOnBackPressed()
     }
 
     override fun onSaveInstanceState(outState: Bundle) { // Save the playback position if currently playing
@@ -144,6 +151,17 @@ class MovieDetailFragment: Fragment() {
             binding.btnRemoveFavorite.isVisible = isFavorite
             Log.d("MovieDetailsLog", "Is favorite: $isFavorite")
         }
+    }
+    private fun handleOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    mainScreenViewModel.setBottomNavigationVisibility(true)
+                    isEnabled = false
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+            })
     }
 }
 
