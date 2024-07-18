@@ -73,6 +73,14 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
                 is Success -> {
                     binding.progressBar.isVisible = false
                     adapter.setMovies(ArrayList(it.status.data!!.results))
+                    Log.d("noResultsCount",adapter.itemCount.toString())
+                    if(adapter.itemCount != 0) {
+                        binding.noResults.isVisible = false
+                        binding.moviesRvSearch.isVisible = true
+                    } else {
+                        binding.moviesRvSearch.isVisible = false
+                        binding.noResults.isVisible = true
+                    }
                 }
                 is Error -> {
                     binding.progressBar.isVisible = false

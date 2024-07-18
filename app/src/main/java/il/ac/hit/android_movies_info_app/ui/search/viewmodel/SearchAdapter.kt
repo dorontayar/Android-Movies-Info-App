@@ -1,12 +1,12 @@
 package il.ac.hit.android_movies_info_app.ui.search.viewmodel
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import il.ac.hit.android_movies_info_app.R.drawable
 import il.ac.hit.android_movies_info_app.data.model.movie_search.Movie
 import il.ac.hit.android_movies_info_app.databinding.ItemMovieBinding
 import il.ac.hit.android_movies_info_app.utils.Constants.Companion.IMAGE_TYPE_W185
@@ -34,7 +34,7 @@ class SearchAdapter(private val listener: MoviesItemListener) :
             itemBinding.description.text = shortenText(item.overview, 150)
             // can change to other sizes, check Constants.kt
             val imagePath: String = IMAGE_TYPE_W185 + item.posterPath
-            Glide.with(itemBinding.root).load(imagePath).placeholder(ColorDrawable(Color.BLACK)).into(itemBinding.image)
+            Glide.with(itemBinding.root).load(imagePath).placeholder(drawable.movie_placeholder).into(itemBinding.image)
         }
 
         override fun onClick(v: View?) {
