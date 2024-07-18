@@ -91,7 +91,6 @@ class MovieDetailFragment: Fragment() {
         binding.movieRating.text = movie.voteAverage.toString()
         binding.movieVote.text = movie.voteCount.toString()
         var trailerKey = movie.videos.results.firstOrNull { it.type == "Trailer" }?.key
-        // Logging the trailer key
         if (trailerKey == null) {
             trailerKey = "dQw4w9WgXcQ"
         }
