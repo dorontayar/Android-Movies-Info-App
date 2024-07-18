@@ -15,5 +15,9 @@ interface AuthRepository {
         userLoginPass:String,
         profilePictureUri: Uri?
     ) : Resource<User>
+    suspend fun changeUserParams(
+        userName: String?,
+        profilePictureUri: Uri?
+    ): Resource<User>
     fun logout()
 }

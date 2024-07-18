@@ -75,6 +75,33 @@ class AuthRepositoryFirebase @Inject constructor(
         }
     }
 
+    override suspend fun changeUserParams(
+        userName: String?,
+        profilePictureUri: Uri?
+    ): Resource<User> {
+        return withContext(Dispatchers.IO) {
+            safeCall {
+                val userId = firebaseAuth.currentUser?.uid!!
+                val userDocument = userRef.document(userId).get().await()
+                val currentUser = userDocument.toObject(User::class.java)!!
+
+                val updatedUser = currentUser.copy(
+                    name = userName ?: currentUser.name,
+                    profilePictureUrl = if (profilePictureUri != null) {
+                        val profilePictureRef = storage.reference.child("profile_pictures/$userId.jpg")
+                        profilePictureRef.putFile(profilePictureUri).await()
+                        profilePictureRef.downloadUrl.await().toString()
+                    } else {
+                        currentUser.profilePictureUrl
+                    }
+                )
+
+                userRef.document(userId).set(updatedUser).await()
+                Resource.success(updatedUser)
+            }
+        }
+    }
+
     override fun logout() {
         firebaseAuth.signOut()
     }
