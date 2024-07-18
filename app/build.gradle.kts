@@ -18,6 +18,9 @@ val properties = Properties().apply {
 project.extensions.extraProperties["TMDB_API_KEY"] = properties.getProperty("TMDB_API_KEY")
 val tmdbApiKey: String = properties.getProperty("TMDB_API_KEY") ?: ""
 
+project.extensions.extraProperties["YOUTUBE_API_KEY"] = properties.getProperty("YOUTUBE_API_KEY")
+val youTubeApiKey: String = properties.getProperty("YOUTUBE_API_KEY") ?: ""
+
 
 android {
     namespace = "il.ac.hit.android_movies_info_app"
@@ -39,6 +42,7 @@ android {
 
         // Injecting API key as a BuildConfig field
         buildConfigField("String", "TMDB_API_KEY", "\"$tmdbApiKey\"")
+        buildConfigField("String", "YOUTUBE_API_KEY", "\"$youTubeApiKey\"")
     }
 
     buildTypes {
@@ -126,6 +130,9 @@ dependencies {
     //For live data ktx - flow as liveData
     implementation (libs.lifecycle.livedata.ktx)
 
+    //For youtube video player
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.core.ktx)
@@ -137,4 +144,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
 }

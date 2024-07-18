@@ -11,6 +11,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import il.ac.hit.android_movies_info_app.data.YouTubeApiService
 import il.ac.hit.android_movies_info_app.data.local_db.AppDatabase
 import il.ac.hit.android_movies_info_app.data.local_db.FavoriteMovieDao
 import il.ac.hit.android_movies_info_app.data.local_db.MovieDao
@@ -20,6 +21,7 @@ import il.ac.hit.android_movies_info_app.data.repositories.auth_repository.fireb
 import il.ac.hit.android_movies_info_app.utils.Constants.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -54,6 +56,7 @@ object AppModule {
 
     @Provides
     @Singleton
+    @Named("Movies")
     fun provideRetrofit (gson: Gson): Retrofit {
         return Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -66,7 +69,7 @@ object AppModule {
     }
 
     @Provides
-    fun provideMovieService(retrofit: Retrofit): MovieService {
+    fun provideMovieService(@Named("Movies") retrofit: Retrofit): MovieService {
         return retrofit.create(MovieService::class.java)
     }
 
@@ -84,6 +87,22 @@ object AppModule {
     @Singleton
     fun providesFavoriteMovieDao(database: AppDatabase): FavoriteMovieDao {
         return database.favoriteMovieDao()
+    }
+
+    @Provides
+    @Singleton
+    @Named("Youtube")
+    fun provideYouTubeRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://www.googleapis.com/youtube/v3/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideYouTubeApiService(@Named("Youtube") retrofit: Retrofit): YouTubeApiService {
+        return retrofit.create(YouTubeApiService::class.java)
     }
 
 }

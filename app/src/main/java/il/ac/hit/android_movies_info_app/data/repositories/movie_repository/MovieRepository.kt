@@ -1,5 +1,6 @@
 package il.ac.hit.android_movies_info_app.data.repositories.movie_repository
 
+import il.ac.hit.android_movies_info_app.data.YouTubeApiService
 import il.ac.hit.android_movies_info_app.data.local_db.FavoriteMovieDao
 import il.ac.hit.android_movies_info_app.data.local_db.MovieDao
 import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
@@ -15,7 +16,7 @@ import javax.inject.Singleton
 class MovieRepository @Inject constructor(
     private val remoteDataSource : MovieRemoteDataSource,
     private val localDataSource: MovieDao,
-    private val favoriteMovieDao: FavoriteMovieDao?
+    private val favoriteMovieDao: FavoriteMovieDao?,
 ) {
     // Movies API related repo functions
     fun getTopMovies()  = performFetchingAndSaving(
@@ -26,13 +27,13 @@ class MovieRepository @Inject constructor(
     fun getMovie(id: Int) = performFetching { remoteDataSource.getMovieDetails(id) }
     fun getSearchedMovies(query : String) = performFetching { remoteDataSource.searchMovie(query) }
 
+    // Youtube API related repo function
+    fun getTrailer(query:String) = performFetching { remoteDataSource.searchTrailer(query) }
+
+
     // Room related repo functions
     fun getAllFavoriteMovies() = favoriteMovieDao?.getAllFavoriteMovies()
     fun getFavoriteMovie(id: Int) = favoriteMovieDao?.getFavoriteMovie(id)
     suspend fun saveFavoriteMovie(movie: FavoriteMovie) = favoriteMovieDao?.insertFavoriteMovie(movie)
     suspend fun deleteFavoriteMovie(id: Int) = favoriteMovieDao?.deleteFavoriteMovie(id)
-
-
-
-
 }
