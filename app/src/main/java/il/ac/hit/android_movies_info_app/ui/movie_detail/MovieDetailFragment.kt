@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
@@ -42,7 +44,11 @@ class MovieDetailFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigateUp()
+            }
+        })
 
         arguments?.getInt("id")?.let{
             viewModel.setId(it)
@@ -105,4 +111,6 @@ class MovieDetailFragment: Fragment() {
             Log.d("MovieDetailsLog", "Is favorite: $isFavorite")
         }
     }
+
+
 }

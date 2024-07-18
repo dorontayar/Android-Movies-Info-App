@@ -86,6 +86,7 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
         navView.setupWithNavController(navController)
 
 
+
         handleOnBackPressed()
     }
 

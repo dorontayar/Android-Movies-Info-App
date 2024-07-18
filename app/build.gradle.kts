@@ -18,6 +18,8 @@ val properties = Properties().apply {
 project.extensions.extraProperties["TMDB_API_KEY"] = properties.getProperty("TMDB_API_KEY")
 val tmdbApiKey: String = properties.getProperty("TMDB_API_KEY") ?: ""
 
+project.extensions.extraProperties["YOUTUBE_API_KEY"] = properties.getProperty("YOUTUBE_API_KEY")
+val youTubeApiKey: String = properties.getProperty("YOUTUBE_API_KEY") ?: ""
 
 android {
     namespace = "il.ac.hit.android_movies_info_app"
@@ -39,6 +41,7 @@ android {
 
         // Injecting API key as a BuildConfig field
         buildConfigField("String", "TMDB_API_KEY", "\"$tmdbApiKey\"")
+        buildConfigField("String", "YOUTUBE_API_KEY", "\"$youTubeApiKey\"")
     }
 
     buildTypes {
