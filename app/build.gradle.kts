@@ -129,6 +129,9 @@ dependencies {
     //For live data ktx - flow as liveData
     implementation (libs.lifecycle.livedata.ktx)
 
+    //For youtube video player
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.annotation)
     implementation(libs.androidx.core.ktx)
@@ -140,4 +143,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
 }

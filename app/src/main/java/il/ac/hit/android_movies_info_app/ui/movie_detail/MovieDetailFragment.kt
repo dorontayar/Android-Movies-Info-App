@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
 import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.MovieDetailsResponse
@@ -29,7 +31,6 @@ import il.ac.hit.android_movies_info_app.utils.toFavoriteMovie
 @AndroidEntryPoint
 class MovieDetailFragment: Fragment() {
     private var binding: FragmentMovieDetailBinding by autoCleared()
-
     private val viewModel: MovieDetailViewModel by viewModels()
 
     private var movieDetailResult: MovieDetailsResponse? = null
@@ -38,7 +39,7 @@ class MovieDetailFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMovieDetailBinding.inflate(inflater,container,false)
+        binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -50,12 +51,14 @@ class MovieDetailFragment: Fragment() {
             }
         })
 
-        arguments?.getInt("id")?.let{
+        lifecycle.addObserver(binding.youtubePlayerView)
+
+        arguments?.getInt("id")?.let {
             viewModel.setId(it)
         }
 
-        viewModel.movie.observe(viewLifecycleOwner){
-            when(it.status) {
+        viewModel.movie.observe(viewLifecycleOwner) {
+            when (it.status) {
                 is Loading -> binding.progressBar.isVisible = true
                 is Success -> {
                     binding.progressBar.isVisible = false
@@ -63,17 +66,15 @@ class MovieDetailFragment: Fragment() {
                     movieDetailResult = it.status.data
                     setButtons()
                     updateFavoriteButtons()
-                    Log.w("MovieDetailsLog",movieDetailResult.toString())
+
                 }
+
                 is Error -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(),it.status.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), it.status.message, Toast.LENGTH_SHORT).show()
                 }
-
             }
-
         }
-
 
 
     }
@@ -92,14 +93,23 @@ class MovieDetailFragment: Fragment() {
         }
     }
 
-    private fun updateMovie(movie: MovieDetailsResponse){
+    private fun updateMovie(movie: MovieDetailsResponse) {
         binding.movieTitle.text = movie.title
-        val imagePath:String = IMAGE_TYPE_ORIGINAL +movie.posterPath
+        val imagePath: String = IMAGE_TYPE_ORIGINAL + movie.posterPath
         Glide.with(requireContext()).load(imagePath).into(binding.moviePoster)
-        binding.movieDescription.text= movie.overview
+        binding.movieDescription.text = movie.overview
         binding.movieRating.text = movie.voteAverage.toString()
         binding.movieVote.text = movie.voteCount.toString()
-
+        var trailerKey = movie.videos.results.firstOrNull { it.type == "Trailer" }?.key
+        if (trailerKey == null) {
+            trailerKey = "dQw4w9WgXcQ"
+        }
+        binding.youtubePlayerView.addYouTubePlayerListener(object :
+            AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youTubePlayer.cueVideo(trailerKey, 0f)
+            }
+        })
     }
 
     private fun updateFavoriteButtons() {
@@ -111,6 +121,5 @@ class MovieDetailFragment: Fragment() {
             Log.d("MovieDetailsLog", "Is favorite: $isFavorite")
         }
     }
-
-
 }
+

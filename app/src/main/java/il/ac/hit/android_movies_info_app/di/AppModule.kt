@@ -21,6 +21,7 @@ import il.ac.hit.android_movies_info_app.data.repositories.auth_repository.fireb
 import il.ac.hit.android_movies_info_app.utils.Constants.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -55,6 +56,7 @@ object AppModule {
 
     @Provides
     @Singleton
+    @Named("Movies")
     fun provideRetrofit (gson: Gson): Retrofit {
         return Retrofit.Builder().baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -67,7 +69,7 @@ object AppModule {
     }
 
     @Provides
-    fun provideMovieService(retrofit: Retrofit): MovieService {
+    fun provideMovieService(@Named("Movies") retrofit: Retrofit): MovieService {
         return retrofit.create(MovieService::class.java)
     }
 
