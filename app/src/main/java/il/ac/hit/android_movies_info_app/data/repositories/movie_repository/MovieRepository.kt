@@ -1,6 +1,6 @@
 package il.ac.hit.android_movies_info_app.data.repositories.movie_repository
 
-import android.util.Log
+
 import il.ac.hit.android_movies_info_app.data.local_db.FavoriteMovieDao
 import il.ac.hit.android_movies_info_app.data.local_db.TopRatedMovieDao
 import il.ac.hit.android_movies_info_app.data.local_db.UpcomingMovieDao
@@ -19,7 +19,6 @@ class MovieRepository @Inject constructor(
     private val localDataSourceTopRated: TopRatedMovieDao,
     private val localDataSourceFavoriteMovie: FavoriteMovieDao?,
     private val localDataSourceUpcoming: UpcomingMovieDao,
-
     ) {
     // Movies API related repo functions
     fun getTopMovies() = performFetchingAndSaving(
@@ -27,7 +26,6 @@ class MovieRepository @Inject constructor(
         { remoteDataSource.getTopRatedMovies() },
         { localDataSourceTopRated.insertMovies(it.results.sortedByDescending { movie -> movie.voteAverage }) }
     )
-
     fun getUpcomingMovies() = performFetchingAndSaving(
         { localDataSourceUpcoming.getUpcomingMovies() },
         { remoteDataSource.getUpcomingMovies() },
@@ -38,13 +36,11 @@ class MovieRepository @Inject constructor(
     fun getSearchedMoviesScrolling(query : String,page:Int) = performFetching { remoteDataSource.searchMovieScrolling(query,page) }
 
 
+
     // Room related repo functions
     fun getAllFavoriteMovies() = localDataSourceFavoriteMovie?.getAllFavoriteMovies()
     fun getFavoriteMovie(id: Int) = localDataSourceFavoriteMovie?.getFavoriteMovie(id)
     suspend fun saveFavoriteMovie(movie: FavoriteMovie) = localDataSourceFavoriteMovie?.insertFavoriteMovie(movie)
     suspend fun deleteFavoriteMovie(id: Int) = localDataSourceFavoriteMovie?.deleteFavoriteMovie(id)
-
-
-
 
 }

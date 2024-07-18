@@ -18,7 +18,7 @@ interface MovieService {
         @Query("query") query: String,
         @Query("api_key") apiKey: String = API_KEY
     ): Response<MovieResponse>
-
+    // Search movies with pages
     @GET("search/movie")
     suspend fun searchMovieScrolling(
         @Query("query") query: String,
