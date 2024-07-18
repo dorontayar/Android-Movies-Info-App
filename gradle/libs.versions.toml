@@ -1,5 +1,6 @@
 [versions]
 activityKtx = "1.9.0"
+core = "12.1.0"
 gson = "2.10.1"
 hiltCompiler = "1.2.0"
 hiltAndroid = "2.51"
@@ -35,6 +36,7 @@ legacySupportV4 = "1.0.0"
 
 
 [libraries]
+core = { module = "com.pierfrancescosoffritti.androidyoutubeplayer:core", version.ref = "core" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }

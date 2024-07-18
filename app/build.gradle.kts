@@ -130,7 +130,7 @@ dependencies {
     implementation (libs.lifecycle.livedata.ktx)
 
     //For youtube video player
-    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+    implementation(libs.core)
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.annotation)
