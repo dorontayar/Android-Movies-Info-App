@@ -17,7 +17,7 @@ import il.ac.hit.android_movies_info_app.utils.shortenText
 class FavoritesAdapter(private val listener : MoviesItemListener) :
     RecyclerView.Adapter<FavoritesAdapter.MovieViewHolder>() {
 
-    private val movies = ArrayList<FavoriteMovie>()
+    val movies = ArrayList<FavoriteMovie>()
 
     class MovieViewHolder (private val itemBinding: ItemMovieBinding,
                            private val listener: MoviesItemListener)
@@ -49,6 +49,10 @@ class FavoritesAdapter(private val listener : MoviesItemListener) :
         this.movies.clear()
         this.movies.addAll(movies)
         notifyDataSetChanged()
+    }
+    fun removeMovie(position: Int) {
+        movies.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {

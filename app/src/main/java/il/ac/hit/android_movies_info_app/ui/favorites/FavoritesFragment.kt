@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.databinding.FragmentFavoritesBinding
@@ -50,6 +52,26 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
         adapter = FavoritesAdapter(this)
         binding.moviesRv.layoutManager = LinearLayoutManager(requireContext())
         binding.moviesRv.adapter = adapter
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val movie = adapter.movies[position]
+                adapter.removeMovie(position)
+
+
+                viewModel.removeFavorite(movie)
+            }
+        })
+
+        itemTouchHelper.attachToRecyclerView(binding.moviesRv)
     }
 
     private fun observeViewModel() {
