@@ -21,6 +21,7 @@ import il.ac.hit.android_movies_info_app.ui.register.viewmodel.RegisterViewModel
 import il.ac.hit.android_movies_info_app.utils.Loading
 import il.ac.hit.android_movies_info_app.utils.Success
 import il.ac.hit.android_movies_info_app.utils.Error
+import il.ac.hit.android_movies_info_app.utils.Resource
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
 @AndroidEntryPoint
@@ -31,7 +32,6 @@ class RegisterFragment: Fragment() {
     private var profilePictureUri: Uri? = null
 
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,13 +61,8 @@ class RegisterFragment: Fragment() {
             selectProfileImage()
         }
 
-
-
         return binding.root
     }
-
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -87,6 +82,7 @@ class RegisterFragment: Fragment() {
                 is Error -> {
                     binding.registerProgress.isVisible = false
                     binding.userRegisterButton.isEnabled = true
+                    Toast.makeText(requireContext(), it.status.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }

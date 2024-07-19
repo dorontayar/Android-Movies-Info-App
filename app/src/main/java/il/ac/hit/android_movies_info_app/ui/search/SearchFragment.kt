@@ -62,7 +62,6 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)){
                     viewModel.setPage(++page)
-                    Toast.makeText(requireContext(), "Loading page $page", Toast.LENGTH_LONG).show()
                 }
             }
         })
@@ -109,7 +108,6 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
     }
 
     override fun onMovieClick(movieId: Int) {
-        Toast.makeText(requireContext(), "Movie Clicked", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_search_nav_to_movieDetailFragment,
             bundleOf("id" to movieId)
         )

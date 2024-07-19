@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import il.ac.hit.android_movies_info_app.HiltApp
+import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.utils.shortenText
 import il.ac.hit.android_movies_info_app.R.drawable
 import il.ac.hit.android_movies_info_app.data.model.movie_search.Movie
@@ -35,7 +37,8 @@ class SearchAdapter(private val listener: MoviesItemListener) :
             itemBinding.title.text = item.title
             if(item.overview != "") {
                 itemBinding.description.text = shortenText(item.overview, 150)
-            } else { itemBinding.description.text = "Description not found"}
+            } else { itemBinding.description.text =
+                HiltApp.getContext()?.getString(R.string.description_not_found)}
             // can change to other sizes, check Constants.kt
             val imagePath: String = IMAGE_TYPE_W300 + item.posterPath
             Glide.with(itemBinding.root).load(imagePath).placeholder(drawable.movie_placeholder).into(itemBinding.image)
@@ -44,9 +47,6 @@ class SearchAdapter(private val listener: MoviesItemListener) :
         override fun onClick(v: View?) {
             listener.onMovieClick(movie.id)
         }
-
-
-
     }
 
     fun setMovies(movies: Collection<Movie>) {
