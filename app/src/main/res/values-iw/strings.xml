@@ -64,5 +64,8 @@
     <string name="empty_email_or_password">אימייל או סיסמא חסרים</string>
     <string name="empty_strings">שדות חסרים</string>
     <string name="not_a_valid_email">אימייל לא תקין</string>
+    <string name="no_results">אין תוצאות</string>
+    <string name="search_movies_btn">חיפוש</string>
+    <string name="change_profile_image">שנה תמונת פרופיל</string>
 
 </resources>

@@ -40,8 +40,6 @@
     <string name="password_hint">Password</string>
     <string name="search_movie">Search Movie</string>
     <string name="searching">Searching...</string>
-    <string name="search_movies">Search movies</string>
-    <string name="search_btn">Search</string>
     <string name="toptext">TopText</string>
     <string name="bottomtext">BottomText</string>
     <string name="movie_details_label">Movie Details</string>
