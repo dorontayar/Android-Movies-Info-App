@@ -61,6 +61,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Movie Title That Is Very Very Very Very Very Long"
+                android:gravity="center"
+                android:layout_gravity="center"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"

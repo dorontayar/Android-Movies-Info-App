@@ -19,7 +19,9 @@
         android:id="@+id/movie_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Movie Title"
+        android:layout_gravity="center"
         android:textSize="14sp"
         android:textStyle="bold"
         android:layout_marginTop="4dp"/>
@@ -28,7 +30,9 @@
         android:id="@+id/movie_release_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="Release Date"
+        android:gravity="center"
         android:textSize="12sp"
         android:layout_marginTop="2dp"/>
 

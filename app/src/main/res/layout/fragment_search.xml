@@ -19,7 +19,7 @@
                 android:id="@+id/search_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Search movies">
+                android:hint="@string/search_movies">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/search_edit_text"
@@ -32,7 +32,7 @@
                     android:id="@+id/search_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Search"
+                    android:text="@string/search_btn"
                     android:backgroundTint="@color/orange"/>
 
             </com.google.android.material.textfield.TextInputLayout>

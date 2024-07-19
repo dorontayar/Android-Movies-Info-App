@@ -55,7 +55,8 @@ class LoginFragment : Fragment() {
                     binding.buttonLogin.isEnabled = false
                 }
                 is Success -> {
-                    Toast.makeText(requireContext(),"Login successful", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),
+                        getString(R.string.login_successful), Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_loginFragment_to_mainScreenFragment)
                 }
                 is Error -> {
