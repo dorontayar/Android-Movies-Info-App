@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import il.ac.hit.android_movies_info_app.utils.shortenText
 import il.ac.hit.android_movies_info_app.R.drawable
 import il.ac.hit.android_movies_info_app.data.model.movie_search.Movie
 import il.ac.hit.android_movies_info_app.databinding.ItemMovieBinding
 import il.ac.hit.android_movies_info_app.utils.Constants.Companion.IMAGE_TYPE_W185
+import il.ac.hit.android_movies_info_app.utils.Constants.Companion.IMAGE_TYPE_W300
 
 class SearchAdapter(private val listener: MoviesItemListener) :
     RecyclerView.Adapter<SearchAdapter.MovieViewHolder>() {
@@ -31,9 +33,11 @@ class SearchAdapter(private val listener: MoviesItemListener) :
         fun bind(item: Movie) {
             this.movie = item
             itemBinding.title.text = item.title
-            itemBinding.description.text = shortenText(item.overview, 150)
+            if(item.overview != "") {
+                itemBinding.description.text = shortenText(item.overview, 150)
+            } else { itemBinding.description.text = "Description not found"}
             // can change to other sizes, check Constants.kt
-            val imagePath: String = IMAGE_TYPE_W185 + item.posterPath
+            val imagePath: String = IMAGE_TYPE_W300 + item.posterPath
             Glide.with(itemBinding.root).load(imagePath).placeholder(drawable.movie_placeholder).into(itemBinding.image)
         }
 
@@ -42,17 +46,7 @@ class SearchAdapter(private val listener: MoviesItemListener) :
         }
 
 
-        private fun shortenText(text: String, maxLength: Int): String {
-            if (text.length <= maxLength) {
-                return text
-            } else {
-                // Trim the text to the specified maxLength
-                val trimmedText = text.substring(0, maxLength)
 
-                // Append "..." to indicate the text has been shortened
-                return "$trimmedText..."
-            }
-        }
     }
 
     fun setMovies(movies: Collection<Movie>) {
