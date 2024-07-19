@@ -103,12 +103,14 @@ class MovieDetailFragment: Fragment() {
             movieDetailResult?.let { movie ->
                 viewModel.addFavorite(movie.toFavoriteMovie())
                 Log.d("MovieDetailsLog", "Added to favorites: ${movie.toFavoriteMovie()}")
-                Toast.makeText(requireContext(), "Added to favorites", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.added_to_favorites), Toast.LENGTH_SHORT).show()
             }
         }
         binding.btnRemoveFavorite.setOnClickListener {
             viewModel.removeFavorite()
-            Toast.makeText(requireContext(), "Removed from favorites", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),
+                getString(R.string.removed_from_favorites), Toast.LENGTH_SHORT).show()
         }
     }
 

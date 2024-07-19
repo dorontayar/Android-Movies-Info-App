@@ -122,7 +122,8 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
             }
 
             R.id.nav_logout -> {
-                Toast.makeText(requireContext(), "Logout!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.logout_toast), Toast.LENGTH_SHORT).show()
                 viewModel.signOut()
                 findNavController().navigate(R.id.action_mainScreenFragment_to_loginFragment)
             }

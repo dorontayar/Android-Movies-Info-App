@@ -98,13 +98,15 @@ class ProfileFragment : Fragment() {
                 is Success -> {
                     binding.profileProgressBar.isVisible = false
                     binding.updateProfileButton.isEnabled = true
-                    Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),
+                        getString(R.string.profile_updated_successfully), Toast.LENGTH_SHORT).show()
                     viewModel.resetUpdateStatus()
                 }
                 is Error -> {
                     binding.profileProgressBar.isVisible = false
                     binding.updateProfileButton.isEnabled = true
-                    Toast.makeText(requireContext(), "Error updating profile: ${resource?.status.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(),
+                        getString(R.string.error_updating_profile, resource?.status.message), Toast.LENGTH_SHORT).show()
                     viewModel.resetUpdateStatus()
                 }
                 else -> {

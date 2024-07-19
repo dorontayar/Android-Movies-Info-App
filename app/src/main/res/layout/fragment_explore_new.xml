@@ -38,9 +38,9 @@
             android:layout_height="wrap_content"
             android:fontFamily=""
             android:letterSpacing="0.15"
-            android:text="• Top Rated"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            android:text="@string/top_rated"
+            android:textStyle="bold"
+            android:textSize="17sp" />
 
     </RelativeLayout>
 
@@ -49,7 +49,7 @@
         android:id="@+id/movies_rv_top_rated"
         android:layout_width="match_parent"
         android:layout_height="260dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/relative"
         tools:layout_editor_absoluteX="0dp"
@@ -59,14 +59,14 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:fontFamily=""
         android:letterSpacing="0.15"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:text="• Upcoming"
-        android:textColor="@color/black"
-        android:textSize="14sp"
+        android:text="@string/upcoming"
+        android:textSize="17sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/movies_rv_top_rated" />
 

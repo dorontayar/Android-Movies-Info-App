@@ -3,6 +3,8 @@ package il.ac.hit.android_movies_info_app.ui.profile.viewmodel
 import android.net.Uri
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import il.ac.hit.android_movies_info_app.HiltApp
+import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.data.model.User
 import il.ac.hit.android_movies_info_app.data.repositories.auth_repository.AuthRepository
 import il.ac.hit.android_movies_info_app.utils.Resource
@@ -54,7 +56,9 @@ class ProfileViewModel @Inject constructor(
     }
     fun updateProfile(name: String?, profilePictureUri: Uri?) {
         if (name.isNullOrBlank() || name.length < 3) {
-            _updateStatus.value = Resource.error("Name must be at least 3 characters long.")
+            _updateStatus.value =
+                HiltApp.getContext()?.getString(R.string.name_must_be_at_least_3_characters_long)
+                    ?.let { Resource.error(it) }
             return
         }
 
@@ -68,7 +72,8 @@ class ProfileViewModel @Inject constructor(
                 }
             }
         } else {
-            _updateStatus.value = Resource.error("No changes to update.")
+            _updateStatus.value = HiltApp.getContext()?.getString(R.string.no_changes_to_update)
+                ?.let { Resource.error(it) }
         }
     }
 

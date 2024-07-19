@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/explore_nav"
         android:name="il.ac.hit.android_movies_info_app.ui.explore.ExploreFragment"
-        android:label="Explore"
+        android:label="@string/explore_label"
         tools:layout="@layout/fragment_explore">
         <action
             android:id="@+id/action_explore_nav_to_movieDetailFragment"
@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/search_nav"
         android:name="il.ac.hit.android_movies_info_app.ui.search.SearchFragment"
-        android:label="Search"
+        android:label="@string/search_label"
         tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_search_nav_to_movieDetailFragment"
@@ -29,13 +29,10 @@
             app:popUpTo="@id/search_nav"
             app:popUpToInclusive="false" />
     </fragment>
-
-
-
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="il.ac.hit.android_movies_info_app.ui.movie_detail.MovieDetailFragment"
-        android:label="Movie Details"
+        android:label="@string/movie_details_label"
         tools:layout="@layout/fragment_movie_detail">
         <action
             android:id="@+id/action_movieDetailFragment_to_explore_nav"
@@ -52,7 +49,7 @@
     <fragment
         android:id="@+id/favorites_nav"
         android:name="il.ac.hit.android_movies_info_app.ui.favorites.FavoritesFragment"
-        android:label="Favorites"
+        android:label="@string/favorites_label"
         tools:layout="@layout/fragment_favorites">
         <action
             android:id="@+id/action_favorites_nav_to_movieDetailFragment"
