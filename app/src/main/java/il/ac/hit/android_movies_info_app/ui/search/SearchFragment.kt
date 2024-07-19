@@ -75,11 +75,13 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
                     adapter.setMovies(ArrayList(it.status.data!!.results))
                     Log.d("noResultsCount",adapter.itemCount.toString())
                     if(adapter.itemCount != 0) {
-                        binding.noResults.isVisible = false
+                        binding.noResultsText.isVisible = false
+                        binding.noResultsImg.isVisible = false
                         binding.moviesRvSearch.isVisible = true
                     } else {
                         binding.moviesRvSearch.isVisible = false
-                        binding.noResults.isVisible = true
+                        binding.noResultsText.isVisible = true
+                        binding.noResultsImg.isVisible = true
                     }
                 }
                 is Error -> {

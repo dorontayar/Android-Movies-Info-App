@@ -33,6 +33,10 @@
     <string name="profile_image">Profile Image</string>
     <string name="enter_name">Enter Name</string>
     <string name="update_profile">Update Profile</string>
+    <string name="no_results">No Results</string>
+    <string name="search_movies">Search movies</string>
+    <string name="search_movies_btn">Search</string>
+    <string name="search_btn">Search</string>
 
 
 </resources>

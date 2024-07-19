@@ -1,6 +1,8 @@
 package il.ac.hit.android_movies_info_app.ui.main_screen
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -103,6 +105,11 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
             }
             R.id.nav_settings -> {
 
+            }
+            R.id.nav_github -> {
+                val url = "https://github.com/dorontayar/Android-Movies-Info-App"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
             }
 
             R.id.nav_logout -> {
