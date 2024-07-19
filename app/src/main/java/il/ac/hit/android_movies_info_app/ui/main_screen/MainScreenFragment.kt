@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -21,9 +22,11 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -67,7 +70,7 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
         val toolbar: Toolbar = binding.appBarMain.toolbar
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
 
-        val drawerLayout: DrawerLayout = binding.drawerLayout
+        val drawerLayout = binding.drawerLayout
         drawerToggle = ActionBarDrawerToggle(
             requireActivity(),
             drawerLayout,
@@ -78,6 +81,17 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
 
         drawerLayout.addDrawerListener(drawerToggle!!)
         drawerToggle!!.syncState()
+        drawerLayout.addDrawerListener(object : DrawerLayout.SimpleDrawerListener() {
+            override fun onDrawerOpened(drawerView: View) {
+                super.onDrawerOpened(drawerView)
+                viewModel.setDrawerState(true)
+            }
+
+            override fun onDrawerClosed(drawerView: View) {
+                super.onDrawerClosed(drawerView)
+                viewModel.setDrawerState(false)
+            }
+        })
 
         val navigationView: NavigationView = binding.navSideView
         navigationView.setNavigationItemSelectedListener(this)
@@ -99,22 +113,37 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
             { isVisible ->
                 setBottomNavigationVisibility(isVisible)
             }
+        viewModel.drawerState.observe(viewLifecycleOwner) { isOpen ->
+            if (isOpen) {
+                Log.w("mainScreenLogs","drawer opening")
+                openDrawer()
+            }
+            else {
+                Log.w("mainScreenLogs","drawer closing")
+                closeDrawer()
+            }
+        }
 
-        //handleOnBackPressed()
+
+        handleOnBackPressed()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_home -> {
-                childFragmentManager.popBackStack()
-                childFragmentManager.popBackStack()
+                childFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.mainScreenFragment, true)
+                    .build()
+                findNavController().navigate(R.id.action_mainScreenFragment_self,null,navOptions)
                 viewModel.setBottomNavigationVisibility(true)
-                findNavController().navigate(R.id.mainScreenFragment)
+
             }
             R.id.nav_profile_manage -> {
-                childFragmentManager.popBackStack()
-                childFragmentManager.popBackStack()
+
+                childFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 findNavController().navigate(R.id.action_mainScreenFragment_to_profileFragmentDrawer)
+
             }
 
             R.id.nav_github -> {
@@ -129,6 +158,7 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
                 findNavController().navigate(R.id.action_mainScreenFragment_to_loginFragment)
             }
         }
+        viewModel.setDrawerState(false)
         binding.drawerLayout.closeDrawers()
         return true
     }
@@ -139,8 +169,8 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if (drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
-                        drawerLayout!!.closeDrawer(GravityCompat.START)
+                    if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                        binding.drawerLayout.closeDrawer(GravityCompat.START)
                     } else {
                         childFragmentManager.popBackStack()
                         isEnabled = false
@@ -151,15 +181,21 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
         )
     }
 
+   
+
+
+
     private fun setBottomNavigationVisibility(isVisible:Boolean){
         binding.appBarMain.contentMain.bottomAppBar.isVisible = isVisible
     }
 
     override fun openDrawer() {
+        binding.drawerLayout.openDrawer(GravityCompat.START)
         drawerLayout?.openDrawer(GravityCompat.START)
     }
 
     override fun closeDrawer() {
+        binding.drawerLayout.closeDrawers()
         drawerLayout?.closeDrawer(GravityCompat.START)
     }
 }

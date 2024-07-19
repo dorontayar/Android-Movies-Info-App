@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.databinding.FragmentFavoritesBinding
 import il.ac.hit.android_movies_info_app.ui.favorites.viewmodel.FavoritesAdapter
 import il.ac.hit.android_movies_info_app.ui.favorites.viewmodel.FavoritesViewModel
+import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenViewModel
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
 @AndroidEntryPoint
@@ -22,6 +24,8 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
     private var binding : FragmentFavoritesBinding by autoCleared()
     private val viewModel: FavoritesViewModel by viewModels()
     private lateinit var adapter:FavoritesAdapter
+    private val mainScreenViewModel: MainScreenViewModel by viewModels({ requireActivity() })
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +41,7 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
 
         setupRecyclerView()
         observeViewModel()
+        handleOnBackPressed()
     }
 
     private fun setupRecyclerView() {
@@ -52,7 +57,22 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
             }
         }
     }
+    private fun handleOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if(mainScreenViewModel.getDrawerState() == false) {
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
+                    else{
+                        mainScreenViewModel.setDrawerState(false)
 
+                    }
+                }
+            })
+    }
     override fun onMovieClick(movieId: Int) {
         findNavController().navigate(R.id.action_favorites_nav_to_movieDetailFragment,
             bundleOf("id" to movieId)

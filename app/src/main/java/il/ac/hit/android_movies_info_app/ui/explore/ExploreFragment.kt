@@ -92,17 +92,9 @@ class ExploreFragment : Fragment(), TopRatedAdapter.MoviesItemListener ,Upcoming
             }
         }
 
-        //handleOnBackPressed()
+
     }
-    private fun handleOnBackPressed() {
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    requireActivity().finish()
-                }
-            })
-    }
+
     override fun onMovieClick(movieId: Int) {
         findNavController().navigate(R.id.action_explore_nav_to_movieDetailFragment,
             bundleOf("id" to movieId))

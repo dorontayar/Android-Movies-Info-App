@@ -159,9 +159,15 @@ class MovieDetailFragment: Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    mainScreenViewModel.setBottomNavigationVisibility(true)
-                    isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                    if(mainScreenViewModel.getDrawerState() == false) {
+                        mainScreenViewModel.setBottomNavigationVisibility(true)
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
+                    else{
+                        mainScreenViewModel.setDrawerState(false)
+
+                    }
                 }
             })
     }

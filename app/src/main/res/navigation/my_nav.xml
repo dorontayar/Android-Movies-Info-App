@@ -34,6 +34,11 @@
             app:destination="@id/profileFragmentDrawer"
             app:popUpTo="@id/mainScreenFragment"
             app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_mainScreenFragment_self"
+            app:destination="@id/mainScreenFragment"
+            app:popUpTo="@id/mainScreenFragment"
+            app:popUpToInclusive="false"/>
 
     </fragment>
     <fragment
@@ -51,7 +56,13 @@
         android:id="@+id/profileFragmentDrawer"
         android:name="il.ac.hit.android_movies_info_app.ui.profile.ProfileFragment"
         android:label="@string/profile_management"
-        tools:layout="@layout/fragment_profile_drawer" />
+        tools:layout="@layout/fragment_profile_drawer" >
+        <action
+            android:id="@+id/action_profileFragmentDrawer_to_mainScreenFragment"
+            app:destination="@id/mainScreenFragment"
+            app:popUpTo="@id/mainScreenFragment"
+            app:popUpToInclusive="false"/>
+    </fragment>
 
 
 </navigation>

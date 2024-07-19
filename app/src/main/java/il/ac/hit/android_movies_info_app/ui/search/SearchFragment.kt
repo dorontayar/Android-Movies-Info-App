@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -16,8 +17,10 @@ import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.databinding.FragmentSearchBinding
+import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenViewModel
 import il.ac.hit.android_movies_info_app.ui.search.viewmodel.SearchAdapter
 import il.ac.hit.android_movies_info_app.ui.search.viewmodel.SearchViewModel
+import il.ac.hit.android_movies_info_app.utils.DrawerController
 import il.ac.hit.android_movies_info_app.utils.Error
 import il.ac.hit.android_movies_info_app.utils.Loading
 import il.ac.hit.android_movies_info_app.utils.Success
@@ -31,6 +34,8 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
     private val viewModel: SearchViewModel by viewModels()
 
     private lateinit var adapter: SearchAdapter
+
+    private val mainScreenViewModel: MainScreenViewModel by viewModels({ requireActivity() })
 
     private var page = 1
     override fun onCreateView(
@@ -105,9 +110,24 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
             }
         }
 
-
+        handleOnBackPressed()
     }
+    private fun handleOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if(mainScreenViewModel.getDrawerState() == false) {
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
+                    else{
+                        mainScreenViewModel.setDrawerState(false)
 
+                    }
+                }
+            })
+    }
     override fun onMovieClick(movieId: Int) {
         Toast.makeText(requireContext(), "Movie Clicked", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_search_nav_to_movieDetailFragment,

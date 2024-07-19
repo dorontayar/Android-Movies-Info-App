@@ -54,9 +54,4 @@
             app:popUpTo="@id/favorites_nav"
             app:popUpToInclusive="false" />
     </fragment>
-    <fragment
-        android:id="@+id/profile_nav"
-        android:name="il.ac.hit.android_movies_info_app.ui.profile.ProfileFragment"
-        android:label="@string/profile_management"
-        tools:layout="@layout/fragment_profile" />
 </navigation>

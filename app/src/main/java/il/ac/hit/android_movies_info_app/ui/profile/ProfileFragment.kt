@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -15,11 +16,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
@@ -37,14 +40,13 @@ import il.ac.hit.android_movies_info_app.utils.autoCleared
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener {
 
-    //private var binding: FragmentProfileBinding by autoCleared()
     private var binding:FragmentProfileDrawerBinding by autoCleared()
     private val viewModel: ProfileViewModel by viewModels()
     private var profilePictureUri: Uri? = null
     private lateinit var imagePickerLauncher: ActivityResultLauncher<Intent>
     private val mainScreenViewModel: MainScreenViewModel by activityViewModels()
-    private var drawerLayout: DrawerLayout? = null
     private var drawerToggle: ActionBarDrawerToggle? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,7 +62,7 @@ class ProfileFragment : Fragment(), NavigationView.OnNavigationItemSelectedListe
         val toolbar: Toolbar = binding.appBarProfile.toolbar
         (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
 
-        val drawerLayout: DrawerLayout = binding.drawerLayout
+        val drawerLayout:DrawerLayout = binding.drawerLayout
         drawerToggle = ActionBarDrawerToggle(
             requireActivity(),
             drawerLayout,
@@ -145,9 +147,12 @@ class ProfileFragment : Fragment(), NavigationView.OnNavigationItemSelectedListe
 
 
 
-       // handleOnBackPressed()
+       handleOnBackPressed()
     }
-
+    override fun onResume() {
+        binding.drawerLayout.closeDrawers()
+        super.onResume()
+    }
     private fun selectProfileImage() {
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = "image/*"
@@ -160,10 +165,15 @@ class ProfileFragment : Fragment(), NavigationView.OnNavigationItemSelectedListe
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
+                    if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                        binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    } else {
+                        mainScreenViewModel.setDrawerState(false)
+                        childFragmentManager.popBackStack()
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
+                    }
 
-                    findNavController().navigate(R.id.mainScreenFragment)
-                    isEnabled = false
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
             })
     }
@@ -171,8 +181,11 @@ class ProfileFragment : Fragment(), NavigationView.OnNavigationItemSelectedListe
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_home -> {
+                val navOptions = NavOptions.Builder()
+                    .setPopUpTo(R.id.mainScreenFragment, true)
+                    .build()
                 mainScreenViewModel.setBottomNavigationVisibility(true)
-                findNavController().navigate(R.id.mainScreenFragment)
+                findNavController().navigate(R.id.action_profileFragmentDrawer_to_mainScreenFragment,null,navOptions)
             }
             R.id.nav_profile_manage -> {
 
