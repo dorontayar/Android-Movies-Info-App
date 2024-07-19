@@ -66,5 +66,11 @@
     <string name="search_movies_btn">Search</string>
     <string name="search_btn">Search</string>
     <string name="change_profile_image">Change Profile Image</string>
+    <string name="movie_title_upcoming">Movie Title</string>
+    <string name="release_date_upcoming">Release Date</string>
+    <string name="current_name">Current Name:</string>
+    <string name="name_profile">Name</string>
+    <string name="description_not_found">Description not found</string>
+    <string name="release_date_not_found">Release date not found</string>
 
 </resources>

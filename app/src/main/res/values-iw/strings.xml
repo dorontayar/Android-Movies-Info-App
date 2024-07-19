@@ -67,5 +67,11 @@
     <string name="no_results">אין תוצאות</string>
     <string name="search_movies_btn">חיפוש</string>
     <string name="change_profile_image">שנה תמונת פרופיל</string>
+    <string name="movie_title_upcoming">שם הסרט</string>
+    <string name="release_date_upcoming">תאריך יציאה</string>
+    <string name="current_name">שם נוכחי:</string>
+    <string name="name_profile">שם</string>
+    <string name="description_not_found">לא נמצא תיאור</string>
+    <string name="release_date_not_found">לא נמצא תאריך יציאה</string>
 
 </resources>

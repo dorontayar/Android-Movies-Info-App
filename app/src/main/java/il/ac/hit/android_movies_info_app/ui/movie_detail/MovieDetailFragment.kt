@@ -117,11 +117,14 @@ class MovieDetailFragment: Fragment() {
     private fun updateMovie(movie: MovieDetailsResponse) {
         binding.movieTitle.text = movie.title
         val imagePath: String = IMAGE_TYPE_ORIGINAL + movie.posterPath
-        Glide.with(requireContext()).load(imagePath).into(binding.moviePoster)
-        binding.movieDescription.text = movie.overview
+        Glide.with(requireContext()).load(imagePath).placeholder(R.drawable.movie_placeholder).into(binding.moviePoster)
+        binding.movieDescription.text = movie.overview.takeIf { it.isNotEmpty() } ?: getString(R.string.description_not_found)
+        binding.movieReleaseDateText.text = movie.releaseDate.takeIf { it.isNotEmpty() }?.let {
+            getString(R.string.release_date, it)
+        } ?: getString(R.string.release_date_not_found)
         binding.movieRating.text = movie.voteAverage.toString()
         binding.movieVote.text = movie.voteCount.toString()
-        binding.movieReleaseDateText.text = getString(R.string.release_date, movie.releaseDate)
+
         var trailerKey = movie.videos.results.firstOrNull { it.type == "Trailer" }?.key
         if (trailerKey == null) {
             trailerKey = "dQw4w9WgXcQ"
