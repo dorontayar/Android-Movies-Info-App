@@ -27,15 +27,8 @@
             android:id="@+id/action_search_nav_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment"
             app:popUpTo="@id/search_nav"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
-
-    <fragment
-        android:id="@+id/profile_nav"
-        android:name="il.ac.hit.android_movies_info_app.ui.profile.ProfileFragment"
-        android:label="@string/profile_label"
-        tools:layout="@layout/fragment_profile" />
-
     <fragment
         android:id="@+id/movieDetailFragment"
         android:name="il.ac.hit.android_movies_info_app.ui.movie_detail.MovieDetailFragment"

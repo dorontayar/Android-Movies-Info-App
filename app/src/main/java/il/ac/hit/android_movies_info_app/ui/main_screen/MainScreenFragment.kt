@@ -1,6 +1,8 @@
 package il.ac.hit.android_movies_info_app.ui.main_screen
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -31,9 +33,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
-import il.ac.hit.android_movies_info_app.databinding.FragmentMainScreenBinding
 import il.ac.hit.android_movies_info_app.databinding.FragmentMainScreenDrawerBinding
+import il.ac.hit.android_movies_info_app.ui.explore.ExploreFragment
+import il.ac.hit.android_movies_info_app.ui.favorites.FavoritesFragment
 import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenViewModel
+import il.ac.hit.android_movies_info_app.ui.profile.ProfileFragment
+import il.ac.hit.android_movies_info_app.ui.search.SearchFragment
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
 
@@ -81,7 +86,7 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
         val navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.explore_nav, R.id.search_nav,R.id.favorites_nav, R.id.profile_nav,R.id.movieDetailFragment),
+            setOf(R.id.explore_nav, R.id.search_nav,R.id.favorites_nav,R.id.movieDetailFragment),
             drawerLayout
         )
         setupActionBarWithNavController(requireActivity() as AppCompatActivity, navController, appBarConfiguration)
@@ -101,8 +106,19 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
             R.id.nav_home -> {
                 findNavController().navigate(R.id.mainScreenFragment)
             }
-            R.id.nav_settings -> {
-
+            R.id.nav_profile_mange -> {
+                setBottomNavigationVisibility(false)
+                binding.appBarMain.toolbar.title = getString(R.string.profile_management)
+                val fragment = ProfileFragment()
+                childFragmentManager.beginTransaction()
+                    .replace(R.id.nav_host_fragment_main_screen, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+            R.id.nav_github -> {
+                val url = "https://github.com/dorontayar/Android-Movies-Info-App"
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
             }
 
             R.id.nav_logout -> {
@@ -124,8 +140,8 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
                     if (drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
                         drawerLayout?.closeDrawer(GravityCompat.START)
                     } else {
-                        isEnabled = false
-                        requireActivity().onBackPressedDispatcher
+                        childFragmentManager.popBackStack()
+
                     }
                 }
             })

@@ -35,3 +35,14 @@ fun MovieDetailsResponse.toFavoriteMovie(): FavoriteMovie {
         images = this.images
     )
 }
+fun shortenText(text: String, maxLength: Int): String {
+    if (text.length <= maxLength) {
+        return text
+    } else {
+        // Trim the text to the specified maxLength
+        val trimmedText = text.substring(0, maxLength)
+
+        // Append "..." to indicate the text has been shortened
+        return "$trimmedText..."
+    }
+}

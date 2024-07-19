@@ -55,7 +55,7 @@ class MovieDetailFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (savedInstanceState != null) { // Restore trailer playback position and state (if playing or not)
+        if (savedInstanceState != null) {
             currentVideoPosition = savedInstanceState.getFloat("CURRENT_VIDEO_POSITION", 0f)
             isPlaying = savedInstanceState.getBoolean("IS_PLAYING", false)
         }
@@ -92,7 +92,7 @@ class MovieDetailFragment: Fragment() {
         handleOnBackPressed()
     }
 
-    override fun onSaveInstanceState(outState: Bundle) { // Save the playback position if currently playing
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putFloat("CURRENT_VIDEO_POSITION", currentVideoPosition)
         outState.putBoolean("IS_PLAYING", isPlaying)
@@ -136,10 +136,10 @@ class MovieDetailFragment: Fragment() {
                     youTubePlayer.cueVideo(trailerKey, currentVideoPosition)
                 }
             }
-            override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) { // Update current video position
+            override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
                 currentVideoPosition = second
             }
-            override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) { // Update playing state
+            override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
                 isPlaying = state == PlayerConstants.PlayerState.PLAYING
             }
         })
