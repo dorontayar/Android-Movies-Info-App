@@ -50,7 +50,6 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
         binding.moviesRvSearch.adapter = adapter
 
         binding.searchButton.setOnClickListener{
-            //reset the page
             val query = binding.searchEditText.text.toString()
             page = 1
             viewModel.setQuery(query)
@@ -61,10 +60,9 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
         binding.moviesRvSearch.addOnScrollListener(object : RecyclerView.OnScrollListener(){
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-
                 if (!recyclerView.canScrollVertically(1)){
                     viewModel.setPage(++page)
-
+                    Toast.makeText(requireContext(), "Loading page $page", Toast.LENGTH_LONG).show()
                 }
             }
         })
@@ -75,7 +73,16 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
                 is Success -> {
                     binding.progressBar.isVisible = false
                     adapter.setMovies(ArrayList(it.status.data!!.results))
-
+                    Log.d("noResultsCount",adapter.itemCount.toString())
+                    if(adapter.itemCount != 0) {
+                        binding.noResultsText.isVisible = false
+                        binding.noResultsImg.isVisible = false
+                        binding.moviesRvSearch.isVisible = true
+                    } else {
+                        binding.moviesRvSearch.isVisible = false
+                        binding.noResultsText.isVisible = true
+                        binding.noResultsImg.isVisible = true
+                    }
                 }
                 is Error -> {
                     binding.progressBar.isVisible = false
@@ -89,7 +96,6 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
                 is Loading -> binding.progressBar.isVisible = true
                 is Success -> {
                     binding.progressBar.isVisible = false
-                    //For the scroll rv when it reaches bottom
                     adapter.generateMoreMovies(ArrayList(it.status.data!!.results))
                 }
                 is Error -> {
@@ -103,6 +109,7 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
     }
 
     override fun onMovieClick(movieId: Int) {
+        Toast.makeText(requireContext(), "Movie Clicked", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_search_nav_to_movieDetailFragment,
             bundleOf("id" to movieId)
         )

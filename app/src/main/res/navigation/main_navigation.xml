@@ -27,7 +27,7 @@
             android:id="@+id/action_search_nav_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment"
             app:popUpTo="@id/search_nav"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
     </fragment>
 
 
