@@ -33,6 +33,7 @@
     <string name="profile_image">Profile Image</string>
     <string name="enter_name">Enter Name</string>
     <string name="update_profile">Update Profile</string>
+    <string name="change_profile_image">Change Profile Image</string>
 
 
 </resources>

@@ -49,6 +49,9 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.fetchProfileImage()
+        viewModel.fetchUserName()
+
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 profilePictureUri = result.data?.data
@@ -65,6 +68,9 @@ class ProfileFragment : Fragment() {
         binding.profileImageView.setOnClickListener {
             selectProfileImage()
         }
+        binding.changeProfileImage.setOnClickListener {
+            selectProfileImage()
+        }
 
         binding.updateProfileButton.setOnClickListener {
             val newName = binding.profileNameEditText.text.toString()
@@ -78,6 +84,10 @@ class ProfileFragment : Fragment() {
                 .error(R.drawable.ic_profile_placeholder)
                 .into(binding.profileImageView)
         }
+        viewModel.userName.observe(viewLifecycleOwner) { name ->
+            binding.currentName.text = name
+        }
+
 
         viewModel.updateStatus.observe(viewLifecycleOwner) { resource ->
             when (resource?.status) {
@@ -106,7 +116,7 @@ class ProfileFragment : Fragment() {
         }
 
 
-        viewModel.fetchProfileImage()
+
 
         handleOnBackPressed()
     }
@@ -123,7 +133,7 @@ class ProfileFragment : Fragment() {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    //mainScreenViewModel.setBottomNavigationVisibility(true)
+
                     findNavController().navigate(R.id.mainScreenFragment)
                     isEnabled = false
                     requireActivity().onBackPressedDispatcher.onBackPressed()
