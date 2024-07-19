@@ -23,6 +23,8 @@ class ProfileViewModel @Inject constructor(
     private val _updateStatus = MutableLiveData<Resource<User>?>()
     val updateStatus: MutableLiveData<Resource<User>?> get() = _updateStatus
 
+    private val _userName = MutableLiveData<String>()
+    val userName: LiveData<String> get() = _userName
     init {
         fetchCurrentUser()
     }
@@ -42,7 +44,14 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
-
+    fun fetchUserName() {
+        viewModelScope.launch {
+            val user = repository.currentUser()
+            user.status.data?.name?.let {
+                _userName.value = it
+            }
+        }
+    }
     fun updateProfile(name: String?, profilePictureUri: Uri?) {
         if (name.isNullOrBlank() || name.length < 3) {
             _updateStatus.value = Resource.error("Name must be at least 3 characters long.")

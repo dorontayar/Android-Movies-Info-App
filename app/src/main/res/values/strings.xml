@@ -37,6 +37,6 @@
     <string name="search_movies">Search movies</string>
     <string name="search_movies_btn">Search</string>
     <string name="search_btn">Search</string>
-
+    <string name="change_profile_image">Change Profile Image</string>
 
 </resources>

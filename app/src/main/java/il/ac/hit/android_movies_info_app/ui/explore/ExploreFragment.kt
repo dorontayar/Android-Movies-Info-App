@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
+import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -90,8 +92,17 @@ class ExploreFragment : Fragment(), TopRatedAdapter.MoviesItemListener ,Upcoming
             }
         }
 
+        handleOnBackPressed()
     }
-
+    private fun handleOnBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    requireActivity().finish()
+                }
+            })
+    }
     override fun onMovieClick(movieId: Int) {
         findNavController().navigate(R.id.action_explore_nav_to_movieDetailFragment,
             bundleOf("id" to movieId))
