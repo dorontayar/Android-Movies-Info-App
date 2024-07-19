@@ -8,7 +8,7 @@
         android:id="@+id/explore_nav"
         android:name="il.ac.hit.android_movies_info_app.ui.explore.ExploreFragment"
         android:label="@string/explore_label"
-        tools:layout="@layout/fragment_explore">
+        tools:layout="@layout/fragment_explore_new">
         <action
             android:id="@+id/action_explore_nav_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment"
