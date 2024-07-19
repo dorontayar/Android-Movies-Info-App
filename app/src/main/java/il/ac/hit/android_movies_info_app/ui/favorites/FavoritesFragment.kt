@@ -16,6 +16,7 @@ import il.ac.hit.android_movies_info_app.databinding.FragmentFavoritesBinding
 import il.ac.hit.android_movies_info_app.ui.favorites.viewmodel.FavoritesAdapter
 import il.ac.hit.android_movies_info_app.ui.favorites.viewmodel.FavoritesViewModel
 import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenViewModel
+import il.ac.hit.android_movies_info_app.utils.UserPreferences
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
 @AndroidEntryPoint
@@ -32,13 +33,14 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentFavoritesBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        UserPreferences.getUserEmail(requireContext()).toString().let { viewModel.setUserId(it) }
         setupRecyclerView()
         observeViewModel()
         handleOnBackPressed()
@@ -51,7 +53,7 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
     }
 
     private fun observeViewModel() {
-        viewModel.allFavoriteMovies?.observe(viewLifecycleOwner) { favoriteMovies ->
+        viewModel.allFavoriteMovies.observe(viewLifecycleOwner) { favoriteMovies ->
             favoriteMovies?.let {
                 adapter.setMovies(it)
             }

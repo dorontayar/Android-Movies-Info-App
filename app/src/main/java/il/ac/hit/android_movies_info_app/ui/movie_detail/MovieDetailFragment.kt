@@ -30,6 +30,7 @@ import il.ac.hit.android_movies_info_app.utils.Constants.Companion.IMAGE_TYPE_OR
 import il.ac.hit.android_movies_info_app.utils.Error
 import il.ac.hit.android_movies_info_app.utils.Loading
 import il.ac.hit.android_movies_info_app.utils.Success
+import il.ac.hit.android_movies_info_app.utils.UserPreferences
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 import il.ac.hit.android_movies_info_app.utils.toFavoriteMovie
 
@@ -41,12 +42,14 @@ class MovieDetailFragment: Fragment() {
     private var currentVideoPosition: Float = 0f
     private var isPlaying: Boolean = false
     private var movieDetailResult: MovieDetailsResponse? = null
+    private var userid:String=""
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        userid=UserPreferences.getUserEmail(requireContext()).toString()
         mainScreenViewModel.setBottomNavigationVisibility(false)
         binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -81,6 +84,7 @@ class MovieDetailFragment: Fragment() {
                     movieDetailResult = it.status.data
                     setButtons()
                     updateFavoriteButtons()
+
                 }
                 is Error -> {
                     binding.progressBar.isVisible = false
@@ -101,14 +105,14 @@ class MovieDetailFragment: Fragment() {
     private fun setButtons(){
         binding.btnAddFavorite.setOnClickListener {
             movieDetailResult?.let { movie ->
-                viewModel.addFavorite(movie.toFavoriteMovie())
+                viewModel.addFavorite(movie.toFavoriteMovie(),userid)
                 Log.d("MovieDetailsLog", "Added to favorites: ${movie.toFavoriteMovie()}")
                 Toast.makeText(requireContext(),
                     getString(R.string.added_to_favorites), Toast.LENGTH_SHORT).show()
             }
         }
         binding.btnRemoveFavorite.setOnClickListener {
-            viewModel.removeFavorite()
+            viewModel.removeFavorite(userid)
             Toast.makeText(requireContext(),
                 getString(R.string.removed_from_favorites), Toast.LENGTH_SHORT).show()
         }
@@ -149,7 +153,7 @@ class MovieDetailFragment: Fragment() {
     }
 
     private fun updateFavoriteButtons() {
-        viewModel.findFavorite().observe(viewLifecycleOwner) { favoriteMovie ->
+        viewModel.findFavorite(userid).observe(viewLifecycleOwner) { favoriteMovie ->
             Log.d("MovieDetailsLog", "Favorite: $favoriteMovie")
             val isFavorite = favoriteMovie != null
             binding.btnAddFavorite.isVisible = !isFavorite

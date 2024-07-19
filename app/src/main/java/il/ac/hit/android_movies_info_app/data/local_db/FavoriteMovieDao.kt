@@ -10,15 +10,16 @@ import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
 
 @Dao
 interface FavoriteMovieDao {
-    @Query("SELECT * FROM favorite_movies")
-    fun getAllFavoriteMovies(): LiveData<List<FavoriteMovie>>
+    @Query("SELECT * FROM favorite_movies WHERE userId = :userId")
+    fun getAllFavoriteMovies(userId: String): LiveData<List<FavoriteMovie>>
 
-    @Query("SELECT * FROM favorite_movies WHERE id = :id")
-    fun getFavoriteMovie(id: Int): LiveData<FavoriteMovie>
+    @Query("SELECT * FROM favorite_movies WHERE id = :id AND userId = :userId")
+    fun getFavoriteMovie(id: Int, userId: String): LiveData<FavoriteMovie>
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFavoriteMovie(movie: FavoriteMovie)
 
-    @Query("DELETE FROM favorite_movies WHERE id = :id")
-    suspend fun deleteFavoriteMovie(id: Int)
+    @Query("DELETE FROM favorite_movies WHERE id = :id AND userId = :userId")
+    suspend fun deleteFavoriteMovie(id: Int, userId: String)
 }

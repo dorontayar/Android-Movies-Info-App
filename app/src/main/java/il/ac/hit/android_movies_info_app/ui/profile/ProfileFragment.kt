@@ -200,7 +200,7 @@ class ProfileFragment : Fragment(), NavigationView.OnNavigationItemSelectedListe
                 Toast.makeText(requireContext(),
                     getString(R.string.logout_toast), Toast.LENGTH_SHORT).show()
                 mainScreenViewModel.signOut()
-                findNavController().navigate(R.id.action_mainScreenFragment_to_loginFragment)
+                findNavController().navigate(R.id.action_profileFragmentDrawer_to_loginFragment)
             }
         }
         binding.drawerLayout.closeDrawers()

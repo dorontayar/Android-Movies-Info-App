@@ -38,9 +38,9 @@ class MovieRepository @Inject constructor(
 
 
     // Room related repo functions
-    fun getAllFavoriteMovies() = localDataSourceFavoriteMovie?.getAllFavoriteMovies()
-    fun getFavoriteMovie(id: Int) = localDataSourceFavoriteMovie?.getFavoriteMovie(id)
+    fun getAllFavoriteMovies(userId:String) = localDataSourceFavoriteMovie?.getAllFavoriteMovies(userId)
+    fun getFavoriteMovie(id: Int,userId:String) = localDataSourceFavoriteMovie?.getFavoriteMovie(id,userId)
     suspend fun saveFavoriteMovie(movie: FavoriteMovie) = localDataSourceFavoriteMovie?.insertFavoriteMovie(movie)
-    suspend fun deleteFavoriteMovie(id: Int) = localDataSourceFavoriteMovie?.deleteFavoriteMovie(id)
+    suspend fun deleteFavoriteMovie(id: Int,userId:String) = localDataSourceFavoriteMovie?.deleteFavoriteMovie(id,userId)
 
 }

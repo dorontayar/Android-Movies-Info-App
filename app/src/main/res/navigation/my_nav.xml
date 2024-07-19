@@ -62,6 +62,11 @@
             app:destination="@id/mainScreenFragment"
             app:popUpTo="@id/mainScreenFragment"
             app:popUpToInclusive="false"/>
+        <action
+            android:id="@+id/action_profileFragmentDrawer_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/my_nav"
+            app:popUpToInclusive="true"/>
     </fragment>
 
 

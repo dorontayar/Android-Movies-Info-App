@@ -1,5 +1,7 @@
 package il.ac.hit.android_movies_info_app.utils
 
+import android.content.Context
+import android.content.SharedPreferences
 import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
 import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.MovieDetailsResponse
 
@@ -32,7 +34,8 @@ fun MovieDetailsResponse.toFavoriteMovie(): FavoriteMovie {
         voteAverage = this.voteAverage,
         voteCount = this.voteCount,
         videos = this.videos,
-        images = this.images
+        images = this.images,
+        userId = "userId"
     )
 }
 fun shortenText(text: String, maxLength: Int): String {
@@ -49,4 +52,27 @@ fun shortenText(text: String, maxLength: Int): String {
 interface DrawerController{
     fun openDrawer()
     fun closeDrawer()
+}
+object UserPreferences {
+    private const val PREFS_NAME = "user_prefs"
+    private const val KEY_USER_EMAIL = "user_email"
+    private const val KEY_USER_NAME = "user_name"
+
+    fun saveUser(context: Context, userEmail: String, userName: String) {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(KEY_USER_EMAIL, userEmail)
+        editor.putString(KEY_USER_NAME, userName)
+        editor.apply()
+    }
+
+    fun getUserEmail(context: Context): String? {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(KEY_USER_EMAIL, "")
+    }
+
+    fun getUserName(context: Context): String? {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(KEY_USER_NAME, "")
+    }
 }

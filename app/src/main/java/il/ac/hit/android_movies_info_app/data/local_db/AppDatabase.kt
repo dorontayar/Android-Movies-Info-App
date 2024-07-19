@@ -18,7 +18,7 @@ import il.ac.hit.android_movies_info_app.data.model.movie_search.GenreIdsConvert
 import il.ac.hit.android_movies_info_app.data.model.top_rated_movies.TopRatedMovie
 import il.ac.hit.android_movies_info_app.data.model.upcoming_movies.UpcomingMovie
 
-@Database(entities = [TopRatedMovie::class, FavoriteMovie::class, UpcomingMovie::class], version=3, exportSchema = false)
+@Database(entities = [TopRatedMovie::class, FavoriteMovie::class, UpcomingMovie::class], version=5, exportSchema = false)
 @TypeConverters(GenreIdsConverter::class,
     GenresConverter::class,
     BelongsToCollectionConverter::class,

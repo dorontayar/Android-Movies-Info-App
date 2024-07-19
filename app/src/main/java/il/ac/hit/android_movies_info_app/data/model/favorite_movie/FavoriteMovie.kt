@@ -13,7 +13,7 @@ import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.Produc
 import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.SpokenLanguage
 import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.Videos
 
-@Entity(tableName = "favorite_movies")
+@Entity(tableName = "favorite_movies", primaryKeys = ["id", "userId"])
 @TypeConverters(
     GenresConverter::class,
     BelongsToCollectionConverter::class,
@@ -31,7 +31,6 @@ data class FavoriteMovie(
     val budget: Int,
     val genres: List<Genre>,
     val homepage: String?,
-    @PrimaryKey
     val id: Int,
     @SerializedName("imdb_id") val imdbId: String?,
     @SerializedName("origin_country") val originCountries: List<String>,
@@ -53,5 +52,6 @@ data class FavoriteMovie(
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("vote_count") val voteCount: Int,
     val videos: Videos,
-    val images: Images
+    val images: Images,
+    var userId: String
 )

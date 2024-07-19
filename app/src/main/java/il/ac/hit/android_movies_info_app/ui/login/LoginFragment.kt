@@ -16,6 +16,7 @@ import il.ac.hit.android_movies_info_app.ui.login.viewmodel.LoginViewModel
 import il.ac.hit.android_movies_info_app.utils.Loading
 import il.ac.hit.android_movies_info_app.utils.Success
 import il.ac.hit.android_movies_info_app.utils.Error
+import il.ac.hit.android_movies_info_app.utils.UserPreferences
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
 @AndroidEntryPoint
@@ -57,6 +58,7 @@ class LoginFragment : Fragment() {
                 is Success -> {
                     Toast.makeText(requireContext(),
                         getString(R.string.login_successful), Toast.LENGTH_SHORT).show()
+                    it.status.data?.let { user -> UserPreferences.saveUser(requireContext(), user.email, user.name) }
                     findNavController().navigate(R.id.action_loginFragment_to_mainScreenFragment)
                 }
                 is Error -> {
@@ -76,6 +78,7 @@ class LoginFragment : Fragment() {
                     binding.buttonLogin.isEnabled = false
                 }
                 is Success -> {
+                    it.status.data?.let { user -> UserPreferences.saveUser(requireContext(), user.email, user.name) }
                     findNavController().navigate(R.id.action_loginFragment_to_mainScreenFragment)
                 }
                 is Error -> {
