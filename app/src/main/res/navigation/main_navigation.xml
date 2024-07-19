@@ -27,7 +27,7 @@
             android:id="@+id/action_search_nav_to_movieDetailFragment"
             app:destination="@id/movieDetailFragment"
             app:popUpTo="@id/search_nav"
-            app:popUpToInclusive="false" />
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -51,7 +51,6 @@
             app:destination="@id/search_nav"
             app:popUpTo="@id/main_navigation"
             app:popUpToInclusive="true" />
-        <!-- Add similar actions for other tabs -->
     </fragment>
 
     <fragment
