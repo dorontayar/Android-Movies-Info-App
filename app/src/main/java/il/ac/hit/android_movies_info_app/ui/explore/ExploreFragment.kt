@@ -92,7 +92,7 @@ class ExploreFragment : Fragment(), TopRatedAdapter.MoviesItemListener ,Upcoming
             }
         }
 
-        handleOnBackPressed()
+        //handleOnBackPressed()
     }
     private fun handleOnBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(

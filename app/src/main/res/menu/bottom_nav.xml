@@ -13,9 +13,6 @@
         android:title="@string/favorites"
         android:id="@+id/favorites_nav"
         android:icon="@drawable/ic_favorites"/>
-    <item
-        android:title="@string/profile"
-        android:id="@+id/profile_nav"
-        android:icon="@drawable/ic_profile_placeholder"/>
+
 
 </menu>

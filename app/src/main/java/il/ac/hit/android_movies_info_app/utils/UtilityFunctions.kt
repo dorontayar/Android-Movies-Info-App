@@ -46,3 +46,7 @@ fun shortenText(text: String, maxLength: Int): String {
         return "$trimmedText..."
     }
 }
+interface DrawerController{
+    fun openDrawer()
+    fun closeDrawer()
+}

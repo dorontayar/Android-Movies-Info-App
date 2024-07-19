@@ -4,6 +4,7 @@ package il.ac.hit.android_movies_info_app.ui.main_screen
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -39,11 +40,12 @@ import il.ac.hit.android_movies_info_app.ui.favorites.FavoritesFragment
 import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenViewModel
 import il.ac.hit.android_movies_info_app.ui.profile.ProfileFragment
 import il.ac.hit.android_movies_info_app.ui.search.SearchFragment
+import il.ac.hit.android_movies_info_app.utils.DrawerController
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
 
 @AndroidEntryPoint
-class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedListener{
+class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedListener,DrawerController{
 
     private var binding: FragmentMainScreenDrawerBinding by autoCleared()
     private val viewModel : MainScreenViewModel by activityViewModels()
@@ -86,7 +88,7 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
         val navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.explore_nav, R.id.search_nav,R.id.favorites_nav,R.id.profile_nav,R.id.movieDetailFragment),
+            setOf(R.id.explore_nav, R.id.search_nav,R.id.favorites_nav,R.id.movieDetailFragment),
             drawerLayout
         )
         setupActionBarWithNavController(requireActivity() as AppCompatActivity, navController, appBarConfiguration)
@@ -98,13 +100,21 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
                 setBottomNavigationVisibility(isVisible)
             }
 
-        handleOnBackPressed()
+        //handleOnBackPressed()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_home -> {
+                childFragmentManager.popBackStack()
+                childFragmentManager.popBackStack()
+                viewModel.setBottomNavigationVisibility(true)
                 findNavController().navigate(R.id.mainScreenFragment)
+            }
+            R.id.nav_profile_manage -> {
+                childFragmentManager.popBackStack()
+                childFragmentManager.popBackStack()
+                findNavController().navigate(R.id.action_mainScreenFragment_to_profileFragmentDrawer)
             }
 
             R.id.nav_github -> {
@@ -123,22 +133,33 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
         return true
     }
 
+
     private fun handleOnBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (drawerLayout?.isDrawerOpen(GravityCompat.START) == true) {
-                        drawerLayout?.closeDrawer(GravityCompat.START)
+                        drawerLayout!!.closeDrawer(GravityCompat.START)
                     } else {
                         childFragmentManager.popBackStack()
-
+                        isEnabled = false
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
                     }
                 }
-            })
+            }
+        )
     }
 
     private fun setBottomNavigationVisibility(isVisible:Boolean){
         binding.appBarMain.contentMain.bottomAppBar.isVisible = isVisible
+    }
+
+    override fun openDrawer() {
+        drawerLayout?.openDrawer(GravityCompat.START)
+    }
+
+    override fun closeDrawer() {
+        drawerLayout?.closeDrawer(GravityCompat.START)
     }
 }
