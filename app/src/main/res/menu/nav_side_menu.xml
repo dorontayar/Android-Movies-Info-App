@@ -10,10 +10,6 @@
             android:icon="@drawable/nav_home"
             android:title="@string/home"/>
         <item
-            android:id="@+id/nav_profile_mange"
-            android:icon="@drawable/ic_profile_placeholder"
-            android:title="@string/profile_management"/>
-        <item
             android:id="@+id/nav_github"
             android:icon="@drawable/nav_github"
             android:title="@string/github"/>

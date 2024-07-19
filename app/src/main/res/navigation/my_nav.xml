@@ -29,6 +29,7 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/my_nav"
             app:popUpToInclusive="true" />
+
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -41,10 +42,6 @@
             app:popUpTo="@id/registerFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/profileFragment"
-        android:name="il.ac.hit.android_movies_info_app.ui.profile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+
 
 </navigation>

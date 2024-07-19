@@ -120,7 +120,7 @@ class ProfileFragment : Fragment() {
 
 
 
-        handleOnBackPressed()
+       // handleOnBackPressed()
     }
 
     private fun selectProfileImage() {

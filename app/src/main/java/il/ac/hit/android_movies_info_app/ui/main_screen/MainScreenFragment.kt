@@ -86,7 +86,7 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
         val navController = navHostFragment.navController
 
         val appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.explore_nav, R.id.search_nav,R.id.favorites_nav,R.id.movieDetailFragment),
+            setOf(R.id.explore_nav, R.id.search_nav,R.id.favorites_nav,R.id.profile_nav,R.id.movieDetailFragment),
             drawerLayout
         )
         setupActionBarWithNavController(requireActivity() as AppCompatActivity, navController, appBarConfiguration)
@@ -106,21 +106,12 @@ class MainScreenFragment : Fragment() , NavigationView.OnNavigationItemSelectedL
             R.id.nav_home -> {
                 findNavController().navigate(R.id.mainScreenFragment)
             }
-            R.id.nav_profile_mange -> {
-                setBottomNavigationVisibility(false)
-                binding.appBarMain.toolbar.title = getString(R.string.profile_management)
-                val fragment = ProfileFragment()
-                childFragmentManager.beginTransaction()
-                    .replace(R.id.nav_host_fragment_main_screen, fragment)
-                    .addToBackStack(null)
-                    .commit()
-            }
+
             R.id.nav_github -> {
                 val url = "https://github.com/dorontayar/Android-Movies-Info-App"
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 startActivity(intent)
             }
-
             R.id.nav_logout -> {
                 Toast.makeText(requireContext(),
                     getString(R.string.logout_toast), Toast.LENGTH_SHORT).show()
