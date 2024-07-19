@@ -5,8 +5,6 @@ import il.ac.hit.android_movies_info_app.data.local_db.FavoriteMovieDao
 import il.ac.hit.android_movies_info_app.data.local_db.TopRatedMovieDao
 import il.ac.hit.android_movies_info_app.data.local_db.UpcomingMovieDao
 import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
-import il.ac.hit.android_movies_info_app.data.model.movie_search.Movie
-import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.MovieDetailsResponse
 import il.ac.hit.android_movies_info_app.data.remote_db.MovieRemoteDataSource
 import il.ac.hit.android_movies_info_app.utils.performFetching
 import il.ac.hit.android_movies_info_app.utils.performFetchingAndSaving
@@ -31,6 +29,12 @@ class MovieRepository @Inject constructor(
         { remoteDataSource.getUpcomingMovies() },
         { localDataSourceUpcoming.insertMovies(it.results.sortedByDescending { movie -> movie.releaseDate }) }
     )
+    fun getUpcomingMoviesByDateRange(startDate: String, endDate: String) = performFetchingAndSaving(
+        { localDataSourceUpcoming.getUpcomingMovies() },
+        { remoteDataSource.getUpcomingMoviesByDateRange(startDate,endDate) },
+        { localDataSourceUpcoming.insertMovies(it.results.sortedByDescending { movie -> movie.releaseDate }) }
+    )
+
     fun getMovie(id: Int) = performFetching { remoteDataSource.getMovieDetails(id) }
     fun getSearchedMovies(query : String) = performFetching { remoteDataSource.searchMovie(query) }
     fun getSearchedMoviesScrolling(query : String,page:Int) = performFetching { remoteDataSource.searchMovieScrolling(query,page) }

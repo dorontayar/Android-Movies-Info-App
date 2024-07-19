@@ -46,5 +46,13 @@ interface MovieService {
         @Query("api_key") apiKey: String = API_KEY
     ): Response<UpcomingMovieResponse>
 
+    @GET("discover/movie")
+    suspend fun getUpcomingMoviesByDateRange(
+        @Query("primary_release_date.gte") startDate: String,
+        @Query("primary_release_date.lte") endDate: String,
+        @Query("sort_by") sortBy: String = "release_date.dsc",
+        @Query("api_key") apiKey: String = API_KEY
+    ): Response<UpcomingMovieResponse>
+
 
 }

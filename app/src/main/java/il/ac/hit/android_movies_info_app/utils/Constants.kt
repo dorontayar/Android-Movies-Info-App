@@ -23,5 +23,8 @@ class Constants {
 
         const val DEFAULT_PROFILE_IMAGE_URL = "drawable/ic_profile_placeholder"
 
+        const val DEFAULT_DATE_RANGE_FOR_UPCOMING_MOVIES = 12
+        const val DEFAULT_UPCOMING_MOVIES_TO_SHOW_IN_EXPLORE=21
+
     }
 }

@@ -74,7 +74,7 @@ class ExploreFragment : Fragment(), TopRatedAdapter.MoviesItemListener ,Upcoming
 
             }
         }
-        viewModel.upcomingMovies.observe(viewLifecycleOwner) {
+        viewModel.upcomingMoviesByRange.observe(viewLifecycleOwner) {
             when(it.status) {
                 is Loading -> binding.progressBar.isVisible = true
                 is Success -> {
