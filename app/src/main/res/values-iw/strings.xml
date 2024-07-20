@@ -73,5 +73,11 @@
     <string name="name_profile">שם</string>
     <string name="description_not_found">לא נמצא תיאור</string>
     <string name="release_date_not_found">לא נמצא תאריך יציאה</string>
+    <string name="genre">• ג\'אנר</string>
+    <string name="title">כותרת</string>
+    <string name="tmp">זמני</string>
+    <string name="tmp_date">2024/07/22</string>
+    <string name="video">• טריילר</string>
+    <string name="gallery">• גלרייה</string>
 
 </resources>

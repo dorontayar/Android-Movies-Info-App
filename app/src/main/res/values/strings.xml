@@ -20,7 +20,7 @@
     <string name="don_t_have_an_acount_yet_click_to_register">Don\'t have an account yet?\nClick to register</string>
     <string name="login">Login</string>
     <string name="movie_title">Movie Title</string>
-    <string name="description">description</string>
+    <string name="description">Description</string>
     <string name="rating">Rating:</string>
     <string name="votes">Votes:</string>
     <string name="favorite">Favorite</string>
@@ -72,5 +72,11 @@
     <string name="name_profile">Name</string>
     <string name="description_not_found">Description not found</string>
     <string name="release_date_not_found">Release date not found</string>
+    <string name="genre">• Genre</string>
+    <string name="title">Title</string>
+    <string name="tmp">tmp</string>
+    <string name="tmp_date">2024/07/22</string>
+    <string name="video">• Trailer</string>
+    <string name="gallery">• Gallery</string>
 
 </resources>
