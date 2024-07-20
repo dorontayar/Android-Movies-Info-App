@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Android-Movies-Info-App</string>
+    <string name="app_name">Moviez</string>
     <string name="open_nav">פתח מגירת ניווט</string>
     <string name="close_nav">סגור מגירת ניווט</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name">שם</string>
     <string name="email">אימייל</string>
     <string name="phone_number">מספר טלפון</string>
@@ -16,7 +15,7 @@
     <string name="profile_management">ניהול פרופיל</string>
     <string name="home">בית</string>
     <string name="settings">הגדרות</string>
-    <string name="github">Github</string>
+    <string name="github">גיטהאב</string>
     <string name="logout">יציאה</string>
     <string name="don_t_have_an_acount_yet_click_to_register">אין משתמש?\nלחצו כאן להרשמה</string>
     <string name="login">כניסה</string>
@@ -89,5 +88,6 @@
     <string name="gallery">• גלרייה:</string>
     <string name="no_internet_connection">אין חיבור לאינטרנט</string>
     <string name="genres_not_found">לא נמצא</string>
+    <string name="no_favorites">אין מועדפים</string>
 
 </resources>

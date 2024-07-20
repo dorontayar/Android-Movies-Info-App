@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">Android-Movies-Info-App</string>
+    <string name="app_name">Moviez</string>
     <string name="open_nav">Open Navigation Drawer</string>
     <string name="close_nav">Close Navigation Drawer</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="phone_number">Phone Number</string>
@@ -88,5 +87,6 @@
     <string name="gallery">• Gallery:</string>
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="genres_not_found">Not found</string>
+    <string name="no_favorites">No Favorites</string>
 
 </resources>
