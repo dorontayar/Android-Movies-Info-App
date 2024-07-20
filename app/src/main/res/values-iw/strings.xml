@@ -21,14 +21,14 @@
     <string name="don_t_have_an_acount_yet_click_to_register">אין משתמש?\nלחצו כאן להרשמה</string>
     <string name="login">כניסה</string>
     <string name="movie_title">שם הסרט</string>
-    <string name="description">תיאור</string>
-    <string name="rating">דירוג:</string>
+    <string name="description">• תיאור:</string>
+    <string name="rating">• דירוג:</string>
     <string name="votes">הצבעות:</string>
     <string name="favorite">מועדפים</string>
     <string name="favorites">מועדפים</string>
     <string name="add_to_favorites">הוסף למועדפים</string>
     <string name="remove_from_favorites">הסר ממועדפים</string>
-    <string name="release_date">תאריך יציאה: %1$s</string>
+    <string name="release_date">• תאריך יציאה: %1$s</string>
     <string name="no_trailer">טריילר לא נמצא - הנה ריק אסטלי!</string>
     <string name="profile_image">תמונת פרופיל</string>
     <string name="enter_name">הכנס שם</string>
@@ -72,7 +72,7 @@
     <string name="current_name">שם נוכחי:</string>
     <string name="name_profile">שם</string>
     <string name="description_not_found">לא נמצא תיאור</string>
-    <string name="release_date_not_found">לא נמצא תאריך יציאה</string>
+    <string name="release_date_not_found">• תאריך יציאה: לא נמצא</string>
     <string name="password_must_be_at_least_6_characters">הסיסמא חייבת להיות 6 תווים לפחות</string>
     <string name="remove_from_favorites_dialog_title">הסרה ממועדפים</string>
     <string name="are_you_sure_you_want_to_remove_this_movie_from_your_favorites">האם את/ה בטוח שברצונך להסיר סרט זה מרשימת המועדפים?</string>
@@ -81,12 +81,13 @@
     <string name="incorrect_email_or_password">איימיל או סיסמא לא נכונים</string>
     <string name="email_badly_formatted">איימיל לא תקין</string>
     <string name="the_email_already_registered">האימייל כבר בשימוש על ידי משתמש אחר</string>
-    <string name="genre">• ג\'אנר</string>
+    <string name="genre">• ג\'אנר: </string>
     <string name="title">כותרת</string>
     <string name="tmp">זמני</string>
     <string name="tmp_date">2024/07/22</string>
-    <string name="video">• טריילר</string>
-    <string name="gallery">• גלרייה</string>
+    <string name="video">• טריילר:</string>
+    <string name="gallery">• גלרייה:</string>
     <string name="no_internet_connection">אין חיבור לאינטרנט</string>
+    <string name="genres_not_found">לא נמצא</string>
 
 </resources>
