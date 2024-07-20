@@ -1,6 +1,7 @@
 package il.ac.hit.android_movies_info_app.ui.register.viewmodel
 
 import android.net.Uri
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,6 +9,7 @@ import il.ac.hit.android_movies_info_app.HiltApp
 import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.data.model.User
 import il.ac.hit.android_movies_info_app.data.repositories.auth_repository.AuthRepository
+import il.ac.hit.android_movies_info_app.data.repositories.auth_repository.firebase_implementation.AuthRepositoryFirebase
 import il.ac.hit.android_movies_info_app.utils.Resource
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +28,8 @@ class RegisterViewModel @Inject constructor(
                 R.string.empty_strings
             )
             !Patterns.EMAIL_ADDRESS.matcher(userEmail).matches() -> HiltApp.getContext()?.getString(R.string.not_a_valid_email)
+            userPass.length<6 -> HiltApp.getContext()?.getString(R.string.password_must_be_at_least_6_characters)
+
             else -> null
         }
         error?.let {

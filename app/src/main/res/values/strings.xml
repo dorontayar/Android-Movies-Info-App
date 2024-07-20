@@ -72,5 +72,13 @@
     <string name="name_profile">Name</string>
     <string name="description_not_found">Description not found</string>
     <string name="release_date_not_found">Release date not found</string>
+    <string name="password_must_be_at_least_6_characters">Password must be at least 6 characters</string>
+    <string name="remove_from_favorites_dialog_title">Remove from Favorites</string>
+    <string name="are_you_sure_you_want_to_remove_this_movie_from_your_favorites">Are you sure you want to remove this movie from your favorites?</string>
+    <string name="yes_dialog">Yes</string>
+    <string name="no">No</string>
+    <string name="incorrect_email_or_password">Incorrect email or password</string>
+    <string name="email_badly_formatted">The email address is badly formatted.</string>
+    <string name="the_email_already_registered">The email already registered</string>
 
 </resources>
