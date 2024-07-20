@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,9 +50,13 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
         UserPreferences.getUserEmail(requireContext()).toString().let { viewModel.setUserId(it) }
         setupRecyclerView()
         observeViewModel()
+        setUpVisibility()
         handleOnBackPressed()
     }
-
+    private fun setUpVisibility(){
+        binding.moviesRv.visibility = View.GONE
+        binding.noFavorites.visibility = View.VISIBLE
+    }
     private fun setupRecyclerView() {
         adapter = FavoritesAdapter(this)
         binding.moviesRv.layoutManager = LinearLayoutManager(requireContext())
@@ -78,8 +83,13 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
 
     private fun observeViewModel() {
         viewModel.allFavoriteMovies.observe(viewLifecycleOwner) { favoriteMovies ->
-            favoriteMovies?.let {
-                adapter.setMovies(it)
+            if (favoriteMovies.isNullOrEmpty()) {
+                binding.moviesRv.visibility = View.GONE
+                binding.noFavorites.visibility = View.VISIBLE
+            } else {
+                binding.moviesRv.visibility = View.VISIBLE
+                binding.noFavorites.visibility = View.GONE
+                adapter.setMovies(favoriteMovies)
             }
         }
     }
