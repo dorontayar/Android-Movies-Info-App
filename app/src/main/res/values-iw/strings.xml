@@ -81,6 +81,11 @@
     <string name="incorrect_email_or_password">איימיל או סיסמא לא נכונים</string>
     <string name="email_badly_formatted">איימיל לא תקין</string>
     <string name="the_email_already_registered">האימייל כבר בשימוש על ידי משתמש אחר</string>
-
+    <string name="genre">• ג\'אנר</string>
+    <string name="title">כותרת</string>
+    <string name="tmp">זמני</string>
+    <string name="tmp_date">2024/07/22</string>
+    <string name="video">• טריילר</string>
+    <string name="gallery">• גלרייה</string>
 
 </resources>

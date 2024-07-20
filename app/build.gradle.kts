@@ -131,6 +131,8 @@ dependencies {
 
     //For youtube video player
     implementation(libs.core)
+    //For image gallery
+    implementation(libs.squareup.picasso)
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.annotation)

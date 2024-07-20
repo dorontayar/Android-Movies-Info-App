@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -21,6 +22,7 @@ import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.MovieDetailsResponse
 import il.ac.hit.android_movies_info_app.databinding.FragmentMovieDetailBinding
 import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenViewModel
+import il.ac.hit.android_movies_info_app.ui.movie_detail.viewmodel.GalleryAdapter
 import il.ac.hit.android_movies_info_app.ui.movie_detail.viewmodel.MovieDetailViewModel
 import il.ac.hit.android_movies_info_app.utils.Constants.Companion.IMAGE_TYPE_ORIGINAL
 import il.ac.hit.android_movies_info_app.utils.Error
@@ -39,6 +41,8 @@ class MovieDetailFragment: Fragment() {
     private var isPlaying: Boolean = false
     private var movieDetailResult: MovieDetailsResponse? = null
     private var userid:String=""
+    private lateinit var adapter: GalleryAdapter
+    private lateinit var viewPager: ViewPager2
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,6 +84,7 @@ class MovieDetailFragment: Fragment() {
                     movieDetailResult = it.status.data
                     setButtons()
                     updateFavoriteButtons()
+                    populateImageGallery()
                 }
                 is Error -> {
                     binding.progressBar.isVisible = false
@@ -91,6 +96,12 @@ class MovieDetailFragment: Fragment() {
         handleOnBackPressed()
     }
 
+    private fun populateImageGallery(){
+        movieDetailResult?.let {
+            adapter = GalleryAdapter(it.images.backdrops)
+            binding.movieImagesGallery.adapter = adapter }
+
+    }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putFloat("CURRENT_VIDEO_POSITION", currentVideoPosition)
@@ -121,8 +132,11 @@ class MovieDetailFragment: Fragment() {
         binding.movieReleaseDateText.text = movie.releaseDate.takeIf { it.isNotEmpty() }?.let {
             getString(R.string.release_date, it)
         } ?: getString(R.string.release_date_not_found)
-        binding.movieRating.text = movie.voteAverage.toString()
-        binding.movieVote.text = movie.voteCount.toString()
+        val voteAveragePercent: String = if (movie.voteAverage == 0.0) "-" else (movie.voteAverage * 10).toInt().toString() + "%"
+        val voteCountText: String = if (movie.voteCount == 0) "-" else movie.voteCount.toString()
+
+        binding.movieRating.text = voteAveragePercent
+        binding.movieVote.text = voteCountText
         binding.genres.text = movie.genres.joinToString(", ") { it.name }
 
         var trailerKey = movie.videos.results.firstOrNull { it.type == "Trailer" }?.key

@@ -13,7 +13,7 @@
         android:backgroundTint="@color/white"
         android:foregroundTint="@color/orange_light"
         android:theme="@style/ThemeOverlay.AppCompat.Light">
-        >
+
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/colapsing"
@@ -32,7 +32,7 @@
                 android:id="@+id/movie_poster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="tmp"
+                android:contentDescription="@string/tmp"
                 tools:src="@drawable/film"
                 android:fitsSystemWindows="true"
                 android:scaleType="fitCenter"
@@ -76,8 +76,7 @@
                         android:marqueeRepeatLimit="marquee_forever"
                         android:padding="20dp"
                         android:singleLine="false"
-                        android:text=" "
-                        android:textColor="@color/black"
+                        android:text="@string/title"
                         android:autoSizeMaxTextSize="26sp"
                         android:textSize="22sp"
                         android:autoSizeMinTextSize="20sp"/>
@@ -95,33 +94,12 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:textSize="22sp"
-                        android:textColor="@color/black"
                         android:layout_centerVertical="true"
                         android:layout_alignParentStart="true"
-                        android:text="Description"
+                        android:text="@string/description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
 
-                    <LinearLayout
-                        android:gravity="center"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-
-                            android:layout_marginLeft="5dp"
-                            android:id="@+id/movie_release_date_text"
-                            android:layout_centerVertical="true"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="2024/07/22"
-                            android:layout_marginStart="5dp"
-                            android:textColor="@color/black"
-                            android:textSize="14sp" />
-
-                    </LinearLayout>
                 </RelativeLayout>
 
                 <TextView
@@ -135,11 +113,10 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp"
-                    android:textColor="@color/black" />
-
+                    />
                 <LinearLayout
-                    android:id="@+id/LayoutRatingVotes"
-                    android:layout_below="@+id/movie_description"
+                    android:layout_below="@id/movie_description"
+                    android:id="@+id/release_date_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -148,14 +125,66 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="20dp">
+
+                    <TextView
+                        android:id="@+id/movie_release_date_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tmp_date"
+                        android:textSize="20sp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_below="@id/release_date_layout"
+                    android:id="@+id/genres_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp">
+
+                    <TextView
+                        android:id="@+id/genreTitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/genre"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/genres"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:gravity="center"
+                        android:text=""
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LayoutRatingVotes"
+                    android:layout_below="@+id/genres_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     >
+
                     <TextView
                         android:id="@+id/movie_rating_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:text="@string/rating"
                         android:textSize="20sp" />
 
@@ -173,7 +202,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:text="@string/votes"
                         android:textSize="20sp" />
 
@@ -186,43 +214,43 @@
                         android:text=""
                         android:textSize="20sp" />
                 </LinearLayout>
-                <TextView
-                    android:id="@+id/genresTitle"
-                    android:layout_below="@+id/LayoutRatingVotes"
-                    android:textSize="14sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:text="• Genre"
-                    android:letterSpacing="0.15"
-                    android:textColor="@color/black"
+                <LinearLayout
+                    android:id="@+id/btns_linear_layout"
+                    android:layout_below="@id/LayoutRatingVotes"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/genres"
-                    android:layout_below="@+id/genresTitle"
-                    android:textSize="14sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:textColor="@color/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="25dp"
+                    android:gravity="center|center_horizontal"
+                    >
+
+                    <Button
+                        android:id="@+id/btn_add_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/add_to_favorites"
+                        />
+                    <Button
+                        android:id="@+id/btn_remove_favorite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/remove_from_favorites"
+
+                        android:visibility="gone"/>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/video"
-                    android:layout_below="@+id/genres"
+                    android:layout_below="@+id/btns_linear_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:letterSpacing="0.15"
-                    android:text="• Video"
+                    android:text="@string/video"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/no_trailer_text"
@@ -266,38 +294,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:letterSpacing="0.15"
-                    android:text="• Screenshots"
+                    android:text="@string/gallery"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
-                    android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-
-                <LinearLayout
-                    android:id="@+id/btns_linear_layout"
+                    android:textSize="20sp" />
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/movieImagesGallery"
                     android:layout_below="@id/screen_shots"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="25dp"
-                    android:gravity="center|center_horizontal"
-                    >
-
-                    <Button
-                        android:id="@+id/btn_add_favorite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add_to_favorites"
-                        />
-                    <Button
-                        android:id="@+id/btn_remove_favorite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/remove_from_favorites"
-
-                        android:visibility="gone"/>
-                </LinearLayout>
+                    android:layout_height="200dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"/>
 
             </RelativeLayout>
 
