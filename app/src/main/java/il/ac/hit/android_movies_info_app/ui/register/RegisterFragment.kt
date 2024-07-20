@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,7 +83,13 @@ class RegisterFragment: Fragment() {
                 is Error -> {
                     binding.registerProgress.isVisible = false
                     binding.userRegisterButton.isEnabled = true
-                    Toast.makeText(requireContext(), it.status.message, Toast.LENGTH_SHORT).show()
+                    if(it.status.message=="The email address is already in use by another account."){
+                        Toast.makeText(requireContext(),
+                            getString(R.string.the_email_already_registered), Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(requireContext(), it.status.message, Toast.LENGTH_SHORT).show()
+                    }
+
                 }
             }
         }

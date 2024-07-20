@@ -35,10 +35,10 @@ class FavoritesViewModel @Inject constructor(
                 try {
                     movieRepository.deleteFavoriteMovie(movie.id, it)
                     Log.d("FavoriteViewModel", "Removed from favorites: $it")
-            } catch (e: Exception) {
-                Log.e("FavoriteViewModel", "Failed to remove favorite: $it")
+                } catch (e: Exception) {
+                    Log.e("FavoriteViewModel", "Failed to remove favorite: $it")
+                }
             }
         }
     }
-}
 }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
+import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
 import il.ac.hit.android_movies_info_app.databinding.FragmentFavoritesBinding
 import il.ac.hit.android_movies_info_app.ui.favorites.viewmodel.FavoritesAdapter
 import il.ac.hit.android_movies_info_app.ui.favorites.viewmodel.FavoritesViewModel
@@ -64,10 +66,8 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 val movie = adapter.movies[position]
-                adapter.removeMovie(position)
 
-
-                viewModel.removeFavorite(movie)
+                showDeleteConfirmationDialog(position, movie)
             }
         })
 
@@ -86,17 +86,41 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
             viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    if(mainScreenViewModel.getDrawerState() == false) {
+                    if (mainScreenViewModel.getDrawerState() == false) {
                         isEnabled = false
                         requireActivity().onBackPressedDispatcher.onBackPressed()
-                    }
-                    else{
+                    } else {
                         mainScreenViewModel.setDrawerState(false)
 
                     }
                 }
             })
     }
+
+    private fun showDeleteConfirmationDialog(position: Int, movie: FavoriteMovie) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.remove_from_favorites_dialog_title))
+        builder.setMessage(getString(R.string.are_you_sure_you_want_to_remove_this_movie_from_your_favorites))
+        builder.setCancelable(false)
+
+        builder.setPositiveButton(getString(R.string.yes_dialog)) { dialog, _ ->
+            adapter.removeMovie(position)
+            viewModel.removeFavorite(movie)
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton(getString(R.string.no)) { dialog, _ ->
+            adapter.notifyItemChanged(position)
+            dialog.dismiss()
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+
+
+
     override fun onMovieClick(movieId: Int) {
         findNavController().navigate(R.id.action_favorites_nav_to_movieDetailFragment,
             bundleOf("id" to movieId)

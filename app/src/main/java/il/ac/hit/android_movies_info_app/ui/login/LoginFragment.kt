@@ -1,6 +1,7 @@
 package il.ac.hit.android_movies_info_app.ui.login
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,9 +65,16 @@ class LoginFragment : Fragment() {
                 is Error -> {
                     binding.loginProgressBar.isVisible = false
                     binding.buttonLogin.isEnabled = true
-                    Toast.makeText(requireContext(),it.status.message,Toast.LENGTH_SHORT).show()
+                    val message = when (it.status.message) {
+                        "The supplied auth credential is incorrect, malformed or has expired." ->
+                            getString(R.string.incorrect_email_or_password)
+                        "The email address is badly formatted." ->
+                            getString(R.string.email_badly_formatted)
+                        else ->
+                            it.status.message
+                    }
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                 }
-
             }
         }
 
