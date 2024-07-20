@@ -22,15 +22,15 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/moviez_title_logo_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/moviez_title_logo_image_small"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:src="@drawable/moviez_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/app_logo_image"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_logo_image"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.285" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
