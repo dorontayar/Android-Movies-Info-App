@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -20,12 +18,10 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
-import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
 import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.MovieDetailsResponse
 import il.ac.hit.android_movies_info_app.databinding.FragmentMovieDetailBinding
 import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenViewModel
 import il.ac.hit.android_movies_info_app.ui.movie_detail.viewmodel.MovieDetailViewModel
-import il.ac.hit.android_movies_info_app.utils.Constants.Companion.IMAGE_TYPE_W185
 import il.ac.hit.android_movies_info_app.utils.Constants.Companion.IMAGE_TYPE_ORIGINAL
 import il.ac.hit.android_movies_info_app.utils.Error
 import il.ac.hit.android_movies_info_app.utils.Loading
@@ -84,7 +80,6 @@ class MovieDetailFragment: Fragment() {
                     movieDetailResult = it.status.data
                     setButtons()
                     updateFavoriteButtons()
-
                 }
                 is Error -> {
                     binding.progressBar.isVisible = false
@@ -128,6 +123,7 @@ class MovieDetailFragment: Fragment() {
         } ?: getString(R.string.release_date_not_found)
         binding.movieRating.text = movie.voteAverage.toString()
         binding.movieVote.text = movie.voteCount.toString()
+        binding.genres.text = movie.genres.joinToString(", ") { it.name }
 
         var trailerKey = movie.videos.results.firstOrNull { it.type == "Trailer" }?.key
         if (trailerKey == null) {
@@ -178,5 +174,6 @@ class MovieDetailFragment: Fragment() {
                 }
             })
     }
+
 }
 
