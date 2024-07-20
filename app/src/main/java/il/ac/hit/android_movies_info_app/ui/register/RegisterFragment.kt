@@ -22,6 +22,7 @@ import il.ac.hit.android_movies_info_app.ui.register.viewmodel.RegisterViewModel
 import il.ac.hit.android_movies_info_app.utils.Loading
 import il.ac.hit.android_movies_info_app.utils.Success
 import il.ac.hit.android_movies_info_app.utils.Error
+import il.ac.hit.android_movies_info_app.utils.NetworkState
 import il.ac.hit.android_movies_info_app.utils.Resource
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
@@ -41,26 +42,8 @@ class RegisterFragment: Fragment() {
     ): View? {
         binding = FragmentRegisterBinding.inflate(inflater,container,false)
 
-        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                profilePictureUri = result.data?.data
-                binding.profileImageView.setImageURI(profilePictureUri)
-            }
-        }
-
-        binding.userRegisterButton.setOnClickListener{
-            viewmodel.createUser(
-                binding.edxtUserName.editText?.text.toString(),
-                binding.edxtEmailAddress.editText?.text.toString(),
-                binding.edxtPhoneNum.editText?.text.toString(),
-                binding.edxtPassword.editText?.text.toString(),
-                profilePictureUri
-            )
-        }
-
-        binding.selectProfileImageButton.setOnClickListener {
-            selectProfileImage()
-        }
+        imagePickerSetup()
+        buttonSetup()
 
         return binding.root
     }
@@ -68,6 +51,11 @@ class RegisterFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        userRegistrationStatus()
+
+    }
+
+    private fun userRegistrationStatus() {
         viewmodel.userRegistrationStatus.observe(viewLifecycleOwner){
 
             when(it.status){
@@ -93,9 +81,36 @@ class RegisterFragment: Fragment() {
                 }
             }
         }
-
     }
 
+    private fun buttonSetup(){
+        binding.userRegisterButton.setOnClickListener{
+            if (NetworkState.isNetworkAvailable(requireContext())) {
+                viewmodel.createUser(
+                    binding.edxtUserName.editText?.text.toString(),
+                    binding.edxtEmailAddress.editText?.text.toString(),
+                    binding.edxtPhoneNum.editText?.text.toString(),
+                    binding.edxtPassword.editText?.text.toString(),
+                    profilePictureUri
+                )
+            }else{
+                Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+            }
+
+        }
+        binding.selectProfileImageButton.setOnClickListener {
+            selectProfileImage()
+        }
+    }
+    private fun imagePickerSetup(){
+        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                profilePictureUri = result.data?.data
+                binding.profileImageView.setImageURI(profilePictureUri)
+            }
+        }
+
+    }
     private fun selectProfileImage() {
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = "image/*"

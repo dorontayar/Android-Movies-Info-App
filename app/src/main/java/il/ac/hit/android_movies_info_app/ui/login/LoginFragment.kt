@@ -17,6 +17,7 @@ import il.ac.hit.android_movies_info_app.ui.login.viewmodel.LoginViewModel
 import il.ac.hit.android_movies_info_app.utils.Loading
 import il.ac.hit.android_movies_info_app.utils.Success
 import il.ac.hit.android_movies_info_app.utils.Error
+import il.ac.hit.android_movies_info_app.utils.NetworkState
 import il.ac.hit.android_movies_info_app.utils.UserPreferences
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
@@ -33,32 +34,35 @@ class LoginFragment : Fragment() {
     ): View? {
         binding = FragmentLoginBinding.inflate(inflater,container,false)
 
-        binding.noAcountTv.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
-        }
 
-        binding.buttonLogin.setOnClickListener {
-
-            viewModel.signInUser(binding.editTextLoginEmail.editText?.text.toString(),
-                binding.editTextLoginPass.editText?.text.toString())
-        }
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeNetworkStatus()
+        buttonsSetup()
+        observeUserSignIn()
+        observeCurrentUser()
 
+    }
+    private fun observeNetworkStatus() {
+        viewModel.isNetworkAvailable.observe(viewLifecycleOwner) { isAvailable ->
+            if (!isAvailable) {
+                Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    private fun observeUserSignIn() {
         viewModel.userSignInStatus.observe(viewLifecycleOwner) {
-
-            when(it.status) {
+            when (it.status) {
                 is Loading -> {
                     binding.loginProgressBar.isVisible = true
                     binding.buttonLogin.isEnabled = false
                 }
                 is Success -> {
-                    Toast.makeText(requireContext(),
-                        getString(R.string.login_successful), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.login_successful), Toast.LENGTH_SHORT).show()
                     it.status.data?.let { user -> UserPreferences.saveUser(requireContext(), user.email, user.name) }
                     findNavController().navigate(R.id.action_loginFragment_to_mainScreenFragment)
                 }
@@ -70,17 +74,17 @@ class LoginFragment : Fragment() {
                             getString(R.string.incorrect_email_or_password)
                         "The email address is badly formatted." ->
                             getString(R.string.email_badly_formatted)
-                        else ->
-                            it.status.message
+                        else -> it.status.message
                     }
                     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
 
+    private fun observeCurrentUser() {
         viewModel.currentUser.observe(viewLifecycleOwner) {
-
-            when(it.status) {
+            when (it.status) {
                 is Loading -> {
                     binding.loginProgressBar.isVisible = true
                     binding.buttonLogin.isEnabled = false
@@ -96,4 +100,25 @@ class LoginFragment : Fragment() {
             }
         }
     }
+    private fun buttonsSetup(){
+        binding.noAcountTv.setOnClickListener {
+            if (NetworkState.isNetworkAvailable(requireContext())) {
+                findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+            }else{
+                Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+        binding.buttonLogin.setOnClickListener {
+            if (NetworkState.isNetworkAvailable(requireContext())) {
+                viewModel.signInUser(binding.editTextLoginEmail.editText?.text.toString(),
+                    binding.editTextLoginPass.editText?.text.toString())
+            }else{
+                Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+
 }

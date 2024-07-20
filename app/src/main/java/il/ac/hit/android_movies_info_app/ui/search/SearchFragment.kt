@@ -23,6 +23,7 @@ import il.ac.hit.android_movies_info_app.ui.search.viewmodel.SearchViewModel
 import il.ac.hit.android_movies_info_app.utils.DrawerController
 import il.ac.hit.android_movies_info_app.utils.Error
 import il.ac.hit.android_movies_info_app.utils.Loading
+import il.ac.hit.android_movies_info_app.utils.NetworkState
 import il.ac.hit.android_movies_info_app.utils.Success
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
@@ -49,15 +50,25 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        adapterSetup()
+        uiSetup()
+        viewModelSetup()
+        handleOnBackPressed()
+    }
+    private fun adapterSetup(){
         adapter = SearchAdapter(this)
         binding.moviesRvSearch.layoutManager = LinearLayoutManager(requireContext())
         binding.moviesRvSearch.adapter = adapter
-
+    }
+    private fun uiSetup(){
         binding.searchButton.setOnClickListener{
-            val query = binding.searchEditText.text.toString()
-            page = 1
-            viewModel.setQuery(query)
+            if (NetworkState.isNetworkAvailable(requireContext())) {
+                val query = binding.searchEditText.text.toString()
+                page = 1
+                viewModel.setQuery(query)
+            }else{
+                Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+            }
 
         }
 
@@ -70,7 +81,8 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
                 }
             }
         })
-
+    }
+    private fun viewModelSetup(){
         viewModel.movies.observe(viewLifecycleOwner) {
             when(it.status) {
                 is Loading -> binding.progressBar.isVisible = true
@@ -90,7 +102,11 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
                 }
                 is Error -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(),it.status.message, Toast.LENGTH_SHORT).show()
+                    if (NetworkState.isNetworkAvailable(requireContext())) {
+                        Toast.makeText(requireContext(),it.status.message, Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -104,12 +120,14 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
                 }
                 is Error -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(),it.status.message, Toast.LENGTH_SHORT).show()
+                    if (NetworkState.isNetworkAvailable(requireContext())) {
+                        Toast.makeText(requireContext(),it.status.message, Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
-
-        handleOnBackPressed()
     }
     private fun handleOnBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -128,8 +146,12 @@ class SearchFragment : Fragment(), SearchAdapter.MoviesItemListener {
             })
     }
     override fun onMovieClick(movieId: Int) {
-        findNavController().navigate(R.id.action_search_nav_to_movieDetailFragment,
-            bundleOf("id" to movieId)
-        )
+        if (NetworkState.isNetworkAvailable(requireContext())) {
+            findNavController().navigate(R.id.action_search_nav_to_movieDetailFragment,
+                bundleOf("id" to movieId)
+            )
+        }else{
+            Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+        }
     }
 }

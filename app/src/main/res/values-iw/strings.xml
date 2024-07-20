@@ -87,5 +87,6 @@
     <string name="tmp_date">2024/07/22</string>
     <string name="video">• טריילר</string>
     <string name="gallery">• גלרייה</string>
+    <string name="no_internet_connection">אין חיבור לאינטרנט</string>
 
 </resources>

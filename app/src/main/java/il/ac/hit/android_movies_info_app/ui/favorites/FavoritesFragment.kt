@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
@@ -20,6 +21,7 @@ import il.ac.hit.android_movies_info_app.databinding.FragmentFavoritesBinding
 import il.ac.hit.android_movies_info_app.ui.favorites.viewmodel.FavoritesAdapter
 import il.ac.hit.android_movies_info_app.ui.favorites.viewmodel.FavoritesViewModel
 import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenViewModel
+import il.ac.hit.android_movies_info_app.utils.NetworkState
 import il.ac.hit.android_movies_info_app.utils.UserPreferences
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
@@ -122,9 +124,14 @@ class FavoritesFragment : Fragment(),FavoritesAdapter.MoviesItemListener {
 
 
     override fun onMovieClick(movieId: Int) {
-        findNavController().navigate(R.id.action_favorites_nav_to_movieDetailFragment,
-            bundleOf("id" to movieId)
-        )
+        if (NetworkState.isNetworkAvailable(requireContext())) {
+            findNavController().navigate(R.id.action_favorites_nav_to_movieDetailFragment,
+                bundleOf("id" to movieId)
+            )
+        }else{
+            Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+        }
+
     }
 
 }

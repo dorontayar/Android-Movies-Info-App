@@ -42,7 +42,6 @@ class MovieDetailFragment: Fragment() {
     private var movieDetailResult: MovieDetailsResponse? = null
     private var userid:String=""
     private lateinit var adapter: GalleryAdapter
-    private lateinit var viewPager: ViewPager2
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -24,6 +24,7 @@ import il.ac.hit.android_movies_info_app.ui.explore.viewmodel.UpcomingAdapter
 import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenViewModel
 import il.ac.hit.android_movies_info_app.utils.Error
 import il.ac.hit.android_movies_info_app.utils.Loading
+import il.ac.hit.android_movies_info_app.utils.NetworkState
 import il.ac.hit.android_movies_info_app.utils.Success
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
@@ -49,14 +50,11 @@ class ExploreFragment : Fragment(), TopRatedAdapter.MoviesItemListener ,Upcoming
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        topRatedAdapter = TopRatedAdapter(this)
-        binding.moviesRvTopRated.layoutManager =  LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.moviesRvTopRated.adapter = topRatedAdapter
+        adapterSetup()
+        viewModelSetup()
 
-        upcomingAdapter = UpcomingAdapter(this)
-        binding.moviesRvUpcoming.setLayoutManager(GridLayoutManager(requireContext(), 3))
-        binding.moviesRvUpcoming.setAdapter(upcomingAdapter)
-
+    }
+    private fun viewModelSetup(){
         viewModel.topMovies.observe(viewLifecycleOwner) {
             when(it.status) {
                 is Loading -> binding.progressBar.isVisible = true
@@ -68,7 +66,12 @@ class ExploreFragment : Fragment(), TopRatedAdapter.MoviesItemListener ,Upcoming
                 }
                 is Error -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(),it.status.message, Toast.LENGTH_SHORT).show()
+                    if (NetworkState.isNetworkAvailable(requireContext())) {
+                        Toast.makeText(requireContext(),it.status.message, Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+                    }
+
                 }
 
 
@@ -85,18 +88,32 @@ class ExploreFragment : Fragment(), TopRatedAdapter.MoviesItemListener ,Upcoming
                 }
                 is Error -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(),it.status.message, Toast.LENGTH_SHORT).show()
+                    if (NetworkState.isNetworkAvailable(requireContext())) {
+                        Toast.makeText(requireContext(),it.status.message, Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+                    }
                 }
 
 
             }
         }
-
-
     }
 
+    private fun adapterSetup(){
+        topRatedAdapter = TopRatedAdapter(this)
+        binding.moviesRvTopRated.layoutManager =  LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.moviesRvTopRated.adapter = topRatedAdapter
+
+        upcomingAdapter = UpcomingAdapter(this)
+        binding.moviesRvUpcoming.setLayoutManager(GridLayoutManager(requireContext(), 3))
+        binding.moviesRvUpcoming.setAdapter(upcomingAdapter)
+    }
     override fun onMovieClick(movieId: Int) {
-        findNavController().navigate(R.id.action_explore_nav_to_movieDetailFragment,
-            bundleOf("id" to movieId))
+        if (NetworkState.isNetworkAvailable(requireContext())) {
+            findNavController().navigate(R.id.action_explore_nav_to_movieDetailFragment, bundleOf("id" to movieId))
+        }else{
+            Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+        }
     }
 }

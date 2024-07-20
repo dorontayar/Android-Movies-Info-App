@@ -34,6 +34,7 @@ import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenView
 import il.ac.hit.android_movies_info_app.ui.profile.viewmodel.ProfileViewModel
 import il.ac.hit.android_movies_info_app.utils.Error
 import il.ac.hit.android_movies_info_app.utils.Loading
+import il.ac.hit.android_movies_info_app.utils.NetworkState
 import il.ac.hit.android_movies_info_app.utils.Success
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
@@ -59,50 +60,26 @@ class ProfileFragment : Fragment(), NavigationView.OnNavigationItemSelectedListe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val toolbar: Toolbar = binding.appBarProfile.toolbar
-        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
 
-        val drawerLayout:DrawerLayout = binding.drawerLayout
-        drawerToggle = ActionBarDrawerToggle(
-            requireActivity(),
-            drawerLayout,
-            toolbar,
-            R.string.open_nav,
-            R.string.close_nav
-        )
+        sideDrawerSetup()
 
-        drawerLayout.addDrawerListener(drawerToggle!!)
-        drawerToggle!!.syncState()
-        val navigationView: NavigationView = binding.navSideView
-        navigationView.setNavigationItemSelectedListener(this)
+        fetchUserDetails()
 
+        uiSetup()
+
+        viewModelSetup()
+
+       handleOnBackPressed()
+    }
+    override fun onResume() {
+        binding.drawerLayout.closeDrawers()
+        super.onResume()
+    }
+    private fun fetchUserDetails(){
         viewModel.fetchProfileImage()
         viewModel.fetchUserName()
-
-        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                profilePictureUri = result.data?.data
-                profilePictureUri?.let { uri ->
-                    Glide.with(this)
-                        .load(uri)
-                        .placeholder(R.drawable.ic_profile_placeholder)
-                        .error(R.drawable.ic_profile_placeholder)
-                        .into(binding.appBarProfile.profileFromDrawer.profileImageView)
-                }
-            }
-        }
-
-        binding.appBarProfile.profileFromDrawer.profileImageView.setOnClickListener {
-            selectProfileImage()
-        }
-        binding.appBarProfile.profileFromDrawer.changeProfileImage.setOnClickListener {
-            selectProfileImage()
-        }
-
-        binding.appBarProfile.profileFromDrawer.updateProfileButton.setOnClickListener {
-            val newName = binding.appBarProfile.profileFromDrawer.profileNameEditText.text.toString()
-            viewModel.updateProfile(newName, profilePictureUri)
-        }
+    }
+    private fun viewModelSetup(){
 
         viewModel.photoUri.observe(viewLifecycleOwner) { photoUri ->
             Glide.with(this)
@@ -128,6 +105,7 @@ class ProfileFragment : Fragment(), NavigationView.OnNavigationItemSelectedListe
                     Toast.makeText(requireContext(),
                         getString(R.string.profile_updated_successfully), Toast.LENGTH_SHORT).show()
                     viewModel.resetUpdateStatus()
+                    fetchUserDetails()
                 }
                 is Error -> {
                     binding.appBarProfile.profileFromDrawer.profileProgressBar.isVisible = false
@@ -143,15 +121,56 @@ class ProfileFragment : Fragment(), NavigationView.OnNavigationItemSelectedListe
                 }
             }
         }
-
-
-
-
-       handleOnBackPressed()
     }
-    override fun onResume() {
-        binding.drawerLayout.closeDrawers()
-        super.onResume()
+    private fun sideDrawerSetup(){
+        val toolbar: Toolbar = binding.appBarProfile.toolbar
+        (requireActivity() as AppCompatActivity).setSupportActionBar(toolbar)
+
+        val drawerLayout:DrawerLayout = binding.drawerLayout
+        drawerToggle = ActionBarDrawerToggle(
+            requireActivity(),
+            drawerLayout,
+            toolbar,
+            R.string.open_nav,
+            R.string.close_nav
+        )
+
+        drawerLayout.addDrawerListener(drawerToggle!!)
+        drawerToggle!!.syncState()
+        val navigationView: NavigationView = binding.navSideView
+        navigationView.setNavigationItemSelectedListener(this)
+    }
+    private fun uiSetup(){
+        imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                profilePictureUri = result.data?.data
+                profilePictureUri?.let { uri ->
+                    Glide.with(this)
+                        .load(uri)
+                        .placeholder(R.drawable.ic_profile_placeholder)
+                        .error(R.drawable.ic_profile_placeholder)
+                        .into(binding.appBarProfile.profileFromDrawer.profileImageView)
+                }
+            }
+        }
+
+        binding.appBarProfile.profileFromDrawer.profileImageView.setOnClickListener {
+            selectProfileImage()
+        }
+        binding.appBarProfile.profileFromDrawer.changeProfileImage.setOnClickListener {
+            selectProfileImage()
+        }
+
+        binding.appBarProfile.profileFromDrawer.updateProfileButton.setOnClickListener {
+            if (NetworkState.isNetworkAvailable(requireContext())) {
+                val newName = binding.appBarProfile.profileFromDrawer.profileNameEditText.text.toString()
+                viewModel.updateProfile(newName, profilePictureUri)
+                fetchUserDetails()
+            }else{
+                Toast.makeText(requireContext(), getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show()
+            }
+
+        }
     }
     private fun selectProfileImage() {
         val intent = Intent(Intent.ACTION_PICK).apply {
