@@ -136,9 +136,11 @@ class MovieDetailFragment: Fragment() {
 
         binding.movieRating.text = voteAveragePercent
         binding.movieVote.text = voteCountText
-        binding.genres.text = movie.genres.joinToString(", ") { it.name }
+        binding.genres.text = movie.genres.takeIf { it.isNotEmpty() }?.let {
+            it.joinToString(", ") { genre -> genre.name }
+        } ?: getString(R.string.genres_not_found)
 
-        var trailerKey = movie.videos.results.firstOrNull { it.type == "Trailer" }?.key
+            var trailerKey = movie.videos.results.firstOrNull { it.type == "Trailer" }?.key
         if (trailerKey == null) {
             trailerKey = "dQw4w9WgXcQ"
             binding.noTrailerText.visibility = View.VISIBLE

@@ -19,14 +19,14 @@
     <string name="don_t_have_an_acount_yet_click_to_register">Don\'t have an account yet?\nClick to register</string>
     <string name="login">Login</string>
     <string name="movie_title">Movie Title</string>
-    <string name="description">Description</string>
-    <string name="rating">Rating:</string>
+    <string name="description">• Description:</string>
+    <string name="rating">• Rating:</string>
     <string name="votes">Votes:</string>
     <string name="favorite">Favorite</string>
     <string name="favorites">Favorites</string>
     <string name="add_to_favorites">Add To Favorites</string>
     <string name="remove_from_favorites">Remove From Favorites</string>
-    <string name="release_date">Release date: %1$s</string>
+    <string name="release_date">• Release date: %1$s</string>
     <string name="no_trailer">No trailer found—here\'s Rick Astley!</string>
     <string name="profile_image">Profile Image</string>
     <string name="enter_name">Enter Name</string>
@@ -70,7 +70,7 @@
     <string name="current_name">Current Name:</string>
     <string name="name_profile">Name</string>
     <string name="description_not_found">Description not found</string>
-    <string name="release_date_not_found">Release date not found</string>
+    <string name="release_date_not_found">• Release date: Not found</string>
     <string name="password_must_be_at_least_6_characters">Password must be at least 6 characters</string>
     <string name="remove_from_favorites_dialog_title">Remove from Favorites</string>
     <string name="are_you_sure_you_want_to_remove_this_movie_from_your_favorites">Are you sure you want to remove this movie from your favorites?</string>
@@ -79,13 +79,14 @@
     <string name="incorrect_email_or_password">Incorrect email or password</string>
     <string name="email_badly_formatted">The email address is badly formatted.</string>
     <string name="the_email_already_registered">The email already registered</string>
-    <string name="genre">• Genre</string>
+    <string name="genre">• Genre: </string>
     <string name="title">Title</string>
     <string name="tmp">tmp</string>
     <string name="tmp_date">2024/07/22</string>
-    <string name="video">• Trailer</string>
-    <string name="gallery">• Gallery</string>
+    <string name="video">• Trailer:</string>
+    <string name="gallery">• Gallery:</string>
     <string name="no_internet_connection">No Internet Connection</string>
+    <string name="genres_not_found">Not found</string>
     <string name="no_favorites">No Favorites</string>
 
 </resources>
