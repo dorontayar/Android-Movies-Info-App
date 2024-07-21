@@ -9,9 +9,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.jakewharton.processphoenix.ProcessPhoenix
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
+import il.ac.hit.android_movies_info_app.databinding.ActivityMainBinding
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -21,11 +24,14 @@ class MainActivity : AppCompatActivity() {
     private var previousOrientation: Int = Configuration.ORIENTATION_UNDEFINED
     private var restartDialog: AlertDialog? = null
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         previousLanguage = Locale.getDefault().language
         previousOrientation = resources.configuration.orientation
+
     }
 
 
@@ -43,9 +49,6 @@ class MainActivity : AppCompatActivity() {
                     previousLanguage = currentLanguage
                     showRestartDialog(this)
                 }
-            }else{
-                recreate()
-
             }
 
         }else{

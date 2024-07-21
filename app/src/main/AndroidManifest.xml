@@ -18,7 +18,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:configChanges="locale|orientation|screenSize|layoutDirection|smallestScreenSize|screenLayout|uiMode">
+            android:configChanges="locale|layoutDirection|smallestScreenSize|screenLayout|uiMode">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
