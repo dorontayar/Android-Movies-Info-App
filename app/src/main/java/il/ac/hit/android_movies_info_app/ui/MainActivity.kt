@@ -1,11 +1,11 @@
 package il.ac.hit.android_movies_info_app.ui
 
-import android.content.Context
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import il.ac.hit.android_movies_info_app.R
+import il.ac.hit.android_movies_info_app.ui.restart_dialog.RestartDialogFragment
 import java.util.Locale
 
 @AndroidEntryPoint

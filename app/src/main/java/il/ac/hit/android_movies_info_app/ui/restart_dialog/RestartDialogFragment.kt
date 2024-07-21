@@ -1,4 +1,4 @@
-package il.ac.hit.android_movies_info_app.ui
+package il.ac.hit.android_movies_info_app.ui.restart_dialog
 
 import android.app.Dialog
 import android.content.Context
