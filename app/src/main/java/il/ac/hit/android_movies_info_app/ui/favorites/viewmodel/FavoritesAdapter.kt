@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import il.ac.hit.android_movies_info_app.HiltApp
 import il.ac.hit.android_movies_info_app.R
 import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
 import il.ac.hit.android_movies_info_app.data.model.movie_search.Movie
@@ -34,8 +35,10 @@ class FavoritesAdapter(private val listener : MoviesItemListener) :
 
             this.movie = item
             itemBinding.title.text = item.title
-            itemBinding.description.text = shortenText(item.overview, 150)
-            // can change to other sizes, check Constants.kt
+            if(item.overview != "") {
+                itemBinding.description.text = shortenText(item.overview, 150)
+            } else { itemBinding.description.text =
+                HiltApp.getContext()?.getString(R.string.description_not_found)}            // can change to other sizes, check Constants.kt
             val imagePath:String = Constants.IMAGE_TYPE_W185 +item.posterPath
             Glide.with(itemBinding.root).load(imagePath).into(itemBinding.image)
         }
