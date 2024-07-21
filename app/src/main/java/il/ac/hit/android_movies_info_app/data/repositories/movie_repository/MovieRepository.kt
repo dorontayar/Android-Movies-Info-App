@@ -5,9 +5,14 @@ import il.ac.hit.android_movies_info_app.data.local_db.FavoriteMovieDao
 import il.ac.hit.android_movies_info_app.data.local_db.TopRatedMovieDao
 import il.ac.hit.android_movies_info_app.data.local_db.UpcomingMovieDao
 import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
+import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.MovieDetailsResponse
 import il.ac.hit.android_movies_info_app.data.remote_db.MovieRemoteDataSource
+import il.ac.hit.android_movies_info_app.utils.getApiLanguage
 import il.ac.hit.android_movies_info_app.utils.performFetching
 import il.ac.hit.android_movies_info_app.utils.performFetchingAndSaving
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,7 +43,14 @@ class MovieRepository @Inject constructor(
     fun getMovie(id: Int) = performFetching { remoteDataSource.getMovieDetails(id) }
     fun getSearchedMovies(query : String) = performFetching { remoteDataSource.searchMovie(query) }
     fun getSearchedMoviesScrolling(query : String,page:Int) = performFetching { remoteDataSource.searchMovieScrolling(query,page) }
-
+    suspend fun getMovieDetailsForIds(ids: List<Int>): List<MovieDetailsResponse> = coroutineScope {
+        ids.map { id ->
+            async {
+                val response = remoteDataSource.getMovieDetails(id)
+                response.status.data
+            }
+        }.awaitAll().filterNotNull()
+    }
 
 
     // Room related repo functions
@@ -46,5 +58,6 @@ class MovieRepository @Inject constructor(
     fun getFavoriteMovie(id: Int,userId:String) = localDataSourceFavoriteMovie?.getFavoriteMovie(id,userId)
     suspend fun saveFavoriteMovie(movie: FavoriteMovie) = localDataSourceFavoriteMovie?.insertFavoriteMovie(movie)
     suspend fun deleteFavoriteMovie(id: Int,userId:String) = localDataSourceFavoriteMovie?.deleteFavoriteMovie(id,userId)
+
 
 }

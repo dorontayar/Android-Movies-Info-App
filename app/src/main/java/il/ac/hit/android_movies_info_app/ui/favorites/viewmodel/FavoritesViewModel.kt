@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
 import il.ac.hit.android_movies_info_app.data.repositories.movie_repository.MovieRepository
+import il.ac.hit.android_movies_info_app.utils.toFavoriteMovie
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +23,25 @@ class FavoritesViewModel @Inject constructor(
     val userId: LiveData<String> get() = _userId
 
     val allFavoriteMovies: LiveData<List<FavoriteMovie>> = _userId.switchMap { id ->
-        movieRepository.getAllFavoriteMovies(id)
+        movieRepository.getAllFavoriteMovies(id)?.switchMap { favoriteMovies ->
+            fetchAndUpdateMovieDetails(favoriteMovies)
+        }
+    }
+
+
+    private fun fetchAndUpdateMovieDetails(favoriteMovies: List<FavoriteMovie>): LiveData<List<FavoriteMovie>> {
+        val updatedFavoriteMovies = MutableLiveData<List<FavoriteMovie>>()
+        viewModelScope.launch {
+            val ids = favoriteMovies.map { it.id }
+            val movieDetailsList = movieRepository.getMovieDetailsForIds(ids)
+
+            val updatedMovies = favoriteMovies.map { favoriteMovie ->
+                val movieDetails = movieDetailsList.find { it.id == favoriteMovie.id }
+                movieDetails?.toFavoriteMovie() ?: favoriteMovie
+            }
+            updatedFavoriteMovies.postValue(updatedMovies)
+        }
+        return updatedFavoriteMovies
     }
 
     fun setUserId(userId: String) {
