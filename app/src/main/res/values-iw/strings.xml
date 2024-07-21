@@ -89,5 +89,8 @@
     <string name="no_internet_connection">אין חיבור לאינטרנט</string>
     <string name="genres_not_found">לא נמצא</string>
     <string name="no_favorites">אין מועדפים</string>
+    <string name="language_change">שפת המערכת השתנתה</string>
+    <string name="to_apply_changes_please_restart_the_app">כדי ששינויים אלו יחלו, אנא הפעל את האפליקציה מחדש</string>
+    <string name="restart">הפעלה מחדש</string>
 
 </resources>

@@ -5,12 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
-import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,7 +18,6 @@ import il.ac.hit.android_movies_info_app.databinding.FragmentExploreNewBinding
 import il.ac.hit.android_movies_info_app.ui.explore.viewmodel.TopRatedAdapter
 import il.ac.hit.android_movies_info_app.ui.explore.viewmodel.ExploreViewModel
 import il.ac.hit.android_movies_info_app.ui.explore.viewmodel.UpcomingAdapter
-import il.ac.hit.android_movies_info_app.ui.main_screen.viewmodel.MainScreenViewModel
 import il.ac.hit.android_movies_info_app.utils.Error
 import il.ac.hit.android_movies_info_app.utils.Loading
 import il.ac.hit.android_movies_info_app.utils.NetworkState
@@ -35,7 +31,7 @@ class ExploreFragment : Fragment(), TopRatedAdapter.MoviesItemListener ,Upcoming
     private var binding : FragmentExploreNewBinding by autoCleared()
     private val viewModel: ExploreViewModel by viewModels()
     private lateinit var  topRatedAdapter: TopRatedAdapter
-    private  lateinit var  upcomingAdapter: UpcomingAdapter
+    private lateinit var  upcomingAdapter: UpcomingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import il.ac.hit.android_movies_info_app.data.model.favorite_movie.FavoriteMovie
 import il.ac.hit.android_movies_info_app.data.model.movie_search_detailed.MovieDetailsResponse
+import java.util.Locale
 
 fun MovieDetailsResponse.toFavoriteMovie(): FavoriteMovie {
     return FavoriteMovie(
@@ -135,5 +136,12 @@ object NetworkState {
             }
         }
         return false
+    }
+}
+
+fun getApiLanguage(): String {
+    return when (Locale.getDefault().language) {
+        "iw" -> "he-IL"
+        else -> "en-US"
     }
 }
