@@ -16,8 +16,6 @@ class ExploreViewModel @Inject constructor(
 ):ViewModel() {
     val topMovies = movieRepository.getTopMovies()
 
-    val upcomingMovies = movieRepository.getUpcomingMovies()
-
     private val startDate: String = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
     private val endDate = getDateAfterMonths(DEFAULT_DATE_RANGE_FOR_UPCOMING_MOVIES)
     val upcomingMoviesByRange = movieRepository.getUpcomingMoviesByDateRange(startDate, endDate)

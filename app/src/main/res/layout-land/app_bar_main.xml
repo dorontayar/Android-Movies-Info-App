@@ -13,7 +13,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             android:background="@color/orange"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme" />
