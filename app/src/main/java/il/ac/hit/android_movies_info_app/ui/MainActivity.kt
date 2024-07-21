@@ -43,6 +43,9 @@ class MainActivity : AppCompatActivity() {
                     previousLanguage = currentLanguage
                     showRestartDialog(this)
                 }
+            }else{
+                recreate()
+
             }
 
         }else{
