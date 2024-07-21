@@ -36,7 +36,6 @@ class FavoritesAdapter(private val listener : MoviesItemListener) :
             itemBinding.description.text = item.overview.takeIf { it.isNotEmpty() }?.let { shortenText(it, 150) } ?: HiltApp.getContext()?.getString(
                 R.string.description_not_found
             )
-
             // can change to other sizes, check Constants.kt
             val imagePath:String = Constants.IMAGE_TYPE_W185 +item.posterPath
             Glide.with(itemBinding.root).load(imagePath).into(itemBinding.image)
