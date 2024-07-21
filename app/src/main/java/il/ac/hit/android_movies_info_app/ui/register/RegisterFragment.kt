@@ -24,6 +24,7 @@ import il.ac.hit.android_movies_info_app.utils.Success
 import il.ac.hit.android_movies_info_app.utils.Error
 import il.ac.hit.android_movies_info_app.utils.NetworkState
 import il.ac.hit.android_movies_info_app.utils.Resource
+import il.ac.hit.android_movies_info_app.utils.UserPreferences
 import il.ac.hit.android_movies_info_app.utils.autoCleared
 
 @AndroidEntryPoint
@@ -66,6 +67,7 @@ class RegisterFragment: Fragment() {
                 is Success -> {
                     Toast.makeText(requireContext(),
                         getString(R.string.registration_successful),Toast.LENGTH_SHORT).show()
+                    it.status.data?.let { user -> UserPreferences.saveUser(requireContext(), user.email, user.name) }
                     findNavController().navigate(R.id.action_registerFragment_to_mainScreenFragment)
                 }
                 is Error -> {

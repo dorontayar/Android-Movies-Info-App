@@ -15,8 +15,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        previousLanguage = Locale.getDefault().language
-        previousOrientation = resources.configuration.orientation
+        previousLocale = Locale.getDefault()
 
     }
 
