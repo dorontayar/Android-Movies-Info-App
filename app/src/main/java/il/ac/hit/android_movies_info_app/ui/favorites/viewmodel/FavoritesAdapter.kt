@@ -38,7 +38,7 @@ class FavoritesAdapter(private val listener : MoviesItemListener) :
             )
             // can change to other sizes, check Constants.kt
             val imagePath:String = Constants.IMAGE_TYPE_W185 +item.posterPath
-            Glide.with(itemBinding.root).load(imagePath).into(itemBinding.image)
+            Glide.with(itemBinding.root).load(imagePath).placeholder(R.drawable.movie_placeholder).into(itemBinding.image)
         }
         override fun onClick(v: View?) {
 
