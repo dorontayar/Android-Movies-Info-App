@@ -15,7 +15,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        previousLocale = Locale.getDefault()
+        previousLanguage = Locale.getDefault().language
+        previousOrientation = resources.configuration.orientation
+
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         val currentLocale = Locale.getDefault()
         if (currentLocale != previousLocale) {
             RestartDialogFragment.show(this)
+
         }
     }
 }
