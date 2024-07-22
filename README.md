@@ -1,7 +1,7 @@
 # Android Movies Info App 🎬
 
 Welcome to the Android Movies Info App! This project is designed to provide a seamless movie browsing experience with features such as searching for movies, viewing detailed information, and managing favorite movies. Below you will find all the necessary information to set up and run the project.
-
+[YOUTUBE LINK](https://www.youtube.com/watch?v=qkJQTSvL674)
 ## Prerequisites 🛠️
 
 Ensure you have the following installed:
