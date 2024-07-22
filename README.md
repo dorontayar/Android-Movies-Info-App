@@ -1,6 +1,4 @@
-Here's the updated README with the inclusion of Coroutines in the architecture section:
 
----
 
 # Movies Android App 🎬
 
