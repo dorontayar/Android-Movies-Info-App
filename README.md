@@ -8,7 +8,6 @@ Ensure you have the following installed:
 
 - Android Studio
 - Kotlin
-- Internet connection for fetching movie data
 
 ## Installation 💻
 
